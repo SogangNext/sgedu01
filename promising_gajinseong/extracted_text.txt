@@ -1,0 +1,87 @@
+
+--- ppt/slides/slide1.xml ---
+PORTFOLIO.
+가진성     
+PHONE: 010-5754-4209     MAIL: jinseongga@gmail.com
+Jinseong’s 
+Portfolio
+
+--- ppt/slides/slide2.xml ---
+PORTFOLIO
+CO
+NTENTS
+01
+02
+03
+이력사항 소개
+프로젝트 소개 1
+프로젝트 소개 2
+
+--- ppt/slides/slide3.xml ---
+PORTFOLIO
+2024. 03
+2024. 05
+전화
+메일
+세명 컴퓨터 고등학교 입학
+교내 프로그래밍 문제 해결 대회 은상
+010-5754-4209
+jinseongga@gmail.com
+2024. 06
+ ~ 2026. 
+04
+2025.03 ~ 2025.04
+서강대학교 미래 유망 분야 인재 양성 사업 참여
+서울 지방 경기 기능 대회(게임 제작 분야) 출전
+EDUCATION
+AWARD
+CONTACT
+EXPERIENCE
+가진성
+GaJinSeong 
+(2008. 06. 28)
+ABOUT M
+E
+Ga jin-Seong
+안녕하세요.
+상상력을 게임으로 만드는 개발자
+가진성 입니다.
+저는 Unity와 C#에 특화된 개발자로서 관련 수업들과 자료들을 기반으로
+제 전문성을 유지, 발전시키며 창의성과 결합하여 다양한 프로젝트에 참여하여
+여러 상황에 맞는 코딩 기법들에 강합니다.
+PR
+O
+GR
+A
+M
+Unity
+Html
+Oracle
+Clude Code
+
+--- ppt/slides/slide4.xml ---
+PORTFOLIO
+LittleSword
+2026.03~2026.04
+이 프로젝트는 NetCode를 기반으로한 멀티 플레이어를 지원하는 2D RPG 게임으로 직관적인 인터페이스와 플레이 방법으로
+남녀노소 구분 없이 쉽게 플레이할 수 있는 게임입니다. BasePlayer,BaseEnemy 같은 코드를 상속 시켜 객체 지향을 준수한점이 돋보이는 작품이였습니다.
+
+--- ppt/slides/slide5.xml ---
+PORTFOLIO
+LittleSword
+2026.03~2026.04
+이 프로젝트는 NetCode를 기반으로한 멀티 플레이어를 지원하는 2D RPG 게임으로 직관적인 인터페이스와 플레이 방법으로
+남녀노소 구분 없이 쉽게 플레이할 수 있는 게임입니다. BasePlayer,BaseEnemy 같은 코드를 상속 시켜 객체 지향을 준수한점이 돋보이는 작품이였습니다.
+
+--- ppt/slides/slide6.xml ---
+PORTFOLIO
+VR BaseBall
+2026.03~2026.04
+이 프로젝트는 XR Interact 기능을 이용하여 Vertual Reality 공간에서 몰입감을 느끼며 직접 배트를 잡고 공을 친다는 느낌을
+받을 수 있도록 제작한 프로젝트 입니다. 타격 시 물리 작용을 구현하는 과정이 돋보이는 프로젝트였습니다.
+
+--- ppt/slides/slide7.xml ---
+THANK Y
+OU.
+Ga Jin-Seong 
+Portfolio

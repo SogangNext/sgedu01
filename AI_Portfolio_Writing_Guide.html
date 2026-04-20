@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 AI 포트폴리오 작성 가이드 | 서강대 미래교육원</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #38bdf8;
+  --primary-dark: #0284c7;
+  --secondary: #818cf8;
+  --accent: #c084fc; /* AI 전용 퍼플 악센트 */
+  --bg: #020617;
+  --bg2: #0f172a;
+  --bg3: #1e293b;
+  --card: rgba(15, 23, 42, 0.4);
+  --border: rgba(255, 255, 255, 0.06);
+  --text: #ffffff;
+  --text-muted: #94a3b8;
+  --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+  --grad-ai: linear-gradient(135deg, #c084fc, #6366f1);
+}
+
+/* BRANDING TOP */
+.brand-top {
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none; color: #fff; font-weight: 800; font-size: 0.95rem;
+    padding: 0 12px; transition: 0.3s; white-space: nowrap;
+}
+.brand-top span { color: var(--accent); }
+.brand-top:hover { transform: translateX(3px); opacity: 0.8; }
+
+html[data-theme='light'] .brand-top { color: #0f172a; }
+
+/* ABSOLUTE BRANDING TOP-LEFT (Visible only on first screen) */
+.brand-fixed {
+    position: absolute; top: 24px; left: 24px; z-index: 10000;
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none; color: #fff; font-weight: 800; font-size: 0.95rem;
+    background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+    padding: 10px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.brand-fixed span { color: var(--accent); }
+.brand-fixed:hover { transform: translateY(-2px); background: rgba(15, 23, 42, 0.8); border-color: var(--accent); box-shadow: 0 12px 40px rgba(192, 132, 252, 0.3); }
+
+html[data-theme='light'] .brand-fixed {
+    background: rgba(255, 255, 255, 0.8); color: #0f172a;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 8px 32px rgba(15, 23, 42, 0.05);
+}
+html[data-theme='light'] .brand-fixed:hover { background: #fff; border-color: #9333ea; color: #9333ea; }
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:3px;}
+
+/* BG GRID */
+.bg-grid {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at 50% 50%, black, transparent 90%);
+  opacity: 0.12; pointer-events: none; z-index: 0;
+}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(168,85,247,.2) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(56,189,248,.15) 0%,transparent 60%);pointer-events:none;}
+.hero-badge{display:inline-block;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.4);color:#c084fc;padding:.4rem 1.2rem;border-radius:999px;font-size:.85rem;font-weight:700;margin-bottom:1.5rem;animation:fadeInUp .6s ease;text-transform:uppercase;letter-spacing:1px;}
+.hero h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:900;line-height:1.1;margin-bottom:1.5rem;animation:fadeInUp .8s ease;}
+.hero h1 span.ai{background:var(--grad-ai);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero h1 span.blue{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:1.1rem;color:var(--text-muted);max-width:700px;margin:0 auto 3rem;animation:fadeInUp 1s ease;}
+
+.hero-meta{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;animation:fadeInUp 1.2s ease;}
+.meta-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem 1.5rem;font-size:.9rem;backdrop-filter:blur(10px);}
+.meta-item strong{display:block;color:var(--accent);font-size:.75rem;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em;}
+
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--text-muted);font-size:.8rem;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* NAV (Unified Style) */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:.8rem 2.5rem;display:flex;align-items:center;gap:1.5rem;overflow-x:auto;scrollbar-width:none;}
+nav::-webkit-scrollbar { display: none; }
+
+.nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 900; font-size: 1.1rem; color: var(--text); text-decoration: none;
+    letter-spacing: -0.5px; flex: 1;
+}
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+.nav-links { display: flex; gap: 0.5rem; }
+nav a.nav-link{color:var(--text-muted);text-decoration:none;font-size:.9rem;font-weight:600;padding:.5rem 1rem;border-radius:8px;white-space:nowrap;transition:.2s;}
+nav a.nav-link:hover{background:var(--card);color:var(--text);}
+nav a.nav-link.active{background:rgba(192,132,252,.15);color:var(--accent);}
+
+.nav-right-group {
+  flex: 1; margin-left: auto;
+  display: flex; align-items: center; justify-content: flex-end; gap: 12px;
+}
+.nav-home-btn{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:#e0e7ff;font-size:1.4rem;text-decoration:none;
+  transition:all .3s cubic-bezier(.23,1,.32,1);
+}
+.nav-home-btn:hover{
+  background:var(--grad-ai); color:#fff; border-color:transparent;
+  transform:translateY(-2px) scale(1.05); box-shadow:0 10px 28px rgba(168,85,247,.4);
+}
+.theme-toggle-btn {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+    display: flex; align-items: center; justify-content: center;
+    color: #e0e7ff; font-size: 1.3rem; cursor: pointer; transition: all 0.3s;
+}
+.theme-toggle-btn:hover { background: rgba(255,255,255,.1); transform: rotate(15deg); }
+
+/* SCROLL TOP BTN */
+.scroll-top-btn{
+  position:fixed;bottom:32px;right:32px;
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(10,14,26,.85);backdrop-filter:blur(12px);
+  border:1px solid rgba(168,85,247,.3);
+  color:#c4b5fd;display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;cursor:pointer;z-index:1000;
+  opacity:0;visibility:hidden;transform:translateY(12px);
+  transition:all .4s cubic-bezier(.23,1,.32,1);
+}
+.scroll-top-btn.visible{opacity:1;visibility:visible;transform:translateY(0);}
+.scroll-top-btn:hover{
+  background:var(--grad-ai); color:#fff; border-color:transparent;
+  transform:translateY(-6px); box-shadow:0 16px 36px rgba(168,85,247,.4);
+}
+
+/* ───── CAREER SECTION ───── */
+.career-section {
+    padding: 100px 40px;
+    background: linear-gradient(135deg, rgba(0,242,254,.06), rgba(67,233,123,.04));
+    border-top: 1px solid rgba(0,242,254,.15);
+    border-bottom: 1px solid rgba(0,242,254,.15);
+    position: relative; overflow: hidden;
+}
+.career-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse at 25% 50%, rgba(0,242,254,.1), transparent 60%),
+        radial-gradient(ellipse at 75% 50%, rgba(67,233,123,.07), transparent 60%);
+    pointer-events: none;
+}
+.career-inner {
+    max-width: 860px; margin: 0 auto;
+    text-align: center; position: relative; z-index: 1;
+}
+.career-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,242,254,.1);
+    border: 1px solid rgba(0,242,254,.3);
+    color: var(--primary); padding: 6px 18px; border-radius: 999px;
+    font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: 24px;
+}
+.career-title {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900; margin-bottom: 16px; line-height: 1.1; color: #fff;
+}
+.career-title span {
+    background: var(--gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.career-desc {
+    color: var(--text-muted); font-size: .95rem; line-height: 1.85;
+    max-width: 680px; margin: 0 auto 40px;
+}
+.career-stats {
+    display: flex; gap: 40px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 40px;
+}
+.career-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.career-stat-num {
+    font-family: 'Outfit', sans-serif; font-size: 2.4rem;
+    font-weight: 900;
+    background: var(--gradient);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.career-stat-lbl { font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+.career-btns {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+.btn-career-main {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 16px 40px; border-radius: 14px;
+    background: var(--gradient);
+    color: var(--bg); text-decoration: none; font-weight: 800; font-size: 1rem;
+    transition: all .3s;
+}
+.btn-career-main:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(0,242,254,.4);
+}
+
+footer {
+    padding: 60px 40px;
+    text-align: center;
+    background: #020617;
+    border-top: 1px solid var(--border);
+}
+
+.footer-logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 12px;
+    display: block;
+    text-decoration: none;
+}
+
+.footer-copy {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+/* Light mode support for career section */
+html[data-theme='light'] .career-section {
+    background: linear-gradient(135deg, rgba(0,242,254,.04), rgba(67,233,123,0.02));
+    border-color: rgba(0,242,254,.1);
+}
+html[data-theme='light'] .career-title { color: #0f172a; }
+html[data-theme='light'] footer {
+    background: #f1f5f9; border-color: rgba(15, 23, 42, 0.06);
+}
+html[data-theme='light'] .footer-logo { color: #0f172a; }
+
+.footer-back-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 32px; padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px; color: var(--text-muted);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.footer-back-link i { font-size: 1.1rem; transition: transform 0.3s; }
+.footer-back-link:hover {
+    background: rgba(255, 255, 255, 0.08); border-color: var(--primary);
+    color: #fff; transform: translateX(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.footer-back-link:hover i { transform: translateX(-3px); }
+
+html[data-theme='light'] .footer-back-link {
+    background: rgba(15, 23, 42, 0.03); border-color: rgba(15, 23, 42, 0.08);
+}
+html[data-theme='light'] .footer-back-link:hover {
+    background: #fff; border-color: #0066ff; color: #0066ff;
+}
+
+/* SECTIONS */
+section{padding:6rem 2.5rem;max-width:1150px;margin:0 auto; opacity:0; transform:translateY(30px); transition:.8s cubic-bezier(0.22, 1, 0.36, 1);}
+section.visible{opacity:1;transform:none;}
+.section-label{font-size:.85rem;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.15em;margin-bottom:1rem; display:flex; align-items:center; gap:10px;}
+.section-label::after { content:''; width:40px; height:1px; background:var(--accent); }
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:2rem;letter-spacing:-1px;}
+.section-title span{background:var(--grad-ai);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* OVERVIEW & CARDS */
+.overview-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1.5rem;margin-top:2.5rem;}
+.overview-card:nth-child(-n+3){grid-column:span 2;}
+.overview-card:nth-child(n+4){grid-column:span 3;}
+@media (max-width:768px){
+  .overview-grid{grid-template-columns:1fr;}
+  .overview-card:nth-child(n){grid-column:span 1;}
+}
+.overview-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;transition:.4s;position:relative;overflow:hidden;text-align:center;backdrop-filter:blur(10px);}
+.overview-card:hover{border-color:rgba(192,132,252,.5);transform:translateY(-8px);background:rgba(30,41,59,0.6);}
+.overview-card .icon{font-size:2.5rem;margin-bottom:1rem;}
+.overview-card h3{font-size:.85rem;color:var(--text-muted);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:1px;}
+.overview-card p{font-size:1.15rem;font-weight:800;color:var(--text);}
+
+/* TOOL GRID */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:2rem;}
+.tool-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:.4s;backdrop-filter:blur(10px);}
+.tool-card::after{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--grad-ai);}
+.tool-card:hover{border-color:rgba(192,132,252,.4);transform:translateY(-5px);}
+.tool-badge{display:inline-block;background:rgba(168,85,247,.15);color:#c084fc;padding:.3rem .9rem;border-radius:99px;font-size:.75rem;font-weight:800;margin-bottom:1rem;border:1px solid rgba(168,85,247,.2);}
+.tool-name{font-size:1.3rem;font-weight:800;margin-bottom:.8rem;color:#fff;}
+.tool-desc{font-size:.92rem;color:var(--text-muted);line-height:1.75;margin-bottom:1.5rem;}
+.tool-uses{display:flex;flex-wrap:wrap;gap:.6rem;}
+.use-tag{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text-muted);border-radius:8px;padding:.3rem .7rem;font-size:.78rem;font-weight:600;}
+
+/* TIMELINE (Curriculum) */
+.timeline{position:relative;margin-top:4rem;padding-left:1rem;}
+.timeline-axis{position:absolute;top:0;bottom:0;left:3.5rem;width:2px;background:linear-gradient(to bottom,var(--accent),var(--secondary));border-radius:1px;opacity:0.3;}
+.curr-week{display:flex;gap:2.5rem;margin-bottom:4rem;position:relative;opacity:0;transform:translateX(-25px);transition:.7s cubic-bezier(0.22, 1, 0.36, 1);}
+.curr-week.visible{opacity:1;transform:none;}
+.week-num{flex-shrink:0;width:5rem;height:5rem;border-radius:50%;background:var(--bg3);border:2px solid var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-en);color:var(--accent);position:relative;z-index:1;box-shadow:0 0 20px rgba(192,132,252,0.2);}
+.week-num span{font-size:1.5rem;font-weight:900;line-height:1;}
+.week-num label{font-size:0.65rem;font-weight:800;margin-top:2px;}
+
+.week-body{flex:1;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.2rem;backdrop-filter:blur(15px);transition:.4s;}
+.week-body:hover{border-color:var(--accent);transform:translateX(5px);}
+.week-phase{display:inline-block;background:rgba(168,85,247,.15);color:var(--accent);border:1px solid rgba(168,85,247,.3);border-radius:999px;padding:.3rem 1rem;font-size:.78rem;font-weight:800;margin-bottom:1rem;}
+.week-title{font-size:1.35rem;font-weight:800;margin-bottom:.8rem;color:#fff;}
+.week-desc{font-size:.95rem;color:var(--text-muted);line-height:1.85;}
+.output-tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem;}
+.output-tag{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);color:#7dd3fc;border-radius:999px;padding:.3rem .9rem;font-size:.78rem;font-weight:700;}
+
+/* TABLE STYLE */
+.table-wrap{overflow-x:auto;margin-top:2.5rem;border-radius:20px;border:1px solid var(--border);background:var(--card);backdrop-filter:blur(10px);}
+table{width:100%;border-collapse:collapse;}
+th{background:rgba(192,132,252,.1);color:var(--accent);font-size:.85rem;font-weight:800;padding:1.2rem 1.5rem;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:1px;}
+td{padding:1.2rem 1.5rem;font-size:.92rem;color:var(--text-muted);border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.03);color:#fff;}
+.badge{display:inline-block;padding:.3rem .8rem;border-radius:8px;font-size:.75rem;font-weight:800;}
+.badge-purple{background:rgba(168,85,247,.2);color:#d8b4fe;}
+.badge-blue{background:rgba(56,189,248,.15);color:#7dd3fc;}
+.badge-green{background:rgba(52,211,153,.15);color:#6ee7b7;}
+
+/* CHECKLIST */
+.check-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2.5rem;}
+.check-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;backdrop-filter:blur(10px);}
+.check-card h3{font-size:1.1rem;font-weight:800;margin-bottom:1.5rem;color:#fff;display:flex;align-items:center;gap:.8rem;}
+.check-card h3 i{color:var(--accent);font-size:1.3rem;}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:.9rem;}
+.check-list li{font-size:.9rem;color:var(--text-muted);padding-left:1.5rem;position:relative;line-height:1.6;}
+.check-list li::before{content:'\eb7a';font-family:'remixicon';position:absolute;left:0;top:-1px;color:var(--accent);font-size:1rem;}
+
+/* EFFECT CARDS */
+.effect-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem;margin-top:2.5rem;}
+.effect-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.2rem;text-align:center;transition:.4s;backdrop-filter:blur(10px);}
+.effect-card:hover{border-color:var(--accent);transform:scale(1.03);}
+.effect-icon{font-size:3rem;margin-bottom:1.2rem;display:inline-block;}
+.effect-card h3{font-size:1.1rem;font-weight:800;margin-bottom:.8rem;color:#fff;}
+.effect-card p{font-size:.88rem;color:var(--text-muted);line-height:1.7;}
+
+/* CTA BANNER */
+.dl-banner {
+  background: linear-gradient(135deg, rgba(168,85,247,.1) 0%, rgba(56,189,248,.1) 100%), var(--card);
+  border: 1px solid rgba(192,132,252,.3); border-radius: 30px; padding: 4rem 2rem;
+  text-align: center; margin-top: 4rem; backdrop-filter: blur(15px);
+}
+.dl-banner h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -1px; }
+.dl-banner p { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
+.dl-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 1.2rem 2.8rem; border-radius: 16px;
+  background: var(--grad-ai); color: white; text-decoration: none; font-weight: 800; font-size: 1.1rem;
+  transition: all .4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.dl-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(168,85,247,0.5); }
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 2rem;text-align:center;}
+footer p{color:var(--text-muted);font-size:.9rem;opacity:0.8;}
+footer strong{color:var(--text);font-weight:800;}
+footer .footer-nav { margin-top: 1.5rem; }
+footer .footer-nav a { color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.95rem; }
+
+/* ANIMATIONS */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+
+/* LIGHT MODE OVERRIDES (Choi Hyun-soo Standard Sync) */
+html[data-theme='light'] {
+    --bg: #f8fafc; --bg2: #f1f5f9; --card: rgba(255, 255, 255, 0.8);
+    --border: rgba(15, 23, 42, 0.08); --text: #0f172a; --text-muted: #475569;
+    --accent: #9333ea;
+}
+html[data-theme='light'] body { background: var(--bg); color: var(--text); }
+html[data-theme='light'] nav { background: rgba(255, 255, 255, 0.9); border-bottom-color: rgba(0,0,0,0.05); }
+html[data-theme='light'] nav a.nav-link { color: #475569; }
+html[data-theme='light'] nav a.nav-link.active { background: rgba(147, 51, 234, 0.1); color: #9333ea; }
+html[data-theme='light'] nav.top-nav .nav-logo { color: #000; }
+html[data-theme='light'] .nav-home-btn { background: #fff; color: #9333ea; border-color: rgba(147, 51, 234, 0.2); }
+html[data-theme='light'] .theme-toggle-btn { background: #fff; color: #000; border-color: rgba(0,0,0,0.1); }
+html[data-theme='light'] .overview-card, html[data-theme='light'] .tool-card, html[data-theme='light'] .week-body, html[data-theme='light'] .check-card, html[data-theme='light'] .effect-card {
+    background: #ffffff; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+html[data-theme='light'] .section-label { background: rgba(147, 51, 234, 0.08); display: inline-flex; padding: 4px 12px; border-radius: 50px; }
+html[data-theme='light'] th { background: rgba(147, 51, 234, 0.05); color: #9333ea; }
+</style>
+</head>
+<body>
+<a href="index.html" class="brand-fixed">세명컴퓨터고등학교 <span>X</span> 서강대학교 미래교육원</a>
+
+<div class="bg-grid"></div>
+
+<!-- SCROLL TOP BUTTON -->
+<button class="scroll-top-btn" id="scrollTopBtn" title="최상단으로 이동">
+  <i class="ri-arrow-up-line"></i>
+</button>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div>
+    <div class="hero-badge">Sparkling Knowledge · 2026 Future Education</div>
+    <h1><span class="ai">AI</span>로 혁신하는<br><span class="blue">포트폴리오</span> 가이드</h1>
+    <p class="hero-sub">ChatGPT, Claude, Gamma 등 최신 AI 도구를 마스터하여<br>8주 만에 기업을 매료시키는 프리미엄 포트폴리오를 설계합니다.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>커리큘럼</strong>8주 완성 실무 과정</div>
+      <div class="meta-item"><strong>주요 도구</strong>Gen-AI 전 제품군</div>
+      <div class="meta-item"><strong>교육 대상</strong>게임소프트웨어과 3학년</div>
+      <div class="meta-item"><strong>핵심 산출물</strong>프리미엄 포트폴리오 1종</div>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ 스크롤하여 상세 보기</div>
+</div>
+
+<!-- NAV (Unified & Integrated) -->
+<nav id="main-nav">
+  <a href="#top" class="nav-link active">AI_Portfolio_Writing_Guide</a>
+  <div class="nav-links">
+    <a href="#overview" class="nav-link">과정 개요</a>
+    <a href="#tools" class="nav-link">AI 도구</a>
+    <a href="#curriculum" class="nav-link">커리큘럼</a>
+    <a href="#schedule" class="nav-link">일정표</a>
+    <a href="#checklist" class="nav-link">체크리스트</a>
+    <a href="#effect" class="nav-link">기대 효과</a>
+  </div>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-home-btn" title="메인 페이지로 이동">
+      <i class="ri-home-4-line"></i>
+    </a>
+    <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="테마 전환">
+      <i class="ri-sun-line theme-icon" id="theme-icon"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- 1. 과정 개요 -->
+<section id="overview">
+  <div class="section-label">Section 01</div>
+  <h2 class="section-title">과정 <span>개요</span></h2>
+  <p style="color:var(--text-muted); max-width:800px; margin-bottom:3rem; font-size:1.1rem;">
+    게임·IT 취업 시장에서 포트폴리오의 질이 합격의 90%를 결정합니다. 이 과정은 단순히 AI 사용법을 배우는 것을 넘어, <strong>채용 목적에 최적화된 결과물</strong>을 도출하는 AI 실전 전략을 체계적으로 다룹니다.
+  </p>
+  <div class="overview-grid">
+    <div class="overview-card">
+      <div class="icon">🎯</div>
+      <h3>목표</h3>
+      <p>AI 기반 포트폴리오 1종 완성</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon">📅</div>
+      <h3>기간</h3>
+      <p>8주과정 (주 1회 100분)</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon">🛠️</div>
+      <h3>주요 도구</h3>
+      <p>GPT · Claude · Gamma</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon">📊</div>
+      <h3>운영 방식</h3>
+      <p>이론 30% : 실습 70%</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon">✅</div>
+      <h3>산출물</h3>
+      <p>PDF형 포트폴리오</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. AI 도구 소개 -->
+<section id="tools">
+  <div class="section-label">Section 02</div>
+  <h2 class="section-title">AI 도구 <span>라인업</span></h2>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-badge">Text-to-Text</div>
+      <div class="tool-name">💬 ChatGPT · Claude</div>
+      <div class="tool-desc">자기소개서 초안 생성, 프로젝트 상세 설명 구성, 직무 핵심 키워드 매핑 및 면접 예상 질문 대응에 활용합니다.</div>
+      <div class="tool-uses">
+        <span class="use-tag">자소서 초안</span> <span class="use-tag">기술 키워드</span> <span class="use-tag">문맥 교정</span>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-badge">Presentation</div>
+      <div class="tool-name">🎨 Gamma</div>
+      <div class="tool-desc">텍스트 한 줄로 전문가급 레이아웃의 발표 자료를 자동화합니다. 포트폴리오 슬라이드 및 프로젝트 요약서 제작에 최적입니다.</div>
+      <div class="tool-uses">
+        <span class="use-tag">발표 자료</span> <span class="use-tag">레이아웃 자동화</span> <span class="use-tag">PPT 생성</span>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-badge">Visual Art</div>
+      <div class="tool-name">🖼️ Midjourney · DALL-E</div>
+      <div class="tool-desc">프로젝트의 시각적 완성도를 높이는 컨셉 아트, 썸네일, 커버 비주얼을 전문가 수준으로 디자인합니다.</div>
+      <div class="tool-uses">
+        <span class="use-tag">컨셉 아트</span> <span class="use-tag">썸네일</span> <span class="use-tag">비주얼 고도화</span>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-badge">Vocal & Video</div>
+      <div class="tool-name">🎬 Runway · ElevenLabs</div>
+      <div class="tool-desc">게임 시연 영상의 고도화 작업 및 발표용 나레이션 생성을 통해 멀티미디어적 몰입감을 극대화합니다.</div>
+      <div class="tool-uses">
+        <span class="use-tag">영상 편집</span> <span class="use-tag">AI 나레이션</span> <span class="use-tag">영상 제작</span>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-badge">Code & Docs</div>
+      <div class="tool-name">💻 GitHub Copilot · Notion</div>
+      <div class="tool-desc">코드 최적화와 자동 README 작성을 통해 기술적 완성도를 증명하고, 체계적인 문서 라이브러리를 구축합니다.</div>
+      <div class="tool-uses">
+        <span class="use-tag">README 자동화</span> <span class="use-tag">코드 최적화</span> <span class="use-tag">문서 정리</span>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-badge">Web Platform</div>
+      <div class="tool-name">🌐 Framer · Webflow AI</div>
+      <div class="tool-desc">노코딩 AI 툴로 고성능 웹 포트폴리오를 제작하여, URL 하나로 언제든 접근 가능한 나만의 채널을 배포합니다.</div>
+      <div class="tool-uses">
+        <span class="use-tag">웹 사이트</span> <span class="use-tag">도메인 배포</span> <span class="use-tag">URL 공유</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. 주차별 커리큘럼 -->
+<section id="curriculum">
+  <div class="section-label">Section 03</div>
+  <h2 class="section-title">8주 완성 <span>커리큘럼</span></h2>
+  <div class="timeline">
+    <div class="timeline-axis"></div>
+    
+    <div class="curr-week">
+      <div class="week-num"><label>Week</label><span>1</span></div>
+      <div class="week-body">
+        <span class="week-phase">Orientation</span>
+        <div class="week-title">AI 시대의 포트폴리오 전략</div>
+        <div class="week-desc">프롬프트 엔지니어링의 기본 원리를 실습하고, 자신의 강점과 목표 직무를 정리하는 '나의 직무 프로파일 카드' 작성.</div>
+        <div class="output-tags">
+          <span class="output-tag">직무 프로파일 카드</span> <span class="output-tag">AI 계정 세팅</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="curr-week">
+      <div class="week-num"><label>Week</label><span>2</span></div>
+      <div class="week-body">
+        <span class="week-phase">Discovery</span>
+        <div class="week-title">프로젝트 소재 발굴 및 키워드 매핑</div>
+        <div class="week-desc">STAR 기법을 활용하여 과거 프로젝트를 분석하고, 채용 시장의 핵심 키워드를 AI와 대화하며 추출 및 연결.</div>
+        <div class="output-tags">
+          <span class="output-tag">프로젝트 분석서</span> <span class="output-tag">직무 키워드 맵</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="curr-week">
+      <div class="week-num"><label>Week</label><span>3</span></div>
+      <div class="week-body">
+        <span class="week-phase">Writing</span>
+        <div class="week-title">AI 자기소개서 및 면접 답변 설계</div>
+        <div class="week-desc">Claude를 활용한 4대 핵심 문항 초안 작성. AI 특유의 말투를 제거하고 나만의 보이스를 입히는 '인간화 편집' 가이드.</div>
+        <div class="output-tags">
+          <span class="output-tag">자소서 완성본</span> <span class="output-tag">면접 10문선</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="curr-week">
+      <div class="week-num"><label>Week</label><span>4</span></div>
+      <div class="week-body">
+        <span class="week-phase">Visualization</span>
+        <div class="week-title">포트폴리오 비주얼 브랜딩 설계</div>
+        <div class="week-desc">Midjourney 등을 활용한 프로젝트 썸네일 및 커버 제작. 면접관의 시선을 머물게 하는 고품격 비주얼 테마 설정.</div>
+        <div class="output-tags">
+          <span class="output-tag">커버 이미지 3종</span> <span class="output-tag">비주얼 가이드라인</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="curr-week">
+      <div class="week-num"><label>Week</label><span>5</span></div>
+      <div class="week-body">
+        <span class="week-phase">Creation</span>
+        <div class="week-title">Gamma로 완성하는 프리미엄 슬라이드</div>
+        <div class="week-desc">구조화된 텍스트를 Gamma AI에 주입하여 10페이지 분량의 포트폴리오 슬라이드 자동 생성 및 실전 커스터마이징.</div>
+        <div class="output-tags">
+          <span class="output-tag">포트폴리오 PPT</span> <span class="output-tag">발표 자료</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="curr-week">
+      <div class="week-num"><label>Week</label><span>6</span></div>
+      <div class="week-body">
+        <span class="week-phase">Optimization</span>
+        <div class="week-title">GitHub & README.md AI 자동화</div>
+        <div class="week-desc">개발자의 얼굴인 GitHub 저장소를 AI로 최적화. 기술 스택, 시연 영상, 아키텍처 다이어그램 자동화 구성 실습.</div>
+        <div class="output-tags">
+          <span class="output-tag">README.md 완성</span> <span class="output-tag">GitHub 프로필 팩</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="curr-week">
+      <div class="week-num"><label>Week</label><span>7</span></div>
+      <div class="week-body">
+        <span class="week-phase">Practice</span>
+        <div class="week-title">AI 모의 면접 및 피드백 훈련</div>
+        <div class="week-desc">자신의 포트폴리오를 기반으로 AI 면접관과 실시간 시뮬레이션. 답변의 논리성과 직무 적합성을 AI 데이터로 점검.</div>
+        <div class="output-tags">
+          <span class="output-tag">면접 피드백 리포트</span> <span class="output-tag">질문 대응 DB</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="curr-week">
+      <div class="week-num"><label>Week</label><span>8</span></div>
+      <div class="week-body">
+        <span class="week-phase">Final Presentation</span>
+        <div class="week-title">최종 성과 발표 및 리뷰</div>
+        <div class="week-desc">완성된 포트폴리오를 성과공유 플랫폼에 등록하고, 동료 평가(Peer Review) 및 전문가 최종 피드백을 수렴.</div>
+        <div class="output-tags">
+          <span class="output-tag">최종 포트폴리오 PDF</span> <span class="output-tag">수료 인증</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 세부 일정표 -->
+<section id="schedule">
+  <div class="section-label">Section 04</div>
+  <h2 class="section-title">세부 <span>일정표</span></h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>주차</th> <th>단계</th> <th>주요 교육 내용</th> <th>주요 산출물</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr> <td>1~3주차</td> <td><span class="badge badge-purple">Planning</span></td> <td>직무 분석, 소재 발굴, 자기소개서 완성</td> <td>직무 카드, 자소서 초안</td> </tr>
+        <tr> <td>4~5주차</td> <td><span class="badge badge-blue">Design</span></td> <td>비주얼 생성, 슬라이드 레이아웃, 포트폴리오 제작</td> <td>슬라이드 PPT, 비주얼 셋</td> </tr>
+        <tr> <td>6~7주차</td> <td><span class="badge badge-blue">Refine</span></td> <td>GitHub README 최적화, AI 모의면접 시뮬레이션</td> <td>README.md, 면접 리포트</td> </tr>
+        <tr> <td>8주차</td> <td><span class="badge badge-green">Finish</span></td> <td>최종 포트폴리오 완성 및 성과 발표회</td> <td>최종 결과물 PDF</td> </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 5. 체크리스트 -->
+<section id="checklist">
+  <div class="section-label">Section 05</div>
+  <h2 class="section-title">최종 <span>체크리스트</span></h2>
+  <div class="check-grid">
+    <div class="check-card">
+      <h3><i class="ri-file-edit-line"></i> 서류 완성도</h3>
+      <ul class="check-list">
+        <li>핵심 기술 키워드 10개 이상 사용</li>
+        <li>AI 생성 문장 '인간화 편집' 완료</li>
+        <li>오타 및 맞춤법 최종 검수</li>
+      </ul>
+    </div>
+    <div class="check-card">
+      <h3><i class="ri-palette-line"></i> 비주얼 포인트</h3>
+      <ul class="check-list">
+        <li>고품질 AI 생성 썸네일 적용</li>
+        <li>Gamma 레이아웃 가독성 확인</li>
+        <li>모바일 열람 최적화 확인</li>
+      </ul>
+    </div>
+    <div class="check-card">
+      <h3><i class="ri-rocket-line"></i> 배포 및 공유</h3>
+      <ul class="check-list">
+        <li>GitHub README.md 최신화</li>
+        <li>URL 링크 정상 작동 확인</li>
+        <li>PDF 버전 용량 최적화</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6. 기대 효과 -->
+<section id="effect">
+  <div class="section-label">Section 06</div>
+  <h2 class="section-title">기속 가능한 <span>기대 효과</span></h2>
+  <div class="effect-grid">
+    <div class="effect-card">
+        <div class="effect-icon">⚡</div>
+        <h3>시간 90% 단축</h3>
+        <p>복잡한 레이아웃과 기본 문구 구성을 AI로 자동화합니다.</p>
+    </div>
+    <div class="effect-card">
+        <div class="effect-icon">📈</div>
+        <h3>합격률 극대화</h3>
+        <p>데이터 기반 키워드 최적화로 서류 통과율을 높입니다.</p>
+    </div>
+    <div class="effect-card">
+        <div class="effect-icon">💡</div>
+        <h3>AI 실전 역량</h3>
+        <p>평생 활용 가능한 Gen-AI 실무 파이프라인을 습득합니다.</p>
+    </div>
+    <div class="effect-card">
+        <div class="effect-icon">🏆</div>
+        <h3>완성도 보장</h3>
+        <p>현업 수준의 비주얼과 논리 체계를 8주 만에 구축합니다.</p>
+    </div>
+  </div>
+
+  <!-- DL BANNER -->
+  <div class="dl-banner" id="download">
+    <h2>강의 자료 다운로드</h2>
+    <p>포트폴리오 작성 가이드 파일을 받아 예습하실 수 있습니다.</p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="download/2026_AI_Portfolio_Writing_Guide.pptx" download="2026_AI_Portfolio_Writing_Guide.pptx" class="dl-btn">
+            <i class="ri-file-ppt-2-line"></i> PPTX 다운로드
+        </a>
+        <a href="download/2026_AI_Portfolio_Writing_Guide.pdf" target="_blank" class="dl-btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);">
+            <i class="ri-file-pdf-line"></i> PDF로 보기 (권장)
+        </a>
+    </div>
+  </div>
+</section>
+  <!-- 취업성공 프로젝트 계획 섹션 -->
+  <div class="career-section" id="career">
+      <div class="career-inner">
+          <div class="career-badge"><i class="ri-rocket-line"></i> 2026 취업 역량 강화</div>
+          <h2 class="career-title">세명 <span>Level-Up</span> 취업 성공 프로젝트</h2>
+          <p class="career-desc">데이터 기반의 진로 진단부터 1:1 밀착 코칭, 기업 매칭까지! 게임소프트웨어과 학생들의 성공적인 취업과 진학을 위한 최적의 로드맵을 제공합니다.</p>
+          <div class="career-stats">
+              <div class="career-stat"><span class="career-stat-num">18명</span><span class="career-stat-lbl">집중 관리 대상</span></div>
+              <div class="career-stat"><span class="career-stat-num">8개월</span><span class="career-stat-lbl">밀착 지원 기간</span></div>
+              <div class="career-stat"><span class="career-stat-num">1:1</span><span class="career-stat-lbl">개별 맞춤 상담</span></div>
+          </div>
+          <div class="career-btns">
+              <a href="Level-Up_Job_Success_Project_Plan.html" class="btn-career-main">
+                  <i class="ri-flag-line"></i> 프로젝트 계획 보기
+              </a>
+          </div>
+      </div>
+  </div>
+
+<footer>
+    <div class="footer-info">
+        <p><strong>세명컴퓨터고 'Level-Up' 취업성공프로젝트</strong></p>
+        <p>작성일: 2026.03.30 &nbsp;|&nbsp; 작성자: 커리어개발전문가 정성희</p>
+    </div>
+    <a href="index.html" class="footer-back-link">
+        <i class="ri-arrow-left-line"></i> 성과공유 플랫폼 메인으로 돌아가기
+    </a>
+    <p class="footer-copy">© 2026 미래유망분야 성과 기반 플랫폼. All Rights Reserved.</p>
+</footer>
+
+<script>
+// Scroll Observer
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, observerOptions);
+
+document.querySelectorAll('section, .curr-week').forEach(el => observer.observe(el));
+
+// Nav Active State
+const sections = document.querySelectorAll('section[id], .hero[id]');
+const navLinks = document.querySelectorAll('nav a.nav-link');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        const top = s.offsetTop;
+        if(window.pageYOffset >= top - 120) current = s.getAttribute('id');
+    });
+    navLinks.forEach(l => {
+        l.classList.remove('active');
+        if(l.getAttribute('href') === '#' + current) l.classList.add('active');
+    });
+});
+
+// Scroll Top Button
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 400) {
+        scrollTopBtn.classList.add('visible');
+    } else {
+        scrollTopBtn.classList.remove('visible');
+    }
+});
+scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Theme Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.className = 'ri-moon-clear-line theme-icon';
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            themeIcon.className = 'ri-sun-line theme-icon';
+        }
+    }
+    applyTheme(savedTheme);
+    toggleBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        localStorage.setItem('theme', current);
+        applyTheme(current);
+    });
+});
+</script>
+
+</body>
+</html>

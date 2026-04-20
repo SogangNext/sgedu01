@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미래유망분야 성과 기반 플랫폼 | Future Leaders Showcase</title>
+    <meta name="description" content="서강대학교 미래교육원 미래유망분야 프로젝트의 학생 성과를 집약한 포트폴리오 플랫폼입니다.">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* ───── RESET & TOKENS ───── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+                :root {
+            --font-ko: 'Pretendard', sans-serif;
+            --font-en: 'Outfit', sans-serif;
+            
+            --bg: #020617; /* ???щ젅?댄듃 釉붾옓 (留ㅼ슦 源딄퀬 怨좉툒?ㅻ윭??寃?? */
+            --bg2: #0f172a; /* ?щ젅?댄듃 ?ㅽ겕 */
+            --card: rgba(15, 23, 42, 0.4); /* ?쒖닔 ?좊━媛 ?꾨땶 諛섑닾紐??щ젅?댄듃 湲?섏뒪 */
+            --card-hv: rgba(30, 41, 59, 0.6);
+            --border: rgba(255, 255, 255, 0.06); /* 留ㅼ슦 ?뉕퀬 ?щ챸???좊━ ?뚮몢由?*/
+            --border-active: rgba(56, 189, 248, 0.4);
+            
+            --clr-1: #38bdf8;   /* ?꾨━誘몄뾼 ?ㅼ뭅???쒖븞 */
+            --clr-1-glow: rgba(56, 189, 248, 0.3);
+            --clr-2: #818cf8;   /* ?꾨━誘몄뾼 ?몃뵒怨?諛붿씠?щ젢 釉붾（) */
+            --clr-2-glow: rgba(129, 140, 248, 0.3);
+            
+            --txt-h: #ffffff; /* ?쒕갚??蹂대떎??遺?쒕윭???붿씠??*/
+            --txt-b: #e2e8f0;
+            --txt-m: #cbd5e1;
+            --txt-s: #94a3b8;
+            
+            --grad: linear-gradient(135deg, var(--clr-1) 0%, var(--clr-2) 100%);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-ko);
+            background: var(--bg);
+            color: var(--txt-b);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ───── DECORATIONS ───── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 100;
+            opacity: .3;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-sphere {
+            position: fixed;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px; right: -100px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ───── NAV ───── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(3, 5, 10, .7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: var(--font-en);
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--txt-h);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--clr-1);
+            box-shadow: 0 0 12px var(--clr-1);
+        }
+
+        /* ───── HERO ───── */
+        .hero {
+            padding: 160px 40px 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+            text-align: left;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 24px;
+            border-radius: 50px;
+            background: rgba(0, 242, 254, .08);
+            border: 1px solid rgba(0, 242, 254, .2);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--clr-1);
+            letter-spacing: 1px;
+            margin-bottom: 32px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--txt-h);
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+
+        .hero-title span {
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--txt-m);
+            max-width: 600px;
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        /* ───── HERO LOGO CARD ───── */
+        .hero-logo-wrap {
+            position: relative;
+            perspective: 1000px;
+        }
+
+                .hero-logo-card {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08); /* 留묒? ?뚮몢由?*/
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-logo-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+            transition: transform 0.6s ease;
+        }
+
+        .hero-logo-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-logo-glow {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, var(--clr-1-glow) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(40px);
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .hero-logo-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+            border-color: var(--clr-1);
+            box-shadow: 
+                0 60px 100px rgba(0, 0, 0, 0.6),
+                0 0 40px var(--clr-1-glow);
+        }
+
+        .hero-logo-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 14px 36px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: .95rem;
+            text-decoration: none;
+            transition: all .3s cubic-bezier(0.23, 1, 0.32, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--grad);
+            color: var(--bg);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, .2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 242, 254, .4);
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--txt-h);
+        }
+
+        .btn-secondary:hover {
+            background: var(--card-hv);
+            border-color: var(--clr-1);
+            transform: translateY(-4px);
+        }
+
+        /* ───── SECTION TITLE ───── */
+        .section-header {
+            max-width: 1400px;
+            margin: 80px auto 40px;
+            padding: 0 40px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--txt-h);
+        }
+
+        .section-title p {
+            font-size: 0.95rem;
+            color: var(--txt-s);
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* ───── BENTO GRID ───── */
+        .showcase-grid {
+            max-width: 1400px;
+            margin: 0 auto 120px;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+                .portfolio-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 32px 24px;
+            transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            backdrop-filter: blur(24px); /* 湲?섏뒪紐⑦뵾利??꾩닔 釉붾윭 */
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--clr-1-glow);
+            background: var(--card-hv);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, .4);
+        }
+
+        .card-main-link {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .card-img-wrap {
+            width: 110px; height: 110px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid transparent;
+            background: linear-gradient(var(--bg2), var(--bg2)) padding-box, var(--grad) border-box;
+            transition: transform .5s;
+        }
+
+        .portfolio-card:hover .card-img {
+            transform: scale(1.08);
+        }
+
+        .card-name-ko {
+            font-size: clamp(2.2rem, 7.5vw, 3.8rem);
+            font-weight: 900;
+            color: var(--txt-h);
+            margin-bottom: 16px;
+            letter-spacing: 0.14em;
+            line-height: 1.0;
+            transition: all 0.4s ease;
+        }
+
+        .card-role {
+            font-size: 0.95rem;
+            color: var(--clr-1);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            min-height: 1.2rem;
+        }
+
+        .card-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 4px;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-card:hover .stat-item {
+            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-value {
+            font-family: var(--font-en);
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--txt-h);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--txt-s);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .card-btn-group {
+            display: flex; gap: 8px; margin-top: auto; width: 100%;
+        }
+        .download-btn {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 12px 10px; flex: 1; background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border); border-radius: 12px;
+            color: var(--txt-m); text-decoration: none; font-size: 0.75rem; font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-btn { color: #f87171; border-color: rgba(248, 113, 113, 0.3); background: rgba(248, 113, 113, 0.05); }
+        .pdf-btn:hover { border-color: #f87171; background: #f87171; color: white; box-shadow: 0 4px 12px rgba(248, 113, 113, 0.3); }
+
+        .download-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.2);
+        }
+
+        /* ───── DARK MODE PHOTO VISIBILITY ───── */
+        html:not([data-theme='light']) .card-img {
+            background: #ffffff !important;
+            border: 3px solid rgba(255, 255, 255, 0.8) !important;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3) !important;
+            padding: 2px;
+        }
+        html:not([data-theme='light']) .card-img-wrap::after {
+            content: ''; position: absolute; inset: -6px;
+            border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+            animation: pulse-border 3s infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.08); opacity: 0.45; }
+        }
+
+        .card-arrow {
+            position: absolute;
+            top: 20px; right: 20px;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--txt-h);
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translate(-5px, 5px);
+            transition: all .4s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+        }
+
+        .portfolio-card:hover .card-arrow {
+            opacity: 1;
+            transform: translate(0, 0);
+            background: var(--grad);
+            color: var(--bg);
+        }
+
+        /* ───── FOOTER ───── */
+        footer {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: var(--font-en);
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--txt-h);
+            margin-bottom: 16px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--txt-s);
+            letter-spacing: 0.5px;
+        }
+
+        /* ───── BACK TO TOP ───── */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--txt-h);
+            font-size: 1.5rem;
+            text-decoration: none;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #back-to-top:hover {
+            background: var(--grad);
+            border-color: var(--clr-1);
+            color: var(--bg);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3);
+        }
+
+        /* ───── AI GUIDE BUTTON ───── */
+        .btn-ai-guide {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 24px; border-radius: 12px;
+            background: linear-gradient(135deg, rgba(168,85,247,.2), rgba(236,72,153,.2));
+            border: 1px solid rgba(168,85,247,.45);
+            color: #c084fc; text-decoration: none; font-weight: 700;
+            font-size: .9rem; transition: all .3s;
+        }
+        .btn-ai-guide:hover {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white; border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(168,85,247,.4);
+        }
+
+        /* ───── AI GUIDE SECTION ───── */
+        .ai-guide-section {
+            padding: 80px 40px;
+            background: linear-gradient(135deg, rgba(168,85,247,.06), rgba(0,242,254,.04));
+            border-top: 1px solid rgba(168,85,247,.15);
+            border-bottom: 1px solid rgba(168,85,247,.15);
+            position: relative; overflow: hidden;
+        }
+        .ai-guide-section::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(168,85,247,.12), transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(0,242,254,.08), transparent 60%);
+            pointer-events: none;
+        }
+        .ai-guide-inner {
+            max-width: 860px; margin: 0 auto;
+            text-align: center; position: relative; z-index: 1;
+        }
+        .ai-guide-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(168,85,247,.12);
+            border: 1px solid rgba(168,85,247,.35);
+            color: #c084fc; padding: 6px 18px; border-radius: 999px;
+            font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+            text-transform: uppercase; margin-bottom: 24px;
+        }
+        .ai-guide-title {
+            font-size: clamp(2rem, 5vw, 3.6rem);
+            font-weight: 900; margin-bottom: 16px; line-height: 1.1;
+        }
+        .ai-guide-title span {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .ai-guide-desc {
+            color: var(--txt-m); font-size: .95rem; line-height: 1.85;
+            max-width: 680px; margin: 0 auto 40px;
+        }
+        .ai-guide-stats {
+            display: flex; gap: 40px; justify-content: center;
+            flex-wrap: wrap; margin-bottom: 40px;
+        }
+        .ai-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .ai-stat-num {
+            font-family: 'Outfit', sans-serif; font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .ai-stat-lbl { font-size: .78rem; color: var(--txt-m); font-weight: 600; }
+        .ai-guide-btns {
+            display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+        }
+        .btn-ai-main {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 36px; border-radius: 14px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white; text-decoration: none; font-weight: 800; font-size: 1rem;
+            transition: all .3s;
+        }
+        .btn-ai-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 36px rgba(168,85,247,.5);
+        }
+        .btn-ai-dl {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 36px; border-radius: 14px;
+            background: var(--card); border: 1px solid rgba(168,85,247,.3);
+            color: var(--txt-h); text-decoration: none; font-weight: 700; font-size: 1rem;
+            transition: all .3s;
+        }
+        .btn-ai-dl:hover {
+            border-color: #a855f7; background: rgba(168,85,247,.1);
+            transform: translateY(-3px);
+        }
+
+        /* ───── CAREER SECTION ───── */
+        .career-section {
+            padding: 80px 40px;
+            background: linear-gradient(135deg, rgba(0,242,254,.06), rgba(67,233,123,.04));
+            border-top: 1px solid rgba(0,242,254,.15);
+            border-bottom: 1px solid rgba(0,242,254,.15);
+            position: relative; overflow: hidden;
+        }
+        .career-section::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 25% 50%, rgba(0,242,254,.1), transparent 60%),
+                radial-gradient(ellipse at 75% 50%, rgba(67,233,123,.07), transparent 60%);
+            pointer-events: none;
+        }
+        .career-inner {
+            max-width: 860px; margin: 0 auto;
+            text-align: center; position: relative; z-index: 1;
+        }
+        .career-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(0,242,254,.1);
+            border: 1px solid rgba(0,242,254,.3);
+            color: var(--clr-1); padding: 6px 18px; border-radius: 999px;
+            font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+            text-transform: uppercase; margin-bottom: 24px;
+        }
+        .career-title {
+            font-size: clamp(2rem, 5vw, 3.6rem);
+            font-weight: 900; margin-bottom: 16px; line-height: 1.1;
+        }
+        .career-title span {
+            background: var(--grad);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .career-desc {
+            color: var(--txt-m); font-size: .95rem; line-height: 1.85;
+            max-width: 680px; margin: 0 auto 40px;
+        }
+        .career-stats {
+            display: flex; gap: 40px; justify-content: center;
+            flex-wrap: wrap; margin-bottom: 40px;
+        }
+        .career-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .career-stat-num {
+            font-family: 'Outfit', sans-serif; font-size: 2.4rem;
+            font-weight: 900;
+            background: var(--grad);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .career-stat-lbl { font-size: .78rem; color: var(--txt-m); font-weight: 600; }
+        .career-btns {
+            display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+        }
+        .btn-career-main {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 40px; border-radius: 14px;
+            background: var(--grad);
+            color: var(--bg); text-decoration: none; font-weight: 800; font-size: 1rem;
+            transition: all .3s;
+        }
+        .btn-career-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 36px rgba(0,242,254,.4);
+        }
+
+        /* ───── RESPONSIVE ───── */
+        @media (max-width: 1024px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .hero-desc { margin: 0 auto 48px; }
+            .cta-group { justify-content: center; }
+            .hero-logo-wrap { max-width: 600px; margin: 0 auto; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .hero { padding: 140px 20px 80px; }
+            .cta-group { flex-direction: column; }
+            .section-header { padding: 0 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
+            .showcase-grid { padding: 0 20px; grid-template-columns: 1fr; }
+        }
+    
+                /* ????? HIGH-END LIGHT MODE ????? */
+        html[data-theme='light'] {
+            --bg: #f8fafc;
+            --bg2: #f1f5f9;
+            --card: rgba(255, 255, 255, 0.7);
+            --card-hv: rgba(255, 255, 255, 0.9);
+            --border: rgba(15, 23, 42, 0.08); /* 留ㅼ슦 ????寃쎄퀎??*/
+            --border-active: rgba(0, 122, 255, 0.4);
+            
+            --clr-1: #0066ff; /* ?꾨━誘몄뾼 釉붾（ */
+            --clr-1-glow: rgba(0, 102, 255, 0.2);
+            --clr-2: #00c6ff; /* ?꾨━誘몄뾼 ?쒖븞 */
+            --clr-2-glow: rgba(0, 198, 255, 0.2);
+            
+            --txt-h: #0f172a; /* ??李⑥퐳 */
+            --txt-b: #334155; 
+            --txt-m: #64748b;
+            --txt-s: #94a3b8;
+        }
+
+        /* ?쇱씠??紐⑤뱶 ?꾩슜 洹몃┝???ㅻ벉湲?(寃怨??곹븳 洹몃┝??以묓솕) */
+        html[data-theme='light'] .portfolio-card, 
+        html[data-theme='light'] .hero-logo-card {
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+            backdrop-filter: blur(24px);
+        }
+
+        html[data-theme='light'] .portfolio-card:hover, 
+        html[data-theme='light'] .hero-logo-card:hover {
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(0, 102, 255, 0.3) inset !important;
+            border-color: var(--clr-1);
+        }
+
+        html[data-theme='light'] .bg-grid {
+            opacity: 0.5;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        }
+
+        html[data-theme='light'] nav {
+            background: rgba(248, 250, 252, 0.85); /* 留ㅼ슦 遺?쒕윭???ㅻ뜑 */
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(20px);
+        }
+
+        html[data-theme='light'] footer {
+            background: #f1f5f9;
+            border-top: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        html[data-theme='light'] .hero-badge {
+            background: rgba(0, 102, 255, 0.08);
+            border: 1px solid rgba(0, 102, 255, 0.15);
+            color: #0055ff;
+        }
+            /* ????? DYNAMIC CARD SELECTION ANIMATION ????? */
+        @keyframes pulseBorder {
+            0% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+            50% { box-shadow: 0 0 50px rgba(0, 122, 255, 0.6), 0 0 0 3px rgba(0, 198, 255, 0.8) inset; }
+            100% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+        }
+
+        .portfolio-card, html[data-theme='light'] .portfolio-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+        }
+
+        .portfolio-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .portfolio-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        .card-arrow {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover .card-arrow {
+            transform: translate(12px, -12px) scale(1.4) !important;
+            background: linear-gradient(135deg, #00c6ff, #0066ff) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px rgba(0, 198, 255, 0.5) !important;
+        }
+            /* ????? EXTRA DYNAMIC CARD SELECTION ANIMATION (INNER PROJECTS) ????? */
+        .proj-card, html[data-theme='light'] .proj-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .proj-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+            position: relative;
+        }
+
+        .proj-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .proj-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        /* Bento Grid items hover enhancement */
+        .bento-item, html[data-theme='light'] .bento-item {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-8px) scale(1.01) !important;
+            border-color: var(--clr-1) !important;
+            box-shadow: 0 20px 40px rgba(0, 198, 255, 0.3), 0 0 0 1px rgba(0, 198, 255, 0.2) inset !important;
+            z-index: 20;
+        }
+
+        html[data-theme='light'] .bento-item:hover {
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 0 0 2px rgba(0, 102, 255, 0.2) inset !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="glow-sphere"></div>
+
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-dot"></div>
+            세명컴퓨터고등학교 X 서강대학교 미래교육원
+        </a>
+            <!-- THEME TOGGLE -->
+        <button id="theme-toggle-btn" style="background: transparent; border: none; color: var(--txt-h); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; padding: 0;" aria-label="?뚮쭏 ?꾪솚">
+            <i class="ri-sun-line theme-icon" id="theme-icon"></i>
+        </button>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="hero-badge">2026 미래유망분야 성과공유 플랫폼</div>
+                <h1 class="hero-title">상상을 현실로 만드는<br><span>기술의 혁신</span>을 만나보세요</h1>
+                <p class="hero-desc">서강대학교 미래교육원 미래유망분야 프로젝트를 통해 탄생한 차세대 디지털 아티스트 및 엔지니어 13인의 독창적인 성과물을 소개합니다.</p>
+                <div class="cta-group">
+                    <a href="#showcase" class="btn btn-primary">성과 포트폴리오 탐색 <i class="ri-arrow-down-line"></i></a>
+                    <a href="Level-Up_Job_Success_Project_Plan.html" class="btn btn-secondary">취업성공 프로젝트 계획</a>
+                    <a href="AI_Portfolio_Writing_Guide.html" class="btn btn-ai-guide"><i class="ri-sparkling-2-line"></i> AI 포트폴리오 가이드</a>
+                </div>
+            </div>
+            <div class="hero-logo-wrap">
+                <div class="hero-logo-card">
+                    <img src="logo.png" alt="Sogang Future Leaders Showcase Logo">
+                </div>
+                <div class="hero-logo-glow"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="section-header" id="showcase">
+        <div class="section-title">
+            <h2>Featured Talent</h2>
+            <p>13인의 혁신적인 포트폴리오</p>
+        </div>
+    </div>
+
+    <main class="showcase-grid">
+        <!-- 1. 최현수 -->
+        <div class="portfolio-card" id="choihyunsoo">
+            <a href="portfolio_01_choihyunsoo.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Choi Hyunsoo" class="card-img">
+                </div>
+                <div class="card-name-ko">최 현 수</div>
+                <div class="card-role">Unity Client Developer</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">8+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2+</div>
+                        <div class="stat-label">Awards</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_choihyunsoo.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_choihyunsoo.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 2. 가진성 -->
+        <div class="portfolio-card" id="gajinseong">
+            <a href="portfolio_01_gajinseong.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_gajinseong/image1.png" alt="Ga Jinseong" class="card-img">
+                </div>
+                <div class="card-name-ko">가 진 성</div>
+                <div class="card-role">Unity Game Specialist</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">03+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2ea</div>
+                        <div class="stat-label">Awards</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_gajinseong.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_gajinseong.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 3. 전혜석 -->
+        <div class="portfolio-card" id="jeonhyeseok">
+            <a href="portfolio_01_jeonhyeseok.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Jeon Hyeseok" class="card-img">
+                </div>
+                <div class="card-name-ko">전 혜 석</div>
+                <div class="card-role">3D Environment Artist</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">5+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Maya</div>
+                        <div class="stat-label">Skill</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_jeonhyeseok.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_jeonhyeseok.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 4. 김희수 -->
+        <div class="portfolio-card" id="kimheesoo">
+            <a href="portfolio_01_kimheesoo.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Kim Heesoo" class="card-img">
+                </div>
+                <div class="card-name-ko">김 희 수</div>
+                <div class="card-role">Unity Client Programmer</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">8+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2+</div>
+                        <div class="stat-label">Awards</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_kimheesoo.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_kimheesoo.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 5. 김서영 -->
+        <div class="portfolio-card" id="kimseoyoung">
+            <a href="portfolio_01_kimseoyoung.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Kim Seoyeong" class="card-img">
+                </div>
+                <div class="card-name-ko">김 서 영</div>
+                <div class="card-role">3D Modeling & Design</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">12+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">High</div>
+                        <div class="stat-label">Skill</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_kimseoyoung.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_kimseoyoung.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 6. 김탁건 -->
+        <div class="portfolio-card" id="kimtakgeon">
+            <a href="portfolio_01_kimtakgeon.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Kim Takgeon" class="card-img">
+                </div>
+                <div class="card-name-ko">김 탁 건</div>
+                <div class="card-role">Unity Client Developer</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">02+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Speed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2027</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_kimtakgeon.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_kimtakgeon.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 7. 김우주 -->
+        <div class="portfolio-card" id="kimwooju">
+            <a href="portfolio_01_kimwooju.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_kimwooju/kimwooju_profile.png" alt="Kim Woojoo" class="card-img">
+                </div>
+                <div class="card-name-ko">김 우 주</div>
+                <div class="card-role">Video Director</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">12+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">6.8k</div>
+                        <div class="stat-label">Follow</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group"><a href="download/portfolio_kimwooju.mp4" download class="download-btn">
+                <i class="ri-video-line"></i> MP4 다운로드
+            </a></div>
+        </div>
+
+        <!-- 8. 이민규 -->
+        <div class="portfolio-card" id="leemingyu">
+            <a href="portfolio_01_leemingyu.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Lee Mingyu" class="card-img">
+                </div>
+                <div class="card-name-ko">이 민 규</div>
+                <div class="card-role">3D Generalist</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">05+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Expert</div>
+                        <div class="stat-label">Skill</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_leemingyu.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_leemingyu.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 9. 임정윤 -->
+        <div class="portfolio-card" id="limjungyun">
+            <a href="portfolio_01_limjungyun.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Lim Jungyoon" class="card-img">
+                </div>
+                <div class="card-name-ko">임 정 윤</div>
+                <div class="card-role">3D Visual Artist</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">10+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Dual</div>
+                        <div class="stat-label">Special</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_limjungyun.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_limjungyun.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 10. 박성진 -->
+        <div class="portfolio-card" id="parksungjin">
+            <a href="portfolio_01_parksungjin.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Park Sungjin" class="card-img">
+                </div>
+                <div class="card-name-ko">박 성 진</div>
+                <div class="card-role">3D Generalist</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">05+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Core</div>
+                        <div class="stat-label">Studio</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_parksungjin.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_parksungjin.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 11. 신원준 -->
+        <div class="portfolio-card" id="shinwonjun">
+            <a href="portfolio_01_shinwonjun.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="신원준 증명사진.png" alt="Shin Wonjun" class="card-img" onerror="this.src='promising_shinwonjun/image1.jpg'">
+                </div>
+                <div class="card-name-ko">신 원 준</div>
+                <div class="card-role">AI Contents Director</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">15+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">75%</div>
+                        <div class="stat-label">Logic</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_shinwonjun.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_shinwonjun.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 12. 위서현 -->
+        <div class="portfolio-card" id="wiseohyun">
+            <a href="portfolio_01_wiseohyun.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Wi Seohyun" class="card-img">
+                </div>
+                <div class="card-name-ko">위 서 현</div>
+                <div class="card-role">3D Environment Specialist</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">08+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Pro</div>
+                        <div class="stat-label">Level</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_wiseohyun.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_wiseohyun.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+
+        <!-- 13. 윤정수 -->
+        <div class="portfolio-card" id="yoonjungsoo">
+            <a href="portfolio_01_yoonjungsoo.html" class="card-main-link">
+                <div class="card-img-wrap">
+                    <img src="promising_choihyunsoo/image162.png" alt="Yoon Jungsoo" class="card-img">
+                </div>
+                <div class="card-name-ko">윤 정 수</div>
+                <div class="card-role">Unity Engine Developer</div>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">07+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1+</div>
+                        <div class="stat-label">Awards</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2026</div>
+                        <div class="stat-label">Year</div>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="ri-arrow-right-m-line"></i></div>
+            </a>
+            <div class="card-btn-group">
+                <a href="download/portfolio_yoonjungsoo.pdf" target="_blank" class="download-btn pdf-btn">
+                    <i class="ri-file-pdf-line"></i> PDF 보기
+                </a>
+                <a href="download/portfolio_yoonjungsoo.pptx" download class="download-btn">
+                <i class="ri-download-cloud-2-line"></i> PPTX 다운로드
+            </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- AI 포트폴리오 가이드 섹션 -->
+    <div class="ai-guide-section">
+        <div class="ai-guide-inner">
+            <div class="ai-guide-badge"><i class="ri-sparkling-2-line"></i> 2026 AI 특강</div>
+            <h2 class="ai-guide-title">AI로 만드는 <span>포트폴리오</span></h2>
+            <p class="ai-guide-desc">ChatGPT · Claude · Gamma · Midjourney 등 최신 AI 도구를 실전 활용하여, 면접관의 시선을 사로잡는 경쟁력 있는 포트폴리오를 8주 만에 완성하는 커리큘럼을 소개합니다.</p>
+            <div class="ai-guide-stats">
+                <div class="ai-stat"><span class="ai-stat-num">8주</span><span class="ai-stat-lbl">완성 커리큘럼</span></div>
+                <div class="ai-stat"><span class="ai-stat-num">6종</span><span class="ai-stat-lbl">AI 도구 실습</span></div>
+                <div class="ai-stat"><span class="ai-stat-num">100%</span><span class="ai-stat-lbl">실습 중심</span></div>
+            </div>
+            <div class="ai-guide-btns" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                <a href="AI_Portfolio_Writing_Guide.html" class="btn-ai-main" style="flex: 1; min-width: 180px;"><i class="ri-book-open-line"></i> 커리큘럼 보기</a>
+                <a href="download/2026_AI_Portfolio_Writing_Guide.pptx" download="2026_AI_Portfolio_Writing_Guide.pptx" class="btn-ai-dl" style="flex: 1; min-width: 180px;"><i class="ri-download-cloud-2-line"></i> PPTX 다운로드</a>
+                <a href="download/2026_AI_Portfolio_Writing_Guide.pdf" target="_blank" class="btn-ai-dl" style="flex: 1; min-width: 180px; background: rgba(255,255,255,0.1);"><i class="ri-file-pdf-line"></i> PDF로 보기</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 취업성공 프로젝트 계획 섹션 -->
+    <div class="career-section">
+        <div class="career-inner">
+            <div class="career-badge"><i class="ri-briefcase-4-line"></i> 2026 취업지원 프로그램</div>
+            <h2 class="career-title">세명 <span>Level-Up</span><br>취업성공 프로젝트</h2>
+            <p class="career-desc">데이터 · 코칭 · 매칭 기반의 단계별 진로·취업 통합 지원 프로그램. 게임소프트웨어과 3학년 18명을 대상으로 2026년 4월부터 11월까지 8개월간 운영됩니다.</p>
+            <div class="career-stats">
+                <div class="career-stat"><span class="career-stat-num">18명</span><span class="career-stat-lbl">지원 대상</span></div>
+                <div class="career-stat"><span class="career-stat-num">8개월</span><span class="career-stat-lbl">운영 기간</span></div>
+                <div class="career-stat"><span class="career-stat-num">3단계</span><span class="career-stat-lbl">단계별 코칭</span></div>
+            </div>
+            <div class="career-btns">
+                <a href="Level-Up_Job_Success_Project_Plan.html" class="btn-career-main"><i class="ri-file-list-3-line"></i> 프로그램 계획 보기</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="#" class="footer-logo">세명컴퓨터고등학교 X 서강대학교 미래교육원</a>
+        <p class="footer-copy">© 2026 미래유망분야 성과 기반 플랫폼. All Rights Reserved.</p>
+    </footer>
+
+    <a id="back-to-top" title="Go to Top">
+        <i class="ri-arrow-up-s-line"></i>
+    </a>
+
+    <script>
+        // Back to Top functionality
+        const backToTop = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Reveal elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.portfolio-card').forEach((card, i) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${i * 0.05}s`;
+            observer.observe(card);
+        });
+    </script>
+    <!-- THEME SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('theme-toggle-btn');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Check local storage or default to dark
+            const savedTheme = localStorage.getItem('theme');
+            const currentTheme = savedTheme ? savedTheme : 'dark';
+            
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    if(themeIcon) {
+                        themeIcon.classList.remove('ri-sun-line');
+                        themeIcon.classList.add('ri-moon-clear-line');
+                    }
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    if(themeIcon) {
+                        themeIcon.classList.remove('ri-moon-clear-line');
+                        themeIcon.classList.add('ri-sun-line');
+                    }
+                }
+}
+            
+            applyTheme(currentTheme);
+            
+            if(toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('theme', newTheme);
+                    applyTheme(newTheme);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

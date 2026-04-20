@@ -1,0 +1,953 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeon Hyeseok | 3D Artist & Modeler Portfolio</title>
+    <meta name="description" content="Autodesk Maya를 기반으로 정교한 캐릭터 모델링과 몰입감 넘치는 씬을 창조하는 3D 아티스트 Jeon Hyeseok의 포트폴리오입니다.">
+
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* ───── RESET & TOKENS (Choi Hyun-soo Standard) ───── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+                :root {
+            --font-ko: 'Pretendard', sans-serif;
+            --font-en: 'Outfit', sans-serif;
+            
+            --bg: #020617; /* ???щ젅?댄듃 釉붾옓 (留ㅼ슦 源딄퀬 怨좉툒?ㅻ윭??寃?? */
+            --bg2: #0f172a; /* ?щ젅?댄듃 ?ㅽ겕 */
+            --card: rgba(15, 23, 42, 0.4); /* ?쒖닔 ?좊━媛 ?꾨땶 諛섑닾紐??щ젅?댄듃 湲?섏뒪 */
+            --card-hv: rgba(30, 41, 59, 0.6);
+            --border: rgba(255, 255, 255, 0.06); /* 留ㅼ슦 ?뉕퀬 ?щ챸???좊━ ?뚮몢由?*/
+            --border-active: rgba(56, 189, 248, 0.4);
+            
+            --clr-1: #38bdf8;   /* ?꾨━誘몄뾼 ?ㅼ뭅???쒖븞 */
+            --clr-1-glow: rgba(56, 189, 248, 0.3);
+            --clr-2: #818cf8;   /* ?꾨━誘몄뾼 ?몃뵒怨?諛붿씠?щ젢 釉붾（) */
+            --clr-2-glow: rgba(129, 140, 248, 0.3);
+            
+            --txt-h: #ffffff; /* ?쒕갚??蹂대떎??遺?쒕윭???붿씠??*/
+            --txt-b: #e2e8f0;
+            --txt-m: #cbd5e1;
+            --txt-s: #94a3b8;
+            
+            --grad: linear-gradient(135deg, var(--clr-1) 0%, var(--clr-2) 100%);
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font-ko);
+            background: var(--bg);
+            color: var(--txt-b);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ───── REEL CONTAINER (SNAP) ───── */
+        #reel {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            position: relative;
+        }
+        #reel::-webkit-scrollbar { display: none; }
+
+        /* ───── DOT NAVIGATION ───── */
+        #nav-dots {
+            position: fixed;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
+        }
+        .nav-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .15);
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            transition: all .4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .nav-dot.active {
+            background: var(--clr-1);
+            height: 32px;
+            border-radius: 10px;
+            border-color: var(--clr-1);
+            box-shadow: 0 0 15px var(--clr-1-glow);
+        }
+
+        /* ───── PROGRESS BAR ───── */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0; width: 0; height: 3px;
+            background: var(--grad);
+            z-index: 10000;
+            transition: width .2s ease;
+        }
+
+        /* ───── NOISE & GRID BACKGROUND ───── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+            opacity: .4;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        
+        .nav-right-group { flex: 1; display: flex; align-items: center; gap: 12px; justify-content: flex-end; }
+        .nav-home-btn {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--txt-h);
+            font-size: 2rem;
+            text-decoration: none;
+            transition: all .3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .nav-home-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            border-color: var(--clr-1);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 30px var(--clr-1-glow);
+        }
+
+        /* ───── SCROLL TOP BUTTON ───── */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            color: var(--txt-h);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .scroll-top-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px var(--clr-1-glow);
+        }
+        .scroll-top-btn i { transition: transform 0.3s ease; }
+        .scroll-top-btn:hover i { transform: translateY(-3px); }
+        .nav-home-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            border-color: var(--clr-1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--clr-1-glow);
+        }
+
+        /* ───── NAV (HEADER) ───── */
+        nav.top-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 24px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(3, 5, 10, .7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: var(--font-en);
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--txt-h);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+            flex: 1;
+        }
+
+        .nav-logo-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--clr-1);
+            box-shadow: 0 0 12px var(--clr-1);
+            animation: blinking 2s ease-in-out infinite;
+        }
+
+        @keyframes blinking {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--clr-1); }
+            50% { opacity: .5; box-shadow: 0 0 20px var(--clr-1); }
+        }
+
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            font-size: .85rem; font-weight: 600; color: var(--txt-m);
+            text-decoration: none; transition: all .3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--grad); transition: width .3s;
+        }
+        .nav-links a:hover { color: var(--txt-h); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ───── HERO ───── */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 180px 40px 80px;
+            overflow: hidden;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(124, 77, 255, .05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 77, 255, .05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 700px; height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124, 77, 255, .12) 0%, transparent 70%);
+            top: -150px; right: -100px;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            background: rgba(124, 77, 255, .08);
+            border: 1px solid rgba(124, 77, 255, .2);
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--clr-1);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            animation: fadeUp .6s both;
+        }
+
+        .hero-tag::before {
+            content: ''; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--clr-1); box-shadow: 0 0 8px var(--clr-1);
+        }
+
+        .hero-name {
+            font-family: var(--font-en);
+            font-size: clamp(1.0rem, 3vw, 1.5rem);
+            font-weight: 900; color: var(--txt-h);
+            letter-spacing: 0.12em; line-height: 1.1; margin-bottom: 12px;
+            animation: fadeUp .6s .08s both;
+        }
+
+        .hero-name-ko {
+            font-size: clamp(2.0rem, 7vw, 3.2rem);
+            font-weight: 300; color: var(--txt-m);
+            margin-bottom: 32px; letter-spacing: 0.15em;
+            animation: fadeUp .6s .12s both;
+        }
+
+        .hero-title {
+            font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+            font-weight: 900; line-height: 1.3; margin-bottom: 20px;
+            animation: fadeUp .6s .18s both;
+        }
+
+        .hero-title .grad {
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: .95rem; line-height: 1.85; color: var(--txt-m);
+            max-width: 480px; margin-bottom: 36px;
+            animation: fadeUp .6s .24s both;
+        }
+
+        /* ───── PROFILE CARD ───── */
+        .profile-card {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .4);
+            animation: fadeUp .6s .2s both;
+        }
+
+        .profile-img-wrap {
+            position: relative !important;
+            width: 140px; height: 140px;
+            margin: 0 auto 24px;
+            z-index: 2;
+        }
+
+        .hero-main-img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.45);
+            background: linear-gradient(var(--bg2), var(--bg2)) padding-box, var(--grad) border-box;
+            position: relative;
+            z-index: 5;
+            transition: .6s;
+        }
+
+        html:not([data-theme='light']) .hero-main-img {
+            background: #ffffff !important;
+            border: 4px solid #ffffff !important;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                0 0 25px rgba(255, 255, 255, 0.45),
+                0 0 50px rgba(0, 242, 254, 0.3);
+            padding: 3px;
+            z-index: 5;
+        }
+
+        .profile-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 242, 254, 0.4);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            pointer-events: none;
+            animation: profile-ring-pulse 3s infinite;
+            z-index: 1;
+        }
+
+        @keyframes profile-ring-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        .profile-name-en { font-family: var(--font-en); font-size: 1.2rem; font-weight: 700; color: var(--txt-h); margin-bottom: 3px; }
+        .profile-role { font-size: .82rem; color: var(--clr-1); font-weight: 700; margin-bottom: 18px; }
+
+        .profile-info {
+            display: flex; flex-direction: column; gap: 12px; text-align: left;
+            margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;
+        }
+        .profile-info-item { display: flex; align-items: center; gap: 10px; font-size: .81rem; color: var(--txt-m); }
+        .profile-info-item i { color: var(--clr-1); font-size: 1rem; }
+
+        .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+        .stat-box { background: rgba(255, 255, 255, .04); border: 1px solid var(--border); border-radius: 12px; padding: 12px 8px; }
+        .stat-val { font-family: var(--font-en); font-size: 1.2rem; font-weight: 700; color: var(--txt-h); }
+        .stat-lbl { font-size: .65rem; color: var(--txt-s); margin-top: 4px; text-transform: uppercase; }
+
+        /* ───── SECTIONS ───── */
+        section {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 100px 40px; position: relative; z-index: 10;
+            scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden;
+        }
+
+        .inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+        .sec-label {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: .72rem; font-weight: 800; font-family: var(--font-en);
+            color: var(--clr-1); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
+        }
+        .sec-label::before { content: ''; width: 24px; height: 1px; background: var(--clr-1); }
+
+        .sec-title { font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 900; color: var(--txt-h); margin-bottom: 40px; }
+
+        /* ───── ANIMATION STATE ───── */
+        .slide-content { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.23, 1, 0.32, 1); }
+        section.active .slide-content { opacity: 1; transform: translateY(0); }
+        section.active .slide-content.d1 { transition-delay: .1s; }
+        section.active .slide-content.d2 { transition-delay: .3s; }
+        section.active .slide-content.d3 { transition-delay: .5s; }
+
+        /* ───── BENTO GRID (ABOUT) ───── */
+        .bento-grid { display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: auto auto; gap: 24px; margin-top: 20px; }
+        .bento-item {
+            background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+            padding: 32px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative; overflow: hidden;
+        }
+        .bento-item:hover { border-color: var(--clr-1-glow); background: var(--card-hv); transform: translateY(-5px); }
+        .bento-item h3 { font-size: 1.2rem; color: var(--txt-h); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .bento-item h3 i { color: var(--clr-1); }
+        
+        .bento-vision {
+            grid-row: span 2; background: linear-gradient(135deg, rgba(124, 77, 255, 0.1) 0%, transparent 100%), var(--card);
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .vision-quote { font-size: 1.6rem; font-weight: 800; line-height: 1.4; color: var(--txt-h); margin-bottom: 24px; }
+        .vision-quote span { color: var(--clr-1); }
+        
+        .award-list, .edu-list { display: flex; flex-direction: column; gap: 16px; }
+        .mini-card { display: flex; gap: 16px; align-items: flex-start; }
+        .mini-icon {
+            width: 36px; height: 36px; border-radius: 10px; background: rgba(124, 77, 255, 0.1);
+            display: flex; align-items: center; justify-content: center; color: var(--clr-1); flex-shrink: 0;
+        }
+        .mini-content p:first-child { font-weight: 700; color: var(--txt-h); font-size: 0.95rem; }
+        .mini-content p:last-child { font-size: 0.8rem; color: var(--txt-m); }
+
+        /* ───── SKILLS ───── */
+        .skills-wrap { display: flex; flex-direction: column; gap: 24px; }
+        .skill-bar-item label { display: flex; justify-content: space-between; font-size: .85rem; font-weight: 700; margin-bottom: 10px; }
+        .bar-bg { height: 8px; background: rgba(255, 255, 255, .06); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; transition: width 1.5s ease-out; background: var(--grad); }
+
+        /* ───── PROJECTS ───── */
+        .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        .proj-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+            overflow: hidden; transition: all .4s cubic-bezier(.165, .84, .44, 1);
+        }
+        .proj-card:hover { transform: translateY(-8px); border-color: rgba(124, 77, 255, .3); box-shadow: 0 30px 60px rgba(0, 0, 0, .5); }
+        .proj-img-wrap { height: 240px; overflow: hidden; }
+        .proj-img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+        .proj-card:hover .proj-img { transform: scale(1.08); }
+        .proj-body { padding: 32px; }
+        .proj-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .proj-tag {
+            font-family: var(--font-en); font-size: .65rem; font-weight: 800;
+            padding: 4px 12px; border-radius: 50px; background: rgba(255, 255, 255, .05);
+            color: var(--txt-m); border: 1px solid var(--border);
+        }
+        .tag-active { border-color: var(--clr-1); color: var(--clr-1); background: rgba(124, 77, 255, .1); }
+        .proj-title { font-size: 1.5rem; font-weight: 800; color: var(--txt-h); margin-bottom: 12px; font-family: var(--font-en); }
+        .proj-desc { font-size: .9rem; color: var(--txt-m); line-height: 1.7; margin-bottom: 24px; }
+        .feat-item { display: flex; gap: 10px; font-size: .8rem; color: var(--txt-b); margin-bottom: 8px; }
+        .feat-item i { color: var(--clr-1); margin-top: 3px; }
+
+        /* ───── CONTACT ───── */
+        .contact-card {
+            background: linear-gradient(135deg, rgba(124, 77, 255, .05) 0%, rgba(61, 90, 254, .05) 100%), var(--card);
+            border: 1px solid rgba(124, 77, 255, .2); border-radius: 32px; padding: 60px; max-width: 800px; margin: 0 auto;
+        }
+        .contact-links { display: flex; gap: 16px; justify-content: center; margin-top: 32px; }
+        .btn-contact { padding: 14px 32px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: .9rem; transition: all .3s; display: flex; align-items: center; gap: 10px; }
+        .btn-email { background: var(--grad); color: var(--bg); }
+        .btn-email:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(124, 77, 255, .4); }
+        .btn-phone { background: var(--card); border: 1px solid var(--border); color: var(--txt-h); }
+        .btn-phone:hover { background: var(--card-hv); border-color: var(--clr-1); }
+
+        /* ───── MOBILE ───── */
+        @media (max-width: 1024px) {
+            
+        .nav-right-group { flex: 1; display: flex; align-items: center; gap: 12px; justify-content: flex-end; }
+        .nav-home-btn { width: 52px; height: 52px; font-size: 1.4rem; }
+            .hero-inner, .bento-grid, .projects-grid { grid-template-columns: 1fr; gap: 40px; }
+            .hero-text { text-align: center; display: flex; flex-direction: column; align-items: center; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-card { max-width: 500px; margin: 0 auto; }
+        }
+    
+                /* ????? HIGH-END LIGHT MODE ????? */
+        html[data-theme='light'] {
+            --bg: #f8fafc;
+            --bg2: #f1f5f9;
+            --card: rgba(255, 255, 255, 0.7);
+            --card-hv: rgba(255, 255, 255, 0.9);
+            --border: rgba(15, 23, 42, 0.08); /* 留ㅼ슦 ????寃쎄퀎??*/
+            --border-active: rgba(0, 122, 255, 0.4);
+            
+            --clr-1: #0066ff; /* ?꾨━誘몄뾼 釉붾（ */
+            --clr-1-glow: rgba(0, 102, 255, 0.2);
+            --clr-2: #00c6ff; /* ?꾨━誘몄뾼 ?쒖븞 */
+            --clr-2-glow: rgba(0, 198, 255, 0.2);
+            
+            --txt-h: #0f172a; /* ??李⑥퐳 */
+            --txt-b: #334155; 
+            --txt-m: #64748b;
+            --txt-s: #94a3b8;
+        }
+
+        /* ?쇱씠??紐⑤뱶 ?꾩슜 洹몃┝???ㅻ벉湲?(寃怨??곹븳 洹몃┝??以묓솕) */
+        html[data-theme='light'] .portfolio-card, 
+        html[data-theme='light'] .hero-logo-card {
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+            backdrop-filter: blur(24px);
+        }
+
+        html[data-theme='light'] .portfolio-card:hover, 
+        html[data-theme='light'] .hero-logo-card:hover {
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(0, 102, 255, 0.3) inset !important;
+            border-color: var(--clr-1);
+        }
+
+        html[data-theme='light'] .bg-grid {
+            opacity: 0.5;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        }
+
+        html[data-theme='light'] nav {
+            background: rgba(248, 250, 252, 0.85); /* 留ㅼ슦 遺?쒕윭???ㅻ뜑 */
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(20px);
+        }
+
+        html[data-theme='light'] footer {
+            background: #f1f5f9;
+            border-top: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        html[data-theme='light'] .hero-badge {
+            background: rgba(0, 102, 255, 0.08);
+            border: 1px solid rgba(0, 102, 255, 0.15);
+            color: #0055ff;
+        }
+            /* ????? DYNAMIC CARD SELECTION ANIMATION ????? */
+        @keyframes pulseBorder {
+            0% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+            50% { box-shadow: 0 0 50px rgba(0, 122, 255, 0.6), 0 0 0 3px rgba(0, 198, 255, 0.8) inset; }
+            100% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+        }
+
+        .portfolio-card, html[data-theme='light'] .portfolio-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+        }
+
+        .portfolio-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .portfolio-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        .card-arrow {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover .card-arrow {
+            transform: translate(12px, -12px) scale(1.4) !important;
+            background: linear-gradient(135deg, #00c6ff, #0066ff) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px rgba(0, 198, 255, 0.5) !important;
+        }
+            /* ????? EXTRA DYNAMIC CARD SELECTION ANIMATION (INNER PROJECTS) ????? */
+        .proj-card, html[data-theme='light'] .proj-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .proj-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+            position: relative;
+        }
+
+        .proj-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .proj-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        /* Bento Grid items hover enhancement */
+        .bento-item, html[data-theme='light'] .bento-item {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-8px) scale(1.01) !important;
+            border-color: var(--clr-1) !important;
+            box-shadow: 0 20px 40px rgba(0, 198, 255, 0.3), 0 0 0 1px rgba(0, 198, 255, 0.2) inset !important;
+            z-index: 20;
+        }
+
+        html[data-theme='light'] .bento-item:hover {
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 0 0 2px rgba(0, 102, 255, 0.2) inset !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <button class="scroll-top-btn" onclick="scrollToSection('#hero')" title="최상단으로 이동">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+
+    <nav class="top-nav">
+        <a href="#hero" class="nav-logo">
+            <div class="nav-logo-dot"></div>
+            JEON HYE SEOK
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right-group"><a href="index.html#jeonhyeseok" class="nav-home-btn" title="메인 페이지로 이동">
+            <i class="ri-home-4-line"></i>
+        </a>
+            <!-- THEME TOGGLE -->
+        <button id="theme-toggle-btn" style="background: transparent; border: none; color: var(--txt-h); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; padding: 0;" aria-label="?뚮쭏 ?꾪솚">
+            <i class="ri-sun-line theme-icon" id="theme-icon"></i>
+        </button></div>
+    </nav>
+
+    <div id="progress-bar"></div>
+    <div id="nav-dots"></div>
+
+    <div id="reel">
+        <!-- Hero Section -->
+        <section class="hero active" id="hero">
+            <div class="hero-glow"></div>
+            <div class="hero-inner slide-content">
+                <div class="hero-text">
+                    <div class="hero-tag">3D Artist & Modeler</div>
+                    <h1 class="hero-name">JEON HYE SEOK</h1>
+                    <p class="hero-name-ko">전 혜 석 | 2007.03.30</p>
+                    <h2 class="hero-title">기하학적 정밀함으로 <span class="grad">가상</span>을 설계합니다.</h2>
+                    <p class="hero-desc">"몰입감 있는 경험은 정밀한 최적화에서 시작됩니다." Autodesk Maya를 기반으로 정교한 모델링과 최적화된 위상 구조(Topology)를 구축합니다. 캐릭터의 생동감과 씬의 몰입감을 결정하는 디테일에 몰입합니다.</p>
+                    <div style="display: flex; gap: 12px; margin-top: 32px;">
+                        <a href="#projects" class="btn-contact btn-email">EXPLORE PROJECTS</a>
+                    </div>
+                </div>
+
+                <div class="hero-card">
+                    <div class="profile-card">
+                        <div class="profile-img-wrap">
+                            
+                            <img src="promising_choihyunsoo/image162.png" alt="Profile Image" class="hero-main-img">
+                            <div class="profile-online"></div>
+                        </div>
+                        <p class="profile-name-en">JEON HYE SEOK</p>
+                        <p class="profile-role">3D Environment & Character Artist</p>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-box">
+                                <p class="stat-val">5+</p>
+                                <p class="stat-lbl">Projects</p>
+                            </div>
+                            <div class="stat-box">
+                                <p class="stat-val">Maya</p>
+                                <p class="stat-lbl">Primary</p>
+                            </div>
+                            <div class="stat-box">
+                                <p class="stat-val">2026</p>
+                                <p class="stat-lbl">Graduate</p>
+                            </div>
+                        </div>
+
+                        <div class="profile-info">
+                            <div class="profile-info-item"><i class="ri-mail-line"></i> example@example.com</div>
+                            <div class="profile-info-item"><i class="ri-instagram-line"></i> @hye_seok_3d</div>
+                            <div class="profile-info-item"><i class="ri-book-line"></i> 세명컴퓨터고등학교</div>
+                            <div class="profile-info-item"><i class="ri-map-pin-line"></i> 서울특별시</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="inner reveal">
+            <div class="slide-content" style="width: 100%;">
+                <div class="sec-label">Identity & Records</div>
+                <h2 class="sec-title">About My Journey</h2>
+                
+                <div class="bento-grid d1">
+                    <div class="bento-item bento-vision">
+                        <i class="ri-double-quotes-l" style="font-size: 2rem; color: var(--clr-1); opacity: 0.3; margin-bottom: 10px;"></i>
+                        <p class="vision-quote">"정밀한 모델링의 가치는 <span>구조적 무결성</span>에서 시작됩니다."</p>
+                        <p style="font-size: 0.9rem; color: var(--txt-m); line-height: 1.8;">
+                            모델링의 구조적 완성도는 디자인의 설득력을 결정합니다. 정교한 위상(Topology) 구성을 통해 애니메이션에 최적화된 메쉬를 제작하며, 라이팅과 쉐이딩을 연계하여 씬의 정서적 깊이를 조율합니다.
+                        </p>
+                    </div>
+
+                    <div class="bento-item">
+                        <h3><i class="ri-medal-line"></i> Main Records</h3>
+                        <div class="award-list">
+                            <div class="mini-card">
+                                <div class="mini-icon"><i class="ri-award-fill"></i></div>
+                                <div class="mini-content">
+                                    <p>Autodesk Maya 전문 모델링 과정 이수</p>
+                                    <p>2024 - 2025 | 하드 서페이스 및 캐릭터 모델링 심화</p>
+                                </div>
+                            </div>
+                            <div class="mini-card">
+                                <div class="mini-icon"><i class="ri-book-open-fill"></i></div>
+                                <div class="mini-content">
+                                    <p>세명컴퓨터고등학교 게임소프트웨어과</p>
+                                    <p>2023 - 2026 | 3D 그래픽 및 게임 엔진 교육 이수</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-item">
+                        <h3><i class="ri-focus-3-line"></i> Core Value</h3>
+                        <p style="font-size: 0.85rem; color: var(--txt-m); line-height: 1.6;">
+                            변함없는 퀄리티를 위해 <strong>'와이어프레임 최적화'</strong>와 <strong>'PBR 텍스처링'</strong>의 정밀함을 고집하며, 사용자 경험의 몰입감을 극대화하는 비주얼을 추구합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="inner reveal">
+            <div class="slide-content" style="width: 100%;">
+                <div class="sec-label">Expertise</div>
+                <h2 class="sec-title">Technical Skills</h2>
+                
+                <div class="projects-grid">
+                    <div class="skills-wrap d2">
+                        <div class="skill-bar-item">
+                            <label><span>Autodesk Maya</span><span>95%</span></label>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <label><span>Hard Surface Modeling</span><span>90%</span></label>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <label><span>PBR Texturing (Substance)</span><span>80%</span></label>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="bento-item d3">
+                        <img src="promising_jeonhyeseok/image22.jpg" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2;">
+                        <div style="position: relative; z-index: 10;">
+                            <h3 style="margin-bottom: 10px;">Integrated Workflow</h3>
+                            <p style="font-size: 0.85rem; color: var(--txt-m);">모델링부터 리깅 대비 와이어프레임 설계까지, 개발 파이프라인 전반을 아우르는 3D 자산 제작이 가능합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="inner reveal">
+            <div class="slide-content" style="width: 100%;">
+                <div class="sec-label">Works</div>
+                <h2 class="sec-title">Featured Projects</h2>
+                
+                <div class="projects-grid d2">
+                    <!-- Project 1 -->
+                    <div class="proj-card">
+                        <div class="proj-img-wrap"><img src="promising_jeonhyeseok/image43.jpg" class="proj-img"></div>
+                        <div class="proj-body">
+                            <div class="proj-tags"><span class="proj-tag tag-active">Maya</span><span class="proj-tag">Character</span></div>
+                            <h3 class="proj-title">Iconic Character Modeling</h3>
+                            <p class="proj-desc">고라파덕 및 Bob-omb 캐릭터를 고유의 위상 구조로 재해석하여 모델링했습니다.</p>
+                            <div class="feat-item"><i class="ri-check-line"></i> Topology Optimization</div>
+                            <div class="feat-item"><i class="ri-check-line"></i> Rigging-Ready Mesh</div>
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="proj-card">
+                        <div class="proj-img-wrap"><img src="promising_jeonhyeseok/image20.jpg" class="proj-img"></div>
+                        <div class="proj-body">
+                            <div class="proj-tags"><span class="proj-tag tag-active">Scene</span><span class="proj-tag">Lighting</span></div>
+                            <h3 class="proj-title">Atmospheric Prison Scene</h3>
+                            <p class="proj-desc">핑구의 감옥 테마를 바탕으로 벽돌 재질감과 림 라이팅을 강조한 씬입니다.</p>
+                            <div class="feat-item"><i class="ri-check-line"></i> Material/Shader Setup</div>
+                            <div class="feat-item"><i class="ri-check-line"></i> Volumetric Lighting</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="inner reveal">
+            <div class="contact-sec slide-content">
+                <div class="sec-label">Connect</div>
+                <h2 class="sec-title">Keep in Touch</h2>
+                <div class="contact-card">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--txt-h);">Geometric Visionary</h3>
+                    <p style="color: var(--txt-m); margin-bottom: 30px;">새로운 시각적 가치를 함께 만들어갈 파트너를 기다립니다.</p>
+                    <div class="contact-links">
+                        <a href="mailto:example@example.com" class="btn-contact btn-email"><i class="ri-mail-send-line"></i> Email Me</a>
+                        <a href="#" class="btn-contact btn-phone"><i class="ri-instagram-line"></i> Instagram</a>
+                    </div>
+                </div>
+                <p style="margin-top: 50px; font-size: 0.75rem; color: var(--txt-s); letter-spacing: 2px;">© 2026 JEON HYE SEOK. ALL RIGHTS RESERVED.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reel = document.getElementById('reel');
+            const sections = document.querySelectorAll('section');
+            const dotsContainer = document.getElementById('nav-dots');
+            const progressBar = document.getElementById('progress-bar');
+            let currentIdx = 0;
+
+            // Dot Nav Init
+            dotsContainer.innerHTML = '';
+            sections.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = `nav-dot ${i === 0 ? 'active' : ''}`;
+                dot.onclick = () => scrollToSection(`#${sections[i].id}`);
+                dotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('.nav-dot');
+
+            function scrollToSection(id) {
+                const el = document.querySelector(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idx = Array.from(sections).indexOf(entry.target);
+                        currentIdx = idx;
+                        sections.forEach(s => s.classList.remove('active'));
+                        entry.target.classList.add('active');
+                        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+                    }
+                });
+            }, { root: reel, threshold: 0.6 });
+
+            sections.forEach(s => observer.observe(s));
+
+            reel.addEventListener('scroll', () => {
+                const pct = (reel.scrollTop / (reel.scrollHeight - reel.clientHeight)) * 100;
+                progressBar.style.width = pct + '%';
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp'].includes(e.key)) {
+                    if (e.key.includes('Down') || e.key === 'PageDown') {
+                        e.preventDefault();
+                        scrollToSection(`#${sections[Math.min(currentIdx + 1, sections.length - 1)].id}`);
+                    } else {
+                        e.preventDefault();
+                        scrollToSection(`#${sections[Math.max(currentIdx - 1, 0)].id}`);
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- THEME SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('theme-toggle-btn');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Check local storage or default to dark
+            const savedTheme = localStorage.getItem('theme');
+            const currentTheme = savedTheme ? savedTheme : 'dark';
+            
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    if(themeIcon) {
+                        themeIcon.classList.remove('ri-sun-line');
+                        themeIcon.classList.add('ri-moon-clear-line');
+                    }
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    if(themeIcon) {
+                        themeIcon.classList.remove('ri-moon-clear-line');
+                        themeIcon.classList.add('ri-sun-line');
+                    }
+                }
+}
+            
+            applyTheme(currentTheme);
+            
+            if(toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('theme', newTheme);
+                    applyTheme(newTheme);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

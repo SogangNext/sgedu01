@@ -1,0 +1,974 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ga Jinseong | Unity Game Developer Portfolio</title>
+    <meta name="description" content="상상력을 게임으로 실체화하는 Unity 개발자 Ga Jinseong의 포트폴리오입니다. 창의적인 로직과 몰입감 있는 XR 경험을 설계합니다.">
+
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* ───── RESET & TOKENS (Choi Hyun-soo Standard) ───── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+                :root {
+            --font-ko: 'Pretendard', sans-serif;
+            --font-en: 'Outfit', sans-serif;
+            
+            --bg: #020617; /* ???щ젅?댄듃 釉붾옓 (留ㅼ슦 源딄퀬 怨좉툒?ㅻ윭??寃?? */
+            --bg2: #0f172a; /* ?щ젅?댄듃 ?ㅽ겕 */
+            --card: rgba(15, 23, 42, 0.4); /* ?쒖닔 ?좊━媛 ?꾨땶 諛섑닾紐??щ젅?댄듃 湲?섏뒪 */
+            --card-hv: rgba(30, 41, 59, 0.6);
+            --border: rgba(255, 255, 255, 0.06); /* 留ㅼ슦 ?뉕퀬 ?щ챸???좊━ ?뚮몢由?*/
+            --border-active: rgba(56, 189, 248, 0.4);
+            
+            --clr-1: #38bdf8;   /* ?꾨━誘몄뾼 ?ㅼ뭅???쒖븞 */
+            --clr-1-glow: rgba(56, 189, 248, 0.3);
+            --clr-2: #818cf8;   /* ?꾨━誘몄뾼 ?몃뵒怨?諛붿씠?щ젢 釉붾（) */
+            --clr-2-glow: rgba(129, 140, 248, 0.3);
+            
+            --txt-h: #ffffff; /* ?쒕갚??蹂대떎??遺?쒕윭???붿씠??*/
+            --txt-b: #e2e8f0;
+            --txt-m: #cbd5e1;
+            --txt-s: #94a3b8;
+            
+            --grad: linear-gradient(135deg, var(--clr-1) 0%, var(--clr-2) 100%);
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font-ko);
+            background: var(--bg);
+            color: var(--txt-b);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ───── REEL CONTAINER (SNAP) ───── */
+        #reel {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            position: relative;
+        }
+        #reel::-webkit-scrollbar { display: none; }
+
+        /* ───── DOT NAVIGATION ───── */
+        #nav-dots {
+            position: fixed;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9999;
+        }
+        .nav-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .15);
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            transition: all .4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .nav-dot.active {
+            background: var(--clr-1);
+            height: 32px;
+            border-radius: 10px;
+            border-color: var(--clr-1);
+            box-shadow: 0 0 15px var(--clr-1-glow);
+        }
+
+        /* ───── PROGRESS BAR ───── */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0; width: 0; height: 3px;
+            background: var(--grad);
+            z-index: 10000;
+            transition: width .2s ease;
+        }
+
+        /* ───── NOISE & GRID BACKGROUND ───── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+            opacity: .4;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        
+        .nav-right-group { flex: 1; display: flex; align-items: center; gap: 12px; justify-content: flex-end; }
+        .nav-home-btn {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--txt-h);
+            font-size: 2rem;
+            text-decoration: none;
+            transition: all .3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .nav-home-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            border-color: var(--clr-1);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 30px var(--clr-1-glow);
+        }
+
+        /* ───── SCROLL TOP BUTTON ───── */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            color: var(--txt-h);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .scroll-top-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px var(--clr-1-glow);
+        }
+        .scroll-top-btn i { transition: transform 0.3s ease; }
+        .scroll-top-btn:hover i { transform: translateY(-3px); }
+
+        /* ───── NAV (HEADER) ───── */
+        nav.top-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 24px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(5, 5, 16, .7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: var(--font-en);
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--txt-h);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+            flex: 1;
+        }
+
+        .nav-logo-marker {
+            width: 12px; height: 12px;
+            background: var(--clr-1);
+            border-radius: 2px;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px var(--clr-1);
+            animation: blinking 2s ease-in-out infinite;
+        }
+
+        @keyframes blinking {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--clr-1); }
+            50% { opacity: .5; box-shadow: 0 0 20px var(--clr-1); }
+        }
+
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            font-size: .85rem; font-weight: 600; color: var(--txt-m);
+            text-decoration: none; transition: all .3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--grad); transition: width .3s;
+        }
+        .nav-links a:hover { color: var(--txt-h); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ───── HERO ───── */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 180px 40px 80px;
+            overflow: hidden;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(168, 85, 247, .05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, .05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 4px;
+            background: rgba(168, 85, 247, 0.1);
+            border-left: 3px solid var(--clr-1);
+            font-size: .75rem;
+            font-weight: 800;
+            color: var(--clr-1);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            animation: fadeUp .6s both;
+        }
+
+        .hero-name {
+            font-family: var(--font-en);
+            font-size: clamp(1.0rem, 3vw, 1.5rem);
+            font-weight: 900; color: var(--txt-h);
+            letter-spacing: 0.12em; line-height: 1.1; margin-bottom: 12px;
+            animation: fadeUp .6s .08s both;
+        }
+
+        .hero-name-ko {
+            font-size: clamp(2.0rem, 7vw, 3.2rem);
+            font-weight: 300; color: var(--txt-m);
+            margin-bottom: 32px; letter-spacing: 0.15em;
+            animation: fadeUp .6s .12s both;
+        }
+
+        .hero-title {
+            font-size: clamp(1.4rem, 2.5vw, 2.22rem);
+            font-weight: 900; line-height: 1.3; margin-bottom: 20px;
+            animation: fadeUp .6s .18s both;
+        }
+
+        .hero-title span {
+            color: var(--clr-1);
+            text-shadow: 0 0 20px var(--clr-1-glow);
+        }
+
+        .hero-desc {
+            font-size: .95rem; line-height: 1.85; color: var(--txt-m);
+            max-width: 480px; margin-bottom: 36px;
+            animation: fadeUp .6s .24s both;
+        }
+
+        /* ───── PROFILE CARD ───── */
+        .profile-card {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .4);
+            animation: fadeUp .6s .2s both;
+        }
+
+        .profile-img-wrap {
+            position: relative !important;
+            width: 140px; height: 140px;
+            margin: 0 auto 24px;
+            z-index: 2;
+        }
+
+        .hero-main-img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.45);
+            background: linear-gradient(var(--bg2), var(--bg2)) padding-box, var(--grad) border-box;
+            position: relative;
+            z-index: 5;
+            transition: .6s;
+        }
+
+        html:not([data-theme='light']) .hero-main-img {
+            background: #ffffff !important;
+            border: 4px solid #ffffff !important;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                0 0 25px rgba(255, 255, 255, 0.45),
+                0 0 50px rgba(0, 242, 254, 0.3);
+            padding: 3px;
+            z-index: 5;
+        }
+
+        .profile-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 242, 254, 0.4);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            pointer-events: none;
+            animation: profile-ring-pulse 3s infinite;
+            z-index: 1;
+        }
+
+        @keyframes profile-ring-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        .profile-card:hover 
+
+        .status-badge {
+            position: absolute; bottom: 8px; right: 8px;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: var(--clr-1); border: 3px solid var(--bg);
+            box-shadow: 0 0 10px var(--clr-1);
+        }
+
+        .profile-name-en { font-family: var(--font-en); font-size: 1.2rem; font-weight: 800; color: var(--txt-h); margin-bottom: 4px; letter-spacing: -0.5px; }
+        .profile-role { font-size: .85rem; color: var(--clr-1); font-weight: 800; margin-bottom: 24px; letter-spacing: 1px; text-transform: uppercase; }
+
+        .profile-info {
+            display: flex; flex-direction: column; gap: 14px; text-align: left;
+            margin-top: 24px; border-top: 1px solid var(--border); padding-top: 24px;
+        }
+        .profile-info-item { display: flex; align-items: center; gap: 12px; font-size: .85rem; color: var(--txt-m); }
+        .profile-info-item i { color: var(--clr-1); font-size: 1.1rem; }
+
+        .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+        .stat-box { background: rgba(255, 255, 255, .04); border: 1px solid var(--border); border-radius: 14px; padding: 14px 8px; }
+        .stat-val { font-family: var(--font-en); font-size: 1.3rem; font-weight: 700; color: var(--txt-h); }
+        .stat-lbl { font-size: .62rem; color: var(--txt-s); margin-top: 5px; text-transform: uppercase; font-weight: 800; }
+
+        /* ───── SECTIONS ───── */
+        section {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 100px 40px; position: relative; z-index: 10;
+            scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden;
+        }
+
+        .inner { max-width: 1150px; margin: 0 auto; width: 100%; }
+
+        .sec-label {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: .75rem; font-weight: 800; font-family: var(--font-en);
+            color: var(--clr-1); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px;
+        }
+        .sec-label::before { content: ''; width: 28px; height: 1px; background: var(--clr-1); }
+
+        .sec-title { font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 900; color: var(--txt-h); margin-bottom: 48px; letter-spacing: -2px; }
+
+        /* ───── ANIMATION STATE ───── */
+        .slide-content { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.23, 1, 0.32, 1); }
+        section.active .slide-content { opacity: 1; transform: translateY(0); }
+        section.active .slide-content.d1 { transition-delay: .1s; }
+        section.active .slide-content.d2 { transition-delay: .3s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ───── BENTO GRID (RESEARCH) ───── */
+        .bento-grid { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto; gap: 24px; margin-top: 20px; }
+        .bento-item {
+            background: var(--card); border: 1px solid var(--border); border-radius: 28px;
+            padding: 40px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative; overflow: hidden;
+        }
+        .bento-item:hover { border-color: var(--clr-1-glow); background: var(--card-hv); transform: translateY(-5px); }
+        .bento-item h3 { font-size: 1.3rem; color: var(--txt-h); font-weight: 800; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+        .bento-item h3 i { color: var(--clr-1); }
+        
+        .bento-vision {
+            grid-row: span 2; background: linear-gradient(135deg, rgba(168, 85, 247, .1) 0%, transparent 100%), var(--card);
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .vision-quote { font-size: 1.88rem; font-weight: 900; line-height: 1.4; color: var(--txt-h); margin-bottom: 28px; letter-spacing: -1px; }
+        .vision-quote span { color: var(--clr-1); }
+        
+        .system-list { display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 10; }
+        .mini-card { display: flex; gap: 18px; align-items: flex-start; }
+        .mini-icon {
+            width: 44px; height: 44px; border-radius: 12px; background: rgba(168, 85, 247, .1);
+            display: flex; align-items: center; justify-content: center; color: var(--clr-1); flex-shrink: 0;
+            border: 1px solid rgba(168, 85, 247, .1);
+        }
+        .mini-content p:first-child { font-weight: 800; color: var(--txt-h); font-size: 1rem; margin-bottom: 4px; }
+        .mini-content p:last-child { font-size: .85rem; color: var(--txt-m); line-height: 1.5; }
+
+        /* ───── PROJECTS ───── */
+        .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        .proj-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 28px;
+            overflow: hidden; transition: all .4s cubic-bezier(.165, .84, .44, 1);
+        }
+        .proj-card:hover { transform: translateY(-10px); border-color: var(--clr-1-glow); box-shadow: 0 40px 80px rgba(0, 0, 0, .6); }
+        
+        .proj-img-wrap { height: 300px; overflow: hidden; background: #000; position: relative; }
+        .proj-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.2) contrast(1.1); transition: transform .8s, filter .6s; }
+        .proj-card:hover .proj-img { transform: scale(1.08); filter: grayscale(0); }
+        
+        .proj-body { padding: 36px; }
+        .proj-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .proj-tag {
+            font-family: var(--font-en); font-size: .68rem; font-weight: 800;
+            padding: 5px 14px; border-radius: 4px; background: rgba(255, 255, 255, .05);
+            color: var(--txt-m); border: 1px solid var(--border); letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .tag-active { border-color: var(--clr-1); color: var(--clr-1); background: rgba(168, 85, 247, .1); }
+        
+        .proj-title { font-size: 1.7rem; font-weight: 900; color: var(--txt-h); margin-bottom: 14px; letter-spacing: -0.8px; }
+        .proj-desc { font-size: .95rem; color: var(--txt-m); line-height: 1.75; margin-bottom: 24px; }
+        
+        .feat-items { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .feat-item { display: flex; gap: 12px; font-size: .88rem; color: var(--txt-b); align-items: center; }
+        .feat-item i { color: var(--clr-1); font-size: 1.1rem; }
+
+        /* ───── SKILLS (DASHBOARD) ───── */
+        .skill-dashboard { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .skill-list-card { background: var(--card); border: 1px solid var(--border); border-radius: 28px; padding: 40px; }
+        .skill-bar-item { margin-bottom: 28px; }
+        .skill-bar-item:last-child { margin-bottom: 0; }
+        .skill-lbl { display: flex; justify-content: space-between; font-size: .9rem; font-weight: 800; color: var(--txt-h); margin-bottom: 12px; }
+        .skill-lbl span { color: var(--clr-1); }
+        .bar-bg { height: 6px; background: rgba(255, 255, 255, .05); border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--grad); border-radius: 10px; width: 0; transition: width 1.5s cubic-bezier(0.23, 1, 0.32, 1); }
+        section.active .bar-fill { width: var(--p); }
+
+        /* ───── CONTACT ───── */
+        .contact-sec { text-align: center; max-width: 800px; margin: 0 auto; }
+        .contact-cta {
+            background: linear-gradient(135deg, rgba(168, 85, 247, .05) 0%, rgba(59, 130, 246, .05) 100%), var(--card);
+            border: 1px solid rgba(168, 85, 247, .2); border-radius: 40px; padding: 75px 40px;
+        }
+        .contact-title { font-size: 3.2rem; font-weight: 900; color: var(--txt-h); margin-bottom: 20px; letter-spacing: -2px; }
+        .contact-btns { display: flex; gap: 20px; justify-content: center; margin-top: 40px; }
+        .btn-main {
+            padding: 18px 40px; border-radius: 12px; font-weight: 900; font-size: 1rem;
+            text-decoration: none; display: flex; align-items: center; gap: 12px; transition: .4s;
+            font-family: var(--font-en); letter-spacing: 1px;
+        }
+        .btn-gold { background: var(--grad); color: #fff; }
+        .btn-gold:hover { transform: translateY(-5px); box-shadow: 0 15px 35px var(--clr-1-glow); }
+        .btn-outline { border: 1px solid var(--border); color: var(--txt-h); }
+        .btn-outline:hover { background: var(--card-hv); border-color: var(--clr-1); transform: translateY(-5px); }
+
+        /* ───── MOBILE ───── */
+        @media (max-width: 1024px) {
+            
+        .nav-right-group { flex: 1; display: flex; align-items: center; gap: 12px; justify-content: flex-end; }
+        .nav-home-btn { width: 52px; height: 52px; font-size: 1.4rem; }
+            .hero-inner, .bento-grid, .projects-grid, .skill-dashboard { grid-template-columns: 1fr; gap: 40px; }
+            .hero-text { text-align: center; display: flex; flex-direction: column; align-items: center; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-card { max-width: 480px; margin: 0 auto; }
+            section { height: auto; min-height: 100vh; padding: 120px 24px; }
+        }
+    
+                /* ????? HIGH-END LIGHT MODE ????? */
+        html[data-theme='light'] {
+            --bg: #f8fafc;
+            --bg2: #f1f5f9;
+            --card: rgba(255, 255, 255, 0.7);
+            --card-hv: rgba(255, 255, 255, 0.9);
+            --border: rgba(15, 23, 42, 0.08); /* 留ㅼ슦 ????寃쎄퀎??*/
+            --border-active: rgba(0, 122, 255, 0.4);
+            
+            --clr-1: #0066ff; /* ?꾨━誘몄뾼 釉붾（ */
+            --clr-1-glow: rgba(0, 102, 255, 0.2);
+            --clr-2: #00c6ff; /* ?꾨━誘몄뾼 ?쒖븞 */
+            --clr-2-glow: rgba(0, 198, 255, 0.2);
+            
+            --txt-h: #0f172a; /* ??李⑥퐳 */
+            --txt-b: #334155; 
+            --txt-m: #64748b;
+            --txt-s: #94a3b8;
+        }
+
+        /* ?쇱씠??紐⑤뱶 ?꾩슜 洹몃┝???ㅻ벉湲?(寃怨??곹븳 洹몃┝??以묓솕) */
+        html[data-theme='light'] .portfolio-card, 
+        html[data-theme='light'] .hero-logo-card {
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+            backdrop-filter: blur(24px);
+        }
+
+        html[data-theme='light'] .portfolio-card:hover, 
+        html[data-theme='light'] .hero-logo-card:hover {
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(0, 102, 255, 0.3) inset !important;
+            border-color: var(--clr-1);
+        }
+
+        html[data-theme='light'] .bg-grid {
+            opacity: 0.5;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        }
+
+        html[data-theme='light'] nav {
+            background: rgba(248, 250, 252, 0.85); /* 留ㅼ슦 遺?쒕윭???ㅻ뜑 */
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(20px);
+        }
+
+        html[data-theme='light'] footer {
+            background: #f1f5f9;
+            border-top: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        html[data-theme='light'] .hero-badge {
+            background: rgba(0, 102, 255, 0.08);
+            border: 1px solid rgba(0, 102, 255, 0.15);
+            color: #0055ff;
+        }
+            /* ????? DYNAMIC CARD SELECTION ANIMATION ????? */
+        @keyframes pulseBorder {
+            0% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+            50% { box-shadow: 0 0 50px rgba(0, 122, 255, 0.6), 0 0 0 3px rgba(0, 198, 255, 0.8) inset; }
+            100% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+        }
+
+        .portfolio-card, html[data-theme='light'] .portfolio-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+        }
+
+        .portfolio-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .portfolio-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        .card-arrow {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover .card-arrow {
+            transform: translate(12px, -12px) scale(1.4) !important;
+            background: linear-gradient(135deg, #00c6ff, #0066ff) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px rgba(0, 198, 255, 0.5) !important;
+        }
+            /* ????? EXTRA DYNAMIC CARD SELECTION ANIMATION (INNER PROJECTS) ????? */
+        .proj-card, html[data-theme='light'] .proj-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .proj-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+            position: relative;
+        }
+
+        .proj-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .proj-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        /* Bento Grid items hover enhancement */
+        .bento-item, html[data-theme='light'] .bento-item {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-8px) scale(1.01) !important;
+            border-color: var(--clr-1) !important;
+            box-shadow: 0 20px 40px rgba(0, 198, 255, 0.3), 0 0 0 1px rgba(0, 198, 255, 0.2) inset !important;
+            z-index: 20;
+        }
+
+        html[data-theme='light'] .bento-item:hover {
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 0 0 2px rgba(0, 102, 255, 0.2) inset !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <button class="scroll-top-btn" onclick="scrollToSection('#hero')" title="최상단으로 이동">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+
+    <nav class="top-nav">
+        <a href="#hero" class="nav-logo">
+            <div class="nav-logo-marker"></div>
+            GA JIN SEONG
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right-group"><a href="index.html#gajinseong" class="nav-home-btn" title="메인 페이지로 이동">
+            <i class="ri-home-4-line"></i>
+        </a>
+            <!-- THEME TOGGLE -->
+        <button id="theme-toggle-btn" style="background: transparent; border: none; color: var(--txt-h); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; padding: 0;" aria-label="?뚮쭏 ?꾪솚">
+            <i class="ri-sun-line theme-icon" id="theme-icon"></i>
+        </button></div>
+    </nav>
+
+    <div id="progress-bar"></div>
+    <div id="nav-dots"></div>
+
+    <div id="reel">
+        <!-- Hero Section -->
+        <section class="hero active" id="hero">
+            <div class="hero-inner slide-content">
+                <div class="hero-text">
+                    <div class="hero-tag">Unity Game Developer</div>
+                    <h1 class="hero-name">GA JIN SEONG</h1>
+                    <p class="hero-name-ko">가 진 성 | 2026 GRADUATE</p>
+                    <h2 class="hero-title">상상력을 <span>게임</span>으로 만드는<br>개발자입니다.</h2>
+                    <p class="hero-desc">Unity와 C#에 특화된 실력을 바탕으로 사용자에게 무한한 몰입감을 선사합니다. 고몰입 XR 환경 구축과 견고한 시스템 설계를 통해 즐거움의 가치를 실현합니다.</p>
+                    <div style="display: flex; gap: 16px; margin-top: 32px;">
+                        <a href="#projects" class="btn-main btn-gold">VIEW DISCOVERY</a>
+                    </div>
+                </div>
+
+                <div class="hero-card">
+                    <div class="profile-card">
+                        <div class="profile-img-wrap">
+                            
+                            <img src="promising_choihyunsoo/image162.png" alt="Profile Image" class="hero-main-img">
+                            <div class="status-badge"></div>
+                        </div>
+                        <p class="profile-name-en">Jinseong Ga</p>
+                        <p class="profile-role">Unity Game Specialist</p>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-box">
+                                <p class="stat-val">03+</p>
+                                <p class="stat-lbl">Projects</p>
+                            </div>
+                            <div class="stat-box">
+                                <p class="stat-val">2ea</p>
+                                <p class="stat-lbl">Awards</p>
+                            </div>
+                            <div class="stat-box">
+                                <p class="stat-val">2026</p>
+                                <p class="stat-lbl">Year</p>
+                            </div>
+                        </div>
+
+                        <div class="profile-info">
+                            <div class="profile-info-item"><i class="ri-mail-line"></i> example@example.com</div>
+                            <div class="profile-info-item"><i class="ri-phone-line"></i> 010-XXXX-XXXX</div>
+                            <div class="profile-info-item"><i class="ri-book-line"></i> 세명컴퓨터고등학교</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section (Bento Grid) -->
+        <section id="about" class="inner reveal">
+            <div class="slide-content" style="width: 100%;">
+                <div class="sec-label">Identity & Records</div>
+                <h2 class="sec-title">About My Journey</h2>
+                
+                <div class="bento-grid d1">
+                    <div class="bento-item bento-vision">
+                        <i class="ri-double-quotes-l" style="font-size: 2.5rem; color: var(--clr-1); margin-bottom: 24px; opacity: .5;"></i>
+                        <p class="vision-quote">"상상력은 개발의 <span>가장 강력한 엔진</span>입니다."</p>
+                        <p style="font-size: 0.95rem; color: var(--txt-m); line-height: 1.8;">
+                            탄탄한 객체지향 설계와 유연한 코딩 기법을 통해, 복잡한 로직도 직관적이고 즐거운 플레이로 변모시킵니다. 창의적인 아이디어를 견고한 코드로 구현하는 과정에서 가장 큰 보람을 느낍니다.
+                        </p>
+                    </div>
+
+                    <div class="bento-item">
+                        <h3><i class="ri-medal-line"></i> Awards & Experience</h3>
+                        <div class="system-list">
+                            <div class="mini-card">
+                                <div class="mini-icon"><i class="ri-award-fill"></i></div>
+                                <div class="mini-content">
+                                    <p>교내 프로그래밍 문제 해결 대회 은상</p>
+                                    <p>2024.05 | 문제 분석 및 알고리즘 최적화 역량 인정</p>
+                                </div>
+                            </div>
+                            <div class="mini-card">
+                                <div class="mini-icon"><i class="ri-fire-fill"></i></div>
+                                <div class="mini-content">
+                                    <p>서울 지방 경기 기능 대회 출전</p>
+                                    <p>2025.03 | 게임 제작 분야 전문성 및 순발력 검증</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-item">
+                        <h3><i class="ri-graduation-cap-line"></i> Education</h3>
+                        <div class="system-list">
+                            <div class="mini-card">
+                                <div class="mini-icon"><i class="ri-bookmark-3-fill"></i></div>
+                                <div class="mini-content">
+                                    <p>서강대 미래 유망 분야 인재 양성</p>
+                                    <p>2024.06 - 2026.04 | 게임 심화 개발 과정 수료</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="inner reveal">
+            <div class="slide-content" style="width: 100%;">
+                <div class="sec-label">Selected Portfolio</div>
+                <h2 class="sec-title">Discovery Showcase</h2>
+                
+                <div class="projects-grid d2">
+                    <!-- Project 1 -->
+                    <div class="proj-card">
+                        <div class="proj-img-wrap"><img src="promising_gajinseong/image2.png" class="proj-img"></div>
+                        <div class="proj-body">
+                            <div class="proj-tags"><span class="proj-tag tag-active">2D RPG</span><span class="proj-tag">Multiplayer</span><span class="proj-tag">NetCode</span></div>
+                            <h3 class="proj-title">LittleSword</h3>
+                            <p class="proj-desc">NetCode 기반의 실시간 상호작용이 가능한 멀티플레이 RPG입니다. BasePlayer/Enemy 상속 구조를 통해 확장성을 확보했습니다.</p>
+                            <div class="feat-items">
+                                <div class="feat-item"><i class="ri-check-line"></i> Real-time Interaction System</div>
+                                <div class="feat-item"><i class="ri-check-line"></i> OOP 기반 상속 구조 설계 및 최적화</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="proj-card">
+                        <div class="proj-img-wrap"><img src="promising_gajinseong/image5.png" class="proj-img"></div>
+                        <div class="proj-body">
+                            <div class="proj-tags"><span class="proj-tag tag-active">VR</span><span class="proj-tag">XR Interaction</span><span class="proj-tag">Physics</span></div>
+                            <h3 class="proj-title">VR Baseball</h3>
+                            <p class="proj-desc">XR Interaction Toolkit과 물리 시뮬레이션을 결합한 고몰입 야구 게임입니다. 사실적인 타격감과 물리 작용을 구현했습니다.</p>
+                            <div class="feat-items">
+                                <div class="feat-item"><i class="ri-check-line"></i> Physics-based Hitting Mechanism</div>
+                                <div class="feat-item"><i class="ri-check-line"></i> XR Interaction Toolkit 실전 활용</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skill Mastery Section -->
+        <section id="skills" class="inner reveal">
+            <div class="slide-content" style="width: 100%;">
+                <div class="sec-label">Technical Mastery</div>
+                <h2 class="sec-title">Expertise Dashboard</h2>
+                
+                <div class="skill-dashboard d2">
+                    <div class="skill-list-card">
+                        <div class="skill-bar-item">
+                            <div class="skill-lbl">Unity & C# <span style="--p: 90%">90%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="--p: 90%"></div></div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-lbl">Web (HTML/CSS) <span style="--p: 85%">85%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="--p: 85%"></div></div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-lbl">Oracle DB <span style="--p: 75%">75%</span></div>
+                            <div class="bar-bg"><div class="bar-fill" style="--p: 75%"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-list-card" style="display: flex; flex-direction: column; justify-content: center;">
+                        <h3 style="color: var(--txt-h); margin-bottom: 24px; font-weight: 800;">Core Competencies</h3>
+                        <div class="system-list">
+                            <div class="feat-item"><i class="ri-checkbox-circle-line"></i> 객체지향(OOP) 기반 상속 구조 설계 및 최적화</div>
+                            <div class="feat-item"><i class="ri-checkbox-circle-line"></i> NetCode 활용 멀티플레이 동기화 심화 구현</div>
+                            <div class="feat-item"><i class="ri-checkbox-circle-line"></i> XR Interaction 기반 고몰입 VR 공간 구축 전문</div>
+                            <div class="feat-item"><i class="ri-checkbox-circle-line"></i> 물리 Simulation 및 렌더링 퍼포먼스 프로파일링</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="inner reveal">
+            <div class="contact-sec slide-content">
+                <div class="contact-cta">
+                    <div class="sec-label" style="justify-content: center; margin-bottom: 24px;">Start a Connection</div>
+                    <h2 class="contact-title">Let's Build the Future</h2>
+                    <p style="color: var(--txt-m); font-size: 1.15rem; max-width: 500px; margin: 0 auto 40px;">당신의 상상력을 경고한 코드로 구현할 준비가 되어 있습니다.</p>
+                    <div class="contact-btns">
+                        <a href="mailto:example@example.com" class="btn-main btn-gold"><i class="ri-mail-send-line"></i> Send Message</a>
+                        <a href="#" class="btn-main btn-outline"><i class="ri-github-line"></i> Check Source</a>
+                    </div>
+                </div>
+                <p style="margin-top: 50px; font-size: 0.75rem; color: var(--txt-s); letter-spacing: 2px;">© 2026 GA JIN SEONG HOUSE. STABLE // CREATIVE // CONNECTED.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reel = document.getElementById('reel');
+            const sections = document.querySelectorAll('section');
+            const dotsContainer = document.getElementById('nav-dots');
+            const progressBar = document.getElementById('progress-bar');
+            let currentIdx = 0;
+
+            // Dot Nav Init
+            dotsContainer.innerHTML = '';
+            sections.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = `nav-dot ${i === 0 ? 'active' : ''}`;
+                dot.onclick = () => scrollToSection(`#${sections[i].id}`);
+                dotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('.nav-dot');
+
+            function scrollToSection(id) {
+                const el = document.querySelector(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idx = Array.from(sections).indexOf(entry.target);
+                        currentIdx = idx;
+                        sections.forEach(s => s.classList.remove('active'));
+                        entry.target.classList.add('active');
+                        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+                    }
+                });
+            }, { root: reel, threshold: 0.6 });
+
+            sections.forEach(s => observer.observe(s));
+
+            reel.addEventListener('scroll', () => {
+                const pct = (reel.scrollTop / (reel.scrollHeight - reel.clientHeight)) * 100;
+                progressBar.style.width = pct + '%';
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (['ArrowDown', 'PageDown', 'ArrowUp', 'PageUp'].includes(e.key)) {
+                    if (e.key.includes('Down') || e.key === 'PageDown') {
+                        e.preventDefault();
+                        scrollToSection(`#${sections[Math.min(currentIdx + 1, sections.length - 1)].id}`);
+                    } else {
+                        e.preventDefault();
+                        scrollToSection(`#${sections[Math.max(currentIdx - 1, 0)].id}`);
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- THEME SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('theme-toggle-btn');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Check local storage or default to dark
+            const savedTheme = localStorage.getItem('theme');
+            const currentTheme = savedTheme ? savedTheme : 'dark';
+            
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    if(themeIcon) {
+                        themeIcon.classList.remove('ri-sun-line');
+                        themeIcon.classList.add('ri-moon-clear-line');
+                    }
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    if(themeIcon) {
+                        themeIcon.classList.remove('ri-moon-clear-line');
+                        themeIcon.classList.add('ri-sun-line');
+                    }
+                }
+}
+            
+            applyTheme(currentTheme);
+            
+            if(toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('theme', newTheme);
+                    applyTheme(newTheme);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

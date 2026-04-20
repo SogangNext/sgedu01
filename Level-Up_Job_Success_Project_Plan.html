@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세명컴퓨터고 Level-Up 취업성공프로젝트</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:root {
+  --primary: #38bdf8;
+  --primary-dark: #0284c7;
+  --secondary: #818cf8;
+  --accent: #0ea5e9;
+  --bg: #020617;
+  --bg2: #0f172a;
+  --bg3: #1e293b;
+  --card: rgba(15, 23, 42, 0.4);
+  --border: rgba(255, 255, 255, 0.06);
+  --text: #ffffff;
+  --text-muted: #cbd5e1;
+  --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+html[data-theme='light'] :root {
+  --bg: #f8fafc;
+  --bg2: #eff6ff;
+  --bg3: #f1f5f9;
+  --card: rgba(255, 255, 255, 0.7);
+  --border: rgba(15, 23, 42, 0.08);
+  --text: #0f172a;
+  --text-muted: #334155;
+}
+
+html[data-theme='light'] .brand-top { color: #0f172a; }
+
+/* ABSOLUTE BRANDING TOP-LEFT (Visible only on first screen) */
+.brand-fixed {
+  position: absolute; top: 24px; left: 24px; z-index: 10000;
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; color: #fff; font-weight: 800; font-size: 0.95rem;
+  background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px);
+  padding: 10px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1);
+  transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.brand-fixed span { color: var(--primary); }
+.brand-fixed:hover { transform: translateY(-2px); background: rgba(15, 23, 42, 0.8); border-color: var(--primary); box-shadow: 0 12px 40px rgba(56, 189, 248, 0.3); }
+
+html[data-theme='light'] .brand-fixed {
+    background: rgba(255, 255, 255, 0.8); color: #0f172a;
+    border-color: rgba(15, 23, 42, 0.1);
+    box-shadow: 0 8px 32px rgba(15, 23, 42, 0.05);
+}
+html[data-theme='light'] .brand-fixed:hover { background: #fff; border-color: #0066ff; color: #0066ff; }
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:3px;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(108,99,255,.25) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(255,101,132,.2) 0%,transparent 60%);pointer-events:none;}
+.hero-badge{display:inline-block;background:rgba(108,99,255,.2);border:1px solid rgba(108,99,255,.5);color:#a78bfa;padding:.4rem 1.2rem;border-radius:999px;font-size:.85rem;font-weight:500;margin-bottom:1.5rem;animation:fadeInUp .6s ease;}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.2;margin-bottom:1rem;animation:fadeInUp .8s ease;}
+.hero h1 span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:1rem;color:var(--text-muted);max-width:600px;margin:0 auto 2.5rem;animation:fadeInUp 1s ease;}
+.hero-meta{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;animation:fadeInUp 1.2s ease;}
+.meta-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem 1.5rem;font-size:.9rem;}
+.meta-item strong{display:block;color:var(--primary);font-size:.75rem;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em;}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--text-muted);font-size:.8rem;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.8rem 2rem;display:flex;gap:1rem;overflow-x:auto;align-items:center;}
+nav a{color:var(--text-muted);text-decoration:none;font-size:.9rem;font-weight:500;padding:.4rem .8rem;border-radius:8px;white-space:nowrap;transition:.2s;}
+nav a:hover{background:var(--card);color:var(--text);}
+nav a.active{background:rgba(108,99,255,.2);color:#a78bfa;}
+
+.nav-right-group {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-home-btn{
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:#e0e7ff;font-size:1.5rem;text-decoration:none;
+  transition:all .3s cubic-bezier(.23,1,.32,1);
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+.nav-home-btn:hover{
+  background:linear-gradient(135deg,#6C63FF,#FF6584);
+  color:#fff;border-color:transparent;
+  transform:translateY(-2px) scale(1.05);
+  box-shadow:0 10px 28px rgba(108,99,255,.45);
+}
+
+/* SCROLL TOP BTN */
+.scroll-top-btn{
+  position:fixed;bottom:32px;right:32px;
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(10,14,26,.85);backdrop-filter:blur(12px);
+  border:1px solid rgba(108,99,255,.3);
+  color:#c4b5fd;display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;cursor:pointer;z-index:1000;
+  opacity:0;visibility:hidden;transform:translateY(12px);
+  transition:all .4s cubic-bezier(.23,1,.32,1);
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+}
+.scroll-top-btn.visible{opacity:1;visibility:visible;transform:translateY(0);}
+.scroll-top-btn:hover{
+  background:linear-gradient(135deg,#6C63FF,#FF6584);
+  color:#fff;border-color:transparent;
+  transform:translateY(-6px);
+  box-shadow:0 16px 36px rgba(108,99,255,.5);
+}
+.scroll-top-btn i{transition:transform .3s;}
+.scroll-top-btn:hover i{transform:translateY(-2px);}
+
+/* SECTIONS */
+section{padding:5rem 2rem;max-width:1100px;margin:0 auto;}
+.section-label{font-size:.8rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.8rem;}
+.section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:1.5rem;}
+.section-title span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* ───── AI GUIDE SECTION ───── */
+.ai-guide-section {
+    padding: 100px 40px;
+    background: linear-gradient(135deg, rgba(168,85,247,.06), rgba(0,242,254,.04));
+    border-top: 1px solid rgba(168,85,247,.15);
+    border-bottom: 1px solid rgba(168,85,247,.15);
+    position: relative; overflow: hidden;
+}
+.ai-guide-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(168,85,247,.12), transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(0,242,254,.08), transparent 60%);
+    pointer-events: none;
+}
+.ai-guide-inner {
+    max-width: 860px; margin: 0 auto;
+    text-align: center; position: relative; z-index: 1;
+}
+.ai-guide-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(168,85,247,.12);
+    border: 1px solid rgba(168,85,247,.35);
+    color: #c084fc; padding: 6px 18px; border-radius: 999px;
+    font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: 24px;
+}
+.ai-guide-title {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900; margin-bottom: 16px; line-height: 1.1; color: #fff;
+}
+.ai-guide-title span {
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.ai-guide-desc {
+    color: var(--text-muted); font-size: .95rem; line-height: 1.85;
+    max-width: 680px; margin: 0 auto 40px;
+}
+.ai-guide-stats {
+    display: flex; gap: 40px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 40px;
+}
+.ai-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.ai-stat-num {
+    font-family: 'Outfit', sans-serif; font-size: 2.4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.ai-stat-lbl { font-size: .78rem; color: var(--text-muted); font-weight: 600; }
+.ai-guide-btns {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+.btn-ai-main {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 16px 36px; border-radius: 14px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: white; text-decoration: none; font-weight: 800; font-size: 1rem;
+    transition: all .3s;
+}
+.btn-ai-main:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(168,85,247,.5);
+}
+.btn-ai-dl {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 16px 36px; border-radius: 14px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,.3);
+    color: #fff; text-decoration: none; font-weight: 700; font-size: 1rem;
+    transition: all .3s;
+}
+.btn-ai-dl:hover {
+    border-color: #a855f7; background: rgba(168,85,247,.1);
+    transform: translateY(-3px);
+}
+
+footer {
+    padding: 60px 40px;
+    text-align: center;
+    background: #020617;
+    border-top: 1px solid var(--border);
+}
+
+.footer-logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 12px;
+    display: block;
+    text-decoration: none;
+}
+
+.footer-copy {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+/* Light mode support for new sections */
+html[data-theme='light'] .ai-guide-section {
+    background: linear-gradient(135deg, rgba(168,85,247,.04), rgba(0,242,254,.02));
+    border-color: rgba(168,85,247,.1);
+}
+html[data-theme='light'] .ai-guide-title { color: #0f172a; }
+html[data-theme='light'] .btn-ai-dl {
+    background: #fff; border-color: rgba(168,85,247,.2); color: #0f172a;
+}
+html[data-theme='light'] footer {
+    background: #f1f5f9; border-color: rgba(15, 23, 42, 0.06);
+}
+html[data-theme='light'] .footer-logo { color: #0f172a; }
+
+.footer-back-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 32px; padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px; color: var(--text-muted);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.footer-back-link i { font-size: 1.1rem; transition: transform 0.3s; }
+.footer-back-link:hover {
+    background: rgba(255, 255, 255, 0.08); border-color: var(--primary);
+    color: #fff; transform: translateX(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.footer-back-link:hover i { transform: translateX(-3px); }
+
+html[data-theme='light'] .footer-back-link {
+    background: rgba(15, 23, 42, 0.03); border-color: rgba(15, 23, 42, 0.08);
+}
+html[data-theme='light'] .footer-back-link:hover {
+    background: #fff; border-color: #0066ff; color: #0066ff;
+}
+
+/* OVERVIEW */
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem;margin-top:2rem;}
+.overview-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:.3s;position:relative;overflow:hidden;}
+.overview-card::before{content:'';position:absolute;inset:0;background:var(--gradient);opacity:0;transition:.3s;}
+.overview-card:hover{border-color:rgba(108,99,255,.4);transform:translateY(-4px);}
+.overview-card:hover::before{opacity:.05;}
+.overview-card .icon{font-size:2rem;margin-bottom:.8rem;}
+.overview-card h3{font-size:.85rem;color:var(--text-muted);margin-bottom:.3rem;}
+.overview-card p{font-size:1rem;font-weight:600;color:var(--text);}
+
+/* BACKGROUND */
+.bg-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem;}
+.bg-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;position:relative;overflow:hidden;}
+.bg-card::after{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--gradient);}
+.bg-card h3{font-size:1rem;font-weight:700;margin-bottom:.8rem;color:#c4b5fd;}
+html[data-theme='light'] .bg-card h3{color:#6366f1;}
+.bg-card p{font-size:.9rem;color:var(--text-muted);line-height:1.8;}
+
+/* TIMELINE */
+.timeline{position:relative;margin-top:3rem;}
+.timeline-axis{position:absolute;top:0;bottom:0;left:2rem;width:2px;background:linear-gradient(to bottom,var(--primary),var(--secondary));border-radius:1px;}
+.timeline-item{display:flex;align-items:center;gap:2rem;margin-bottom:3rem;position:relative;opacity:0;transform:translateX(-20px);transition:.6s;}
+.timeline-item.visible{opacity:1;transform:none;}
+.timeline-dot{flex-shrink:0;width:4rem;height:4rem;border-radius:50%;background:var(--bg3);border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:800;color:var(--primary);position:relative;z-index:1;}
+.timeline-content{flex:1;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;}
+.timeline-content .month-badge{display:inline-block;background:rgba(108,99,255,.2);color:#a78bfa;border:1px solid rgba(108,99,255,.3);border-radius:999px;padding:.2rem .8rem;font-size:.75rem;font-weight:700;margin-bottom:.5rem;}
+.timeline-content h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem;}
+.timeline-content .desc{font-size:.9rem;color:var(--text-muted);line-height:1.8;}
+.output-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem;}
+.output-tag{background:rgba(67,233,123,.1);border:1px solid rgba(67,233,123,.3);color:#6ee7b7;border-radius:999px;padding:.2rem .7rem;font-size:.75rem;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;margin-top:2rem;border-radius:16px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;}
+th{background:rgba(108,99,255,.15);color:#c4b5fd;font-size:.85rem;font-weight:700;padding:1rem 1.2rem;text-align:center;border-bottom:1px solid var(--border);}
+td{padding:.9rem 1.2rem;font-size:.9rem;color:var(--text);border-bottom:1px solid var(--border);vertical-align:middle;text-align:center;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.03);}
+.badge{display:inline-block;padding:.2rem .7rem;border-radius:999px;font-size:.75rem;font-weight:600;}
+.badge-blue{background:rgba(108,99,255,.2);color:#a78bfa;}
+.badge-pink{background:rgba(255,101,132,.2);color:#fca5a5;}
+.badge-green{background:rgba(67,233,123,.2);color:#6ee7b7;}
+
+/* METHOD CARDS */
+.method-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem;}
+.method-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;text-align:center;transition:.3s;}
+.method-card:hover{border-color:rgba(108,99,255,.4);transform:translateY(-4px);}
+.method-num{font-size:2.5rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem;}
+.method-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
+.method-card p{font-size:.85rem;color:var(--text-muted);line-height:1.7;}
+
+/* 1:1 TABLE */
+.consult-table{margin-top:2rem;}
+
+/* ONLINE */
+.online-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem;}
+.online-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;}
+.online-card .month{font-size:1.5rem;font-weight:900;color:var(--primary);margin-bottom:.5rem;}
+.online-card p{font-size:.9rem;color:var(--text-muted);line-height:1.7;}
+
+/* EVALUATION */
+.eval-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;}
+@media(max-width:600px){.eval-grid{grid-template-columns:1fr;}}
+.eval-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;}
+.eval-card h3{font-size:1rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.eval-card ul{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.eval-card ul li{font-size:.9rem;color:var(--text-muted);padding-left:1.2rem;position:relative;line-height:1.6;}
+.eval-card ul li::before{content:'•';position:absolute;left:0;color:var(--primary);}
+
+/* EFFECT */
+.effect-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:2rem;}
+.effect-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;text-align:center;}
+.effect-icon{font-size:2.5rem;margin-bottom:1rem;}
+.effect-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
+.effect-card p{font-size:.85rem;color:var(--text-muted);line-height:1.7;}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;}
+footer p{color:var(--text-muted);font-size:.9rem;}
+footer strong{color:var(--text);}
+
+/* ANIM */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+section{opacity:0;transform:translateY(20px);transition:.7s;}
+section.visible{opacity:1;transform:none;}
+
+                /* ????? HIGH-END LIGHT MODE ????? */
+        html[data-theme='light'] {
+            --bg: #f8fafc;
+            --bg2: #f1f5f9;
+            --card: rgba(255, 255, 255, 0.7);
+            --card-hv: rgba(255, 255, 255, 0.9);
+            --border: rgba(15, 23, 42, 0.08); /* 留ㅼ슦 ????寃쎄퀎??*/
+            --border-active: rgba(0, 122, 255, 0.4);
+            
+            --clr-1: #0066ff; /* ?꾨━誘몄뾼 釉붾（ */
+            --clr-1-glow: rgba(0, 102, 255, 0.2);
+            --clr-2: #00c6ff; /* ?꾨━誘몄뾼 ?쒖븞 */
+            --clr-2-glow: rgba(0, 198, 255, 0.2);
+            
+            --txt-h: #0f172a; /* ??李⑥퐳 */
+            --txt-b: #334155; 
+            --txt-m: #cbd5e1;
+            --txt-s: #94a3b8;
+            
+            --text: #000000;
+            --text-muted: #111827;
+            --primary: #0055ff;
+            --secondary: #00aaff;
+        }
+
+        /* ?쇱씠??紐⑤뱶 ?꾩슜 洹몃┝???ㅻ벉湲?(寃怨??곹븳 洹몃┝??以묓솕) */
+        html[data-theme='light'] .portfolio-card, 
+        html[data-theme='light'] .hero-logo-card {
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+            backdrop-filter: blur(24px);
+        }
+
+        html[data-theme='light'] .portfolio-card:hover, 
+        html[data-theme='light'] .hero-logo-card:hover {
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(0, 102, 255, 0.3) inset !important;
+            border-color: var(--clr-1);
+        }
+
+        html[data-theme='light'] .bg-grid {
+            opacity: 0.5;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        }
+
+        html[data-theme='light'] nav {
+            background: rgba(248, 250, 252, 0.85); /* 留ㅼ슦 遺?쒕윭???ㅻ뜑 */
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(20px);
+        }
+
+        html[data-theme='light'] footer {
+            background: #f1f5f9;
+            border-top: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        html[data-theme='light'] .hero-badge {
+            background: rgba(0, 102, 255, 0.08);
+            border: 1px solid rgba(0, 102, 255, 0.15);
+            color: #0055ff;
+        }
+            /* ????? DYNAMIC CARD SELECTION ANIMATION ????? */
+        @keyframes pulseBorder {
+            0% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+            50% { box-shadow: 0 0 50px rgba(0, 122, 255, 0.6), 0 0 0 3px rgba(0, 198, 255, 0.8) inset; }
+            100% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+        }
+
+        .portfolio-card, html[data-theme='light'] .portfolio-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+        }
+
+        .portfolio-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .portfolio-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        .card-arrow {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover .card-arrow {
+            transform: translate(12px, -12px) scale(1.4) !important;
+            background: linear-gradient(135deg, #00c6ff, #0066ff) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px rgba(0, 198, 255, 0.5) !important;
+        }
+            /* ????? EXTRA DYNAMIC CARD SELECTION ANIMATION (INNER PROJECTS) ????? */
+        .proj-card, html[data-theme='light'] .proj-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .proj-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+            position: relative;
+        }
+
+        .proj-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .proj-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        /* Bento Grid items hover enhancement */
+        .bento-item, html[data-theme='light'] .bento-item {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-8px) scale(1.01) !important;
+            border-color: var(--clr-1) !important;
+            box-shadow: 0 20px 40px rgba(0, 198, 255, 0.3), 0 0 0 1px rgba(0, 198, 255, 0.2) inset !important;
+            z-index: 20;
+        }
+
+        html[data-theme='light'] .bento-item:hover {
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 0 0 2px rgba(0, 102, 255, 0.2) inset !important;
+        }
+
+        /* ───── EXTRA LEVEL-UP CARDS ANIMATION ───── */
+        .overview-card, .bg-card, .timeline-content, .method-card, .online-card, .eval-card, .effect-card {
+            backdrop-filter: blur(24px) !important;
+            -webkit-backdrop-filter: blur(24px) !important;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .overview-card:hover, .bg-card:hover, .timeline-content:hover, .method-card:hover, .online-card:hover, .eval-card:hover, .effect-card:hover {
+            transform: translateY(-8px) scale(1.02) !important;
+            border-color: var(--primary) !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+            position: relative;
+        }
+
+        html[data-theme='light'] .overview-card:hover,
+        html[data-theme='light'] .bg-card:hover,
+        html[data-theme='light'] .timeline-content:hover,
+        html[data-theme='light'] .method-card:hover,
+        html[data-theme='light'] .online-card:hover,
+        html[data-theme='light'] .eval-card:hover,
+        html[data-theme='light'] .effect-card:hover {
+            border-color: var(--primary) !important;
+            animation: none !important;
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.1), 0 0 0 2px var(--primary) inset !important;
+        }
+
+        /* ───── ULTRA-PREMIUM LIGHT MODE VISUALIZATION FOR LEVEL-UP ───── */
+        html[data-theme='light'] body { background: #f8fafc !important; color: #0f172a !important; }
+        
+        html[data-theme='light'] .hero::before {
+            background: radial-gradient(ellipse at 30% 50%, rgba(0, 102, 255, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(0, 198, 255, 0.08) 0%, transparent 60%) !important;
+        }
+
+        html[data-theme='light'] .hero h1 span,
+        html[data-theme='light'] .method-num,
+        html[data-theme='light'] .section-title span {
+            background: linear-gradient(135deg, #0066ff, #00c6ff) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
+        }
+
+        html[data-theme='light'] .hero-sub { color: #475569 !important; font-weight: 500; }
+
+        html[data-theme='light'] .section-label { color: #0066ff !important; background: rgba(0, 102, 255, 0.08); display: inline-block; padding: 4px 12px; border-radius: 50px; }
+
+        html[data-theme='light'] .overview-card, html[data-theme='light'] .bg-card, html[data-theme='light'] .timeline-content, html[data-theme='light'] .method-card, html[data-theme='light'] .online-card, html[data-theme='light'] .eval-card, html[data-theme='light'] .effect-card {
+            background: rgba(255, 255, 255, 0.8) !important; border: 1px solid rgba(15, 23, 42, 0.08) !important; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.03) !important; border-radius: 20px !important; color: #1e293b !important;
+        }
+
+        html[data-theme='light'] .bg-card::after { background: linear-gradient(to bottom, #0066ff, #00c6ff) !important; }
+
+        html[data-theme='light'] .bg-card h3, html[data-theme='light'] .timeline-content h3, html[data-theme='light'] .method-card h3, html[data-theme='light'] .online-card h3, html[data-theme='light'] .eval-card h3, html[data-theme='light'] .effect-card h3 { color: #0f172a !important; font-weight: 800 !important; }
+        html[data-theme='light'] .bg-card p, html[data-theme='light'] .timeline-content .desc, html[data-theme='light'] .method-card p, html[data-theme='light'] .online-card p, html[data-theme='light'] .eval-card ul li, html[data-theme='light'] .effect-card p { color: #475569 !important; }
+
+        html[data-theme='light'] .timeline-dot { background: #ffffff !important; border: 2px solid #0066ff !important; color: #0066ff !important; box-shadow: 0 4px 12px rgba(0, 102, 255, 0.15); }
+        html[data-theme='light'] .timeline-axis { background: linear-gradient(to bottom, #0066ff, #00c6ff) !important; }
+
+        html[data-theme='light'] .badge-blue, html[data-theme='light'] .month-badge { background: rgba(0, 102, 255, 0.1) !important; color: #0066ff !important; border: 1px solid rgba(0, 102, 255, 0.2) !important; }
+        html[data-theme='light'] .badge-pink { background: rgba(236, 72, 153, 0.1) !important; color: #ec4899 !important; border: 1px solid rgba(236, 72, 153, 0.2) !important; }
+        html[data-theme='light'] .badge-green, html[data-theme='light'] .output-tag { background: rgba(16, 185, 129, 0.1) !important; color: #10b981 !important; border: 1px solid rgba(16, 185, 129, 0.2) !important; }
+
+        html[data-theme='light'] th { background: rgba(15, 23, 42, 0.04) !important; color: #334155 !important; font-weight: 800; }
+        html[data-theme='light'] table td { color: #475569 !important; }
+
+        /* ───── NAV VISIBILITY OVERRIDE (LIGHT MODE) ───── */
+        html[data-theme='light'] nav {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.1) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+        }
+        html[data-theme='light'] nav a {
+            color: #334155 !important;
+            font-weight: 600 !important;
+        }
+        html[data-theme='light'] nav a:hover {
+            color: #0066ff !important;
+            background: rgba(0, 102, 255, 0.08) !important;
+        }
+        html[data-theme='light'] nav a.active {
+            color: #0066ff !important;
+            background: rgba(0, 102, 255, 0.12) !important;
+            font-weight: 700 !important;
+        }
+        html[data-theme='light'] .nav-home-btn {
+            background: #ffffff !important;
+            border: 1px solid rgba(0, 102, 255, 0.2) !important;
+            color: #0066ff !important;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.1) !important;
+        }
+        html[data-theme='light'] .nav-home-btn:hover {
+            background: linear-gradient(135deg, #0066ff, #00c6ff) !important;
+            color: #ffffff !important;
+            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.3) !important;
+        }
+    </style>
+</head>
+<body>
+<a href="index.html" class="brand-fixed">세명컴퓨터고등학교 <span>X</span> 서강대학교 미래교육원</a>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div>
+    <div class="hero-badge">🎮 세명컴퓨터고등학교 · 게임소프트웨어과 3학년</div>
+    <h1>세명 <span>Level-Up</span><br>취업성공 프로젝트</h1>
+    <p class="hero-sub">데이터 · 코칭 · 매칭 기반 진로·취업 통합 지원 프로그램</p>
+    <div class="hero-meta">
+      <div class="meta-item"><strong>대상</strong>게임소프트웨어과 3학년 18명</div>
+      <div class="meta-item"><strong>기간</strong>2026년 4월 ~ 11월 (8개월)</div>
+      <div class="meta-item"><strong>작성자</strong>커리어개발전문가 정성희</div>
+      <div class="meta-item"><strong>작성일</strong>2026.03.30</div>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ 스크롤하여 내용 보기</div>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#top" class="nav-link active">Level-Up_Job_Success_Project_Plan</a>
+  <a href="#background" class="nav-link">1. 추진 배경</a>
+  <a href="#overview" class="nav-link">2. 프로그램 개요</a>
+  <a href="#structure" class="nav-link">3. 연간 운영 구조</a>
+  <a href="#schedule" class="nav-link">4. 세부 일정표</a>
+  <a href="#monthly" class="nav-link">5. 월별 상세</a>
+  <a href="#method" class="nav-link">6. 운영 방식</a>
+  <a href="#consult" class="nav-link">7. 1:1 컨설팅</a>
+  <a href="#evaluation" class="nav-link">8. 평가 및 환류</a>
+  <a href="#effect" class="nav-link">9. 기대 효과</a>
+  <div class="nav-right-group"><a href="index.html" class="nav-home-btn" title="메인 페이지로 이동">
+    <i class="ri-home-4-line"></i>
+  </a>
+        <!-- THEME TOGGLE -->
+        <button id="theme-toggle-btn" style="background: transparent; border: none; color: var(--txt-h); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; padding: 0;" aria-label="?뚮쭏 ?꾪솚">
+            <i class="ri-sun-line theme-icon" id="theme-icon"></i>
+        </button></div>
+    </nav>
+
+<!-- 1. 추진 배경 -->
+<section id="background">
+  <div class="section-label">Section 01</div>
+  <h2 class="section-title">추진 배경 및 <span>필요성</span></h2>
+  <div class="bg-cards">
+    <div class="bg-card">
+      <h3>🏛️ 국책사업 성과 제고</h3>
+      <p>고졸인력양성사업의 운영 취지에 부합하도록, 전년도 대비 취업 성과 향상을 위한 체계적이고 지속적인 지원 체계가 필요합니다. 최종 취업 현황은 공공DB 및 보험 가입 정보 기준을 참고하여 보다 정확하게 점검합니다.</p>
+    </div>
+    <div class="bg-card">
+      <h3>🎮 전공 특화 맞춤형 전략</h3>
+      <p>게임학과 학생들의 특성상 포트폴리오, 직무 적합성, 산업체 이해가 중요합니다. 게임 산업 직무 분석과 스토리텔링 기반 커리어 설계를 통해 관련 업종 취업과 계약학과 진학 가능성을 함께 고려한 맞춤형 진로 설계가 필요합니다.</p>
+    </div>
+    <div class="bg-card">
+      <h3>🔀 진로 경로의 다변화 대응</h3>
+      <p>고3 학생들이 대학진학, 계약학과 진학, 관련 업종 취업, 산업체 연계 취업, 창업 등 다양한 선택지를 이해하고, 자신의 상황에 맞는 경로를 선택할 수 있도록 체계적인 안내와 상담이 필요합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 프로그램 개요 -->
+<section id="overview">
+  <div class="section-label">Section 02</div>
+  <h2 class="section-title">프로그램 <span>개요</span></h2>
+  <p style="color:var(--text-muted);line-height:1.9;margin-bottom:2rem;">본 계획안은 세명컴퓨터고 게임소프트웨어과 3학년 학생들이 졸업 후 다양한 진로 경로를 이해하고, 취업 및 계약학과 진학으로 실질적으로 연결될 수 있도록 지원하기 위해 수립한 연간 운영안입니다. 학생별 진단(Data), 밀착형 상담(Coaching), 실전 연계(Matching)를 핵심 축으로 단계별 지원 체계를 구축합니다.</p>
+  <div class="overview-grid">
+    <div class="overview-card"><div class="icon">🎓</div><h3>대상</h3><p>게임소프트웨어과 3학년 18명</p></div>
+    <div class="overview-card"><div class="icon">📅</div><h3>기간</h3><p>2026년 4월 ~ 11월 (총 8개월)</p></div>
+    <div class="overview-card"><div class="icon">📍</div><h3>장소</h3><p>세명컴퓨터고 실습실 + 서강대 미래교육원</p></div>
+    <div class="overview-card"><div class="icon">💡</div><h3>핵심 가치</h3><p>Data · Coaching · Matching</p></div>
+  </div>
+</section>
+
+<!-- 3. 연간 운영 구조 -->
+<section id="structure">
+  <div class="section-label">Section 03</div>
+  <h2 class="section-title">연간 운영 <span>구조</span></h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;" class="half-grid">
+    <div class="bg-card">
+      <h3>☀️ 상반기 — 기반 구축</h3>
+      <p>학생 이해와 진로 방향 설정을 위한 기반 구축 단계입니다.<br><br>
+      <strong style="color:#c4b5fd;">4월</strong> 마음진단 → <strong style="color:#c4b5fd;">5월</strong> 자기탐색 → <strong style="color:#c4b5fd;">6월</strong> 역량강화<br><br>
+      대학진학, 계약학과 진학, 관련 업종 취업, 산업체 연계 가능성, 창업 탐색 등 학생별 진로 경로를 구체화합니다.</p>
+    </div>
+    <div class="bg-card">
+      <h3>🍂 하반기 — 성과 도출</h3>
+      <p>개별 코칭과 실전 연계 중심의 성과 도출 단계입니다.<br><br>
+      <strong style="color:#f9a8d4;">7월</strong> 심층코칭 → <strong style="color:#f9a8d4;">8월</strong> 실전훈련 → <strong style="color:#f9a8d4;">9월</strong> 집중지원 → <strong style="color:#f9a8d4;">10월</strong> 매칭안착 → <strong style="color:#f9a8d4;">11월</strong> 성과보고<br><br>
+      취업 및 계약학과 진학으로의 실질적 연결을 강화합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 세부 일정표 -->
+<section id="schedule">
+  <div class="section-label">Section 04</div>
+  <h2 class="section-title">세부 추진 <span>일정표</span></h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>일정</th><th>주제</th><th>세부 운영 내용</th><th>핵심 산출물</th><th>장소</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="badge badge-blue">마음진단</span></td><td>4월 중</td><td>직업심리검사 기반 진로 프로파일링</td><td>직업흥미검사·직업가치관검사 실시, 결과 해석상담, 학생별 진로 1차 분류</td><td>검사 결과지, 진로 프로파일 카드, 개인별 로드맵 기초안</td><td>세명고</td></tr>
+        <tr><td><span class="badge badge-blue">자기탐색</span></td><td>5월 중</td><td>게임 산업 직무 이해와 진로 방향 설정</td><td>게임 산업 구조 이해, 기획·개발·아트·QA 직무 분석, 희망 직무·타겟 기업 설정</td><td>희망 직무표, 타겟 기업 리스트, 진로 방향 설정지</td><td>세명고</td></tr>
+        <tr><td><span class="badge badge-blue">역량강화</span></td><td>6월 중</td><td>스토리텔링 기반 실전 서류 구축</td><td>자기소개서 작성, 포트폴리오 구성, 프로젝트 경험의 직무 언어화</td><td>자기소개서 초안, 포트폴리오 목차, 대표 프로젝트 설명문</td><td>세명고</td></tr>
+        <tr><td><span class="badge badge-pink">심층코칭</span></td><td>7월(방학)</td><td>서강대 연계 1:1 개별 컨설팅</td><td>서강대 미래교육원 상담실 1:1 상담, 자기소개서·포트폴리오 최종 검수</td><td>수정 자소서, 포트폴리오 보완안, 개인별 체크리스트</td><td>서강대</td></tr>
+        <tr><td><span class="badge badge-pink">실전훈련</span></td><td>8월 중</td><td>면접 스피치와 자기표현 훈련</td><td>1분 자기소개, 모의면접, 산업체·계약학과 면접 대응 훈련</td><td>1분 자기소개문, 면접 피드백 카드</td><td>세명고</td></tr>
+        <tr><td><span class="badge badge-pink">집중지원</span></td><td>9월 중</td><td>하반기 채용 실전 지원 관리</td><td>채용 공고 분석, 지원 플랫폼 활용, 실제 입사지원 개시</td><td>지원 현황표, 기업별 지원 리스트, 면접 준비 체크리스트</td><td>세명고</td></tr>
+        <tr><td><span class="badge badge-pink">매칭안착</span></td><td>10월 중</td><td>미취업자 집중 매칭 및 직무고도화</td><td>추가 매칭 상담, 근로기준법·근로계약 교육, 직장 적응 교육</td><td>입사 전 체크리스트, 미취업자 보완상담 기록</td><td>세명고</td></tr>
+        <tr><td><span class="badge badge-green">성과보고</span></td><td>11월 중</td><td>최종 성과 분석 및 사후관리</td><td>최종 취업·진학 현황 점검, 우수사례 공유, 만족도 조사</td><td>최종 성과 정리표, 만족도 조사 결과, 결과보고서</td><td>세명고</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 5. 월별 상세 -->
+<section id="monthly">
+  <div class="section-label">Section 05</div>
+  <h2 class="section-title">월별 운영 <span>상세</span></h2>
+  <div class="timeline">
+    <div class="timeline-axis"></div>
+    <div class="timeline-item">
+      <div class="timeline-dot">4월</div>
+      <div class="timeline-content">
+        <span class="month-badge">마음진단</span>
+        <h3>직업심리검사 기반 진로 프로파일링</h3>
+        <p class="desc">4월은 프로그램의 출발 단계로 학생들의 흥미와 가치관을 객관적으로 확인합니다. 1교시에는 직업흥미검사, 2교시에는 직업가치관검사를 실시하고, 학생별 강점 키워드와 진로 방향을 정리합니다. 대학진학형, 계약학과 진학형, 관련 업종 취업형, 창업탐색형으로 1차 분류합니다.</p>
+        <div class="output-tags">
+          <span class="output-tag">검사 결과지</span>
+          <span class="output-tag">진로 프로파일 카드</span>
+          <span class="output-tag">개인별 로드맵 기초안</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">5월</div>
+      <div class="timeline-content">
+        <span class="month-badge">자기탐색</span>
+        <h3>게임 산업 직무 이해와 진로 방향 설정</h3>
+        <p class="desc">게임 산업의 구조와 주요 직무를 이해하고, 학생별 흥미·가치관 결과와 연결해 현실적인 진로 방향을 설정합니다. 기획, 개발, 아트, QA 직무를 비교 분석하고, 학생별 희망 직무와 타겟 기업·타겟 학과를 설정합니다.</p>
+        <div class="output-tags">
+          <span class="output-tag">희망 직무표</span>
+          <span class="output-tag">타겟 기업 리스트</span>
+          <span class="output-tag">진로 방향 설정지</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">6월</div>
+      <div class="timeline-content">
+        <span class="month-badge">역량강화</span>
+        <h3>스토리텔링 기반 실전 서류 구축</h3>
+        <p class="desc">학생들이 보유한 프로젝트 경험과 실습 결과물을 채용 언어로 전환합니다. 자기소개서 1차 초안 작성, 포트폴리오 목차 설계, 대표 작업물 선정 및 설명문 작성을 진행합니다. 대면 강의 이후 초안은 온라인 피드백 방식으로 보완합니다.</p>
+        <div class="output-tags">
+          <span class="output-tag">자기소개서 초안</span>
+          <span class="output-tag">포트폴리오 목차</span>
+          <span class="output-tag">대표 프로젝트 설명문</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:var(--secondary);color:var(--secondary);">7월</div>
+      <div class="timeline-content">
+        <span class="month-badge" style="background:rgba(255,101,132,.2);color:#fca5a5;border-color:rgba(255,101,132,.3);">심층코칭</span>
+        <h3>서강대 연계 1:1 개별 컨설팅</h3>
+        <p class="desc">여름방학 중 서강대학교 미래교육원 상담실에서 학생별 1:1 심층 커리어 컨설팅을 진행합니다. 자기소개서와 포트폴리오를 개별 검수하고, 하반기 취업 지원 전략, 계약학과 진학 가능성, 대학진학 여부를 점검합니다.</p>
+        <div class="output-tags">
+          <span class="output-tag">수정 자소서</span>
+          <span class="output-tag">포트폴리오 보완안</span>
+          <span class="output-tag">개인별 체크리스트</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:var(--secondary);color:var(--secondary);">8월</div>
+      <div class="timeline-content">
+        <span class="month-badge" style="background:rgba(255,101,132,.2);color:#fca5a5;border-color:rgba(255,101,132,.3);">실전훈련</span>
+        <h3>면접 스피치와 자기표현 훈련</h3>
+        <p class="desc">게임 업계 및 관련 업종 면접 질문을 분석하고, 1분 자기소개와 포트폴리오 발표를 훈련합니다. 모의면접과 피드백을 통해 태도, 표정, 시선, 목소리 등 비언어적 요소까지 점검합니다.</p>
+        <div class="output-tags">
+          <span class="output-tag">1분 자기소개문</span>
+          <span class="output-tag">면접 피드백 카드</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:var(--secondary);color:var(--secondary);">9월</div>
+      <div class="timeline-content">
+        <span class="month-badge" style="background:rgba(255,101,132,.2);color:#fca5a5;border-color:rgba(255,101,132,.3);">집중지원</span>
+        <h3>하반기 채용 실전 지원 관리</h3>
+        <p class="desc">하반기 공채 및 상시채용에 대비하여 실제 지원 행동이 이루어지도록 집중 지원합니다. 채용 공고 분석, 지원 플랫폼 활용, 제출 서류 점검, 서류 합격자 후속 면접 코칭을 진행합니다.</p>
+        <div class="output-tags">
+          <span class="output-tag">지원 현황표</span>
+          <span class="output-tag">기업별 지원 리스트</span>
+          <span class="output-tag">면접 준비 체크리스트</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:var(--secondary);color:var(--secondary);">10월</div>
+      <div class="timeline-content">
+        <span class="month-badge" style="background:rgba(255,101,132,.2);color:#fca5a5;border-color:rgba(255,101,132,.3);">매칭안착</span>
+        <h3>미취업자 집중 매칭 및 직무고도화</h3>
+        <p class="desc">미취업 학생에게는 추가 매칭 상담과 지원 방향 재설정을 제공하고, 취업 예정 학생에게는 근로기준법, 근로계약, 비즈니스 매너, 게임 실무 프로세스 이해 등 직장 적응 역량 강화 교육을 실시합니다.</p>
+        <div class="output-tags">
+          <span class="output-tag">입사 전 체크리스트</span>
+          <span class="output-tag">미취업자 보완상담 기록</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="border-color:var(--accent);color:var(--accent);">11월</div>
+      <div class="timeline-content">
+        <span class="month-badge" style="background:rgba(67,233,123,.2);color:#6ee7b7;border-color:rgba(67,233,123,.3);">성과보고</span>
+        <h3>최종 성과 분석 및 사후관리</h3>
+        <p class="desc">최종 취업 현황을 점검하고 프로그램 운영 결과를 정리합니다. 우수사례 공유, 만족도 조사, 학생별 변화 정리, 미취업자 후속 지원 안내를 통해 프로그램을 책임 있게 마무리합니다.</p>
+        <div class="output-tags">
+          <span class="output-tag">최종 성과 정리표</span>
+          <span class="output-tag">만족도 조사 결과</span>
+          <span class="output-tag">결과보고서</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. 운영 방식 -->
+<section id="method">
+  <div class="section-label">Section 06</div>
+  <h2 class="section-title">운영 방식별 <span>세부 기준</span></h2>
+  <div class="method-grid">
+    <div class="method-card">
+      <div class="method-num">01</div>
+      <h3>전체 집합교육형</h3>
+      <p>50분씩 2교시를 기본 구조로 운영합니다. 진로 인식 확장, 게임 산업 직무 이해, 자기소개서·면접 기초 훈련, 직장 적응 교육 등에 적용합니다.</p>
+    </div>
+    <div class="method-card">
+      <div class="method-num">02</div>
+      <h3>1:1 개별면담형</h3>
+      <p>학생별 진로 방향 점검, 자기소개서·포트폴리오 피드백, 실전 지원 전략 수립에 적합합니다. 7월 서강대 미래교육원 심층코칭이 핵심 운영입니다.</p>
+    </div>
+    <div class="method-card">
+      <div class="method-num">03</div>
+      <h3>온라인 점검형</h3>
+      <p>과제 제출, 문서 피드백, 지원 현황 추적, 짧은 후속 상담에 적합합니다. 대면 수업의 연속성을 보완하고 학생별 진행 상황을 놓치지 않기 위해 병행 운영합니다.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:3rem;margin-bottom:1rem;font-size:1.1rem;font-weight:700;">월별 운영 흐름 및 강의형태</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>월</th><th>운영 주제</th><th>강의형태</th><th>운영 시간</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>4월</td><td>마음진단</td><td>집합교육 + 개별 해석상담</td><td>집합 100분 + 해석상담 1인 10분 내외</td></tr>
+        <tr><td>5월</td><td>자기탐색</td><td>집합교육형</td><td>50분×2교시 (총 100분)</td></tr>
+        <tr><td>6월</td><td>역량강화</td><td>집합교육 + 온라인 피드백</td><td>집합 100분 + 온라인 피드백 1회</td></tr>
+        <tr><td>7월</td><td>심층코칭</td><td>1:1 개별상담형</td><td>권장: 1인 40분 × 18명 = 총 12시간</td></tr>
+        <tr><td>8월</td><td>실전훈련</td><td>집합교육형</td><td>50분×2교시 (총 100분)</td></tr>
+        <tr><td>9월</td><td>집중지원</td><td>집합교육 + 온라인 점검</td><td>집합 100분 + 온라인 점검 월 1회</td></tr>
+        <tr><td>10월</td><td>매칭안착</td><td>집합교육 + 개별 보완상담</td><td>집합 100분 + 보완상담 1인 15분 내외</td></tr>
+        <tr><td>11월</td><td>성과보고</td><td>집합교육형(성과공유형)</td><td>50분×2교시 (총 100분)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 7. 1:1 컨설팅 -->
+<section id="consult">
+  <div class="section-label">Section 07</div>
+  <h2 class="section-title">1:1 개별면담 <span>운영안</span></h2>
+  <p style="color:var(--text-muted);margin-bottom:2rem;">7월 심층코칭은 사전 자료 제출과 연계한 1:1 개별상담 형태로 운영합니다. 학생 수 18명 기준 운영 시간 계산표입니다.</p>
+  <div class="table-wrap consult-table">
+    <table>
+      <thead>
+        <tr><th>상담 시간</th><th>총 운영 시간</th><th>운영 해석</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1인 60분</td><td>18명 × 60분 = 총 18시간</td><td>최소 3일 이상 운영 필요</td></tr>
+        <tr><td><strong style="color:var(--accent);">1인 40분 ⭐ 권장</strong></td><td>18명 × 40분 = 총 12시간</td><td>하루 6시간 기준 2일 운영 가능</td></tr>
+        <tr><td>1인 30분</td><td>18명 × 30분 = 총 9시간</td><td>사전 자료 검토가 충분할 때 가능</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="bg-card" style="margin-top:1.5rem;">
+    <h3>✅ 권장 운영 방식</h3>
+    <p>「사전 자료 제출 + 1인 40분 상담」 방식을 권장합니다. 학생들은 상담 전에 자기소개서 초안과 포트폴리오를 제출하고, 상담 당일에는 목표 직무 점검, 자료 피드백, 하반기 지원 전략 정리, 체크리스트 작성 중심으로 진행합니다.</p>
+  </div>
+  <div class="bg-card" style="margin-top:1rem;">
+    <h3>🌐 온라인 운영에 적합한 주제</h3>
+    <p>• <strong>6월:</strong> 자기소개서 초안, 포트폴리오 목차 및 대표 작업물 설명문 피드백<br>
+    • <strong>9월:</strong> 실제 입사지원 현황 점검 및 합격·불합격 후속 관리<br>
+    • <strong>10월:</strong> 미취업 학생 추가 점검 및 보완상담<br><br>
+    반면 4월 첫 오리엔테이션, 5월 게임 산업 직무 및 진로 경로 강의, 8월 면접 스피치 훈련은 참여도와 상호작용이 중요하므로 <strong>대면 운영이 더 적합</strong>합니다.</p>
+  </div>
+</section>
+
+<!-- 8. 평가 및 환류 -->
+<section id="evaluation">
+  <div class="section-label">Section 08</div>
+  <h2 class="section-title">평가 및 <span>환류 방안</span></h2>
+  <div class="eval-grid">
+    <div class="eval-card">
+      <h3>📊 만족도 조사 및 진단</h3>
+      <ul>
+        <li>매 회차 종료 후 만족도 조사 실시 (강의 내용, 참여도, 이해도, 만족도 점검)</li>
+        <li>프로그램 참여 전후의 진로 성숙도, 자기이해도, 취업 준비도, 계약학과 진학 준비도 변화 비교</li>
+      </ul>
+    </div>
+    <div class="eval-card">
+      <h3>🔄 환류 방안</h3>
+      <ul>
+        <li>매월 운영 결과를 학교 담당자 및 운영진과 공유하여 학생별 진행 상황 점검</li>
+        <li>취업 준비 미진 학생은 조기 파악하여 추가 상담 및 보완 과제 제공</li>
+        <li>1:1 상담 결과는 차월 프로그램에 반영하여 맞춤형 지원 지속</li>
+      </ul>
+    </div>
+  </div>
+  <h3 style="margin-top:2rem;margin-bottom:1rem;font-size:1.1rem;font-weight:700;">성과 지표</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>구분</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-blue">정량 지표</span></td><td>전년도 대비 취업 성과 향상, 프로그램 수료율 제고, 1:1 상담 운영 충실도 확보, 계약학과 진학 및 관련 업종 취업 연계 실적 점검</td></tr>
+        <tr><td><span class="badge badge-green">정성 지표</span></td><td>자기이해도 향상, 포트폴리오 완성도 제고, 면접 자신감 향상, 직장 적응력 강화, 진로 경로 구체화</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 9. 기대 효과 -->
+<section id="effect">
+  <div class="section-label">Section 09</div>
+  <h2 class="section-title">기대 <span>효과</span></h2>
+  <div class="effect-grid">
+    <div class="effect-card">
+      <div class="effect-icon">📈</div>
+      <h3>취업 성과 향상</h3>
+      <p>단계별 진단과 밀착 코칭을 통해 학생들의 관련 업종 취업 준비도와 실제 취업 연계 성과를 높일 수 있습니다.</p>
+    </div>
+    <div class="effect-card">
+      <div class="effect-icon">🏫</div>
+      <h3>학교 지원 체계 강화</h3>
+      <p>진단→탐색→구축→훈련→매칭으로 이어지는 체계적 운영 모델을 통해 취업, 계약학과, 대학진학, 산업체 연계를 아우르는 학교 차원의 지원 역량을 강화합니다.</p>
+    </div>
+    <div class="effect-card">
+      <div class="effect-icon">🌱</div>
+      <h3>학생 개별 성장 가시화</h3>
+      <p>학생 스스로 자신의 흥미, 가치관, 적성, 직무 방향을 이해하고 진로 경로를 구체화함으로써 자기주도적 진로 설계 역량을 키웁니다.</p>
+    </div>
+    <div class="effect-card">
+      <div class="effect-icon">🤝</div>
+      <h3>대학·산업체 연계 상징성</h3>
+      <p>서강대학교 미래교육원과 연계한 운영을 통해 학생들의 동기부여를 높이고, 향후 지역 고교-대학 협력 모델의 우수 사례로 발전시킵니다.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- AI 포트폴리오 가이드 섹션 -->
+<div class="ai-guide-section">
+    <div class="ai-guide-inner">
+        <div class="ai-guide-badge"><i class="ri-sparkling-2-line"></i> 2026 AI 특강</div>
+        <h2 class="ai-guide-title">AI로 만드는 <span>포트폴리오</span></h2>
+        <p class="ai-guide-desc">ChatGPT · Claude · Gamma · Midjourney 등 최신 AI 도구를 실전 활용하여, 면접관의 시선을 사로잡는 경쟁력 있는 포트폴리오를 8주 만에 완성하는 커리큘럼을 소개합니다.</p>
+        <div class="ai-guide-stats">
+            <div class="ai-stat"><span class="ai-stat-num">8주</span><span class="ai-stat-lbl">완성 커리큘럼</span></div>
+            <div class="ai-stat"><span class="ai-stat-num">6종</span><span class="ai-stat-lbl">AI 도구 실습</span></div>
+            <div class="ai-stat"><span class="ai-stat-num">100%</span><span class="ai-stat-lbl">실습 중심</span></div>
+        </div>
+        <div class="ai-guide-btns">
+            <a href="AI_Portfolio_Writing_Guide.html" class="btn-ai-main"><i class="ri-book-open-line"></i> 커리큘럼 보기</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-info">
+        <p><strong>세명컴퓨터고 'Level-Up' 취업성공프로젝트</strong></p>
+        <p>작성일: 2026.03.30 &nbsp;|&nbsp; 작성자: 커리어개발전문가 정성희</p>
+    </div>
+    <a href="index.html" class="footer-back-link">
+        <i class="ri-arrow-left-line"></i> 성과공유 플랫폼 메인으로 돌아가기
+    </a>
+    <p class="footer-copy">© 2026 미래유망분야 성과 기반 플랫폼. All Rights Reserved.</p>
+</footer>
+
+<a id="scrollTopBtn" class="scroll-top-btn"><i class="ri-arrow-up-line"></i></a>
+
+<!-- THEME SCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. 스크롤 애니메이션 (Intersection Observer)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('section, .timeline-item, .overview-card, .effect-card, .bg-card').forEach(el => observer.observe(el));
+
+    // 2. 네비게이션 활성화
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => {
+            if (window.scrollY >= s.offsetTop - 150) current = s.id;
+        });
+        navLinks.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+        });
+    });
+
+    // 3. 최상단 이동 버튼
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+        if(scrollTopBtn) {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+        }
+    });
+    if(scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // 4. 테마 토글 (Dark/Light)
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            if(themeIcon) themeIcon.className = 'ri-moon-clear-line theme-icon';
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            if(themeIcon) themeIcon.className = 'ri-sun-line theme-icon';
+        }
+    }
+    
+    applyTheme(savedTheme);
+    
+    if(toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+    }
+});
+
+// 반응형 half-grid 주입
+const gridStyle = document.createElement('style');
+gridStyle.textContent = '@media(max-width:600px){.half-grid{grid-template-columns:1fr!important;}}';
+document.head.appendChild(gridStyle);
+</script>
+</body>
+</html>
+

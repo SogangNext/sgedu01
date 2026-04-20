@@ -1,0 +1,935 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kim Woo Joo | Visual Storyteller & Video Director Portfolio</title>
+    <meta name="description" content="찰나의 순간을 영원으로, 감각적인 영상으로 메시지를 전달하는 비디오 디렉터 Kim Woo Joo의 포트폴리오입니다.">
+
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* ───── RESET & TOKENS (Standard) ───── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+                :root {
+            --font-ko: 'Pretendard', sans-serif;
+            --font-en: 'Outfit', sans-serif;
+            
+            --bg: #020617; /* ???щ젅?댄듃 釉붾옓 (留ㅼ슦 源딄퀬 怨좉툒?ㅻ윭??寃?? */
+            --bg2: #0f172a; /* ?щ젅?댄듃 ?ㅽ겕 */
+            --card: rgba(15, 23, 42, 0.4); /* ?쒖닔 ?좊━媛 ?꾨땶 諛섑닾紐??щ젅?댄듃 湲?섏뒪 */
+            --card-hv: rgba(30, 41, 59, 0.6);
+            --border: rgba(255, 255, 255, 0.06); /* 留ㅼ슦 ?뉕퀬 ?щ챸???좊━ ?뚮몢由?*/
+            --border-active: rgba(56, 189, 248, 0.4);
+            
+            --clr-1: #38bdf8;   /* ?꾨━誘몄뾼 ?ㅼ뭅???쒖븞 */
+            --clr-1-glow: rgba(56, 189, 248, 0.3);
+            --clr-2: #818cf8;   /* ?꾨━誘몄뾼 ?몃뵒怨?諛붿씠?щ젢 釉붾（) */
+            --clr-2-glow: rgba(129, 140, 248, 0.3);
+            
+            --txt-h: #ffffff; /* ?쒕갚??蹂대떎??遺?쒕윭???붿씠??*/
+            --txt-b: #e2e8f0;
+            --txt-m: #cbd5e1;
+            --txt-s: #94a3b8;
+            
+            --grad: linear-gradient(135deg, var(--clr-1) 0%, var(--clr-2) 100%);
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font-ko);
+            background: var(--bg);
+            color: var(--txt-b);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ───── SNAP SCROLL ───── */
+        #reel {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            position: relative;
+        }
+        #reel::-webkit-scrollbar { display: none; }
+
+        /* ───── PROGRESS BAR ───── */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0; width: 0; height: 3px;
+            background: var(--grad);
+            z-index: 10000;
+            transition: width .2s ease;
+        }
+
+        /* ───── NOISE & GRID BACKGROUND ───── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+            opacity: .4;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 90%);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ───── NAV (HEADER) ───── */
+        nav.top-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 24px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(3, 5, 10, .7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: var(--font-en);
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--txt-h);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+            flex: 1;
+        }
+
+        .nav-logo-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--clr-1);
+            box-shadow: 0 0 12px var(--clr-1);
+            animation: blinking 2s ease-in-out infinite;
+        }
+
+        @keyframes blinking {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--clr-1); }
+            50% { opacity: .5; box-shadow: 0 0 20px var(--clr-1); }
+        }
+
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            font-size: .85rem; font-weight: 600; color: var(--txt-m);
+            text-decoration: none; transition: all .3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--grad); transition: width .3s;
+        }
+        .nav-links a:hover { color: var(--txt-h); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ───── HERO ───── */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 180px 40px 80px;
+            overflow: hidden;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(167, 139, 250, .05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(167, 139, 250, .05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            background: rgba(167, 139, 250, .08);
+            border: 1px solid rgba(167, 139, 250, .2);
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--clr-1);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            animation: fadeUp .6s both;
+        }
+
+        .hero-name {
+            font-family: var(--font-en);
+            font-size: clamp(1.0rem, 3vw, 1.5rem);
+            font-weight: 900; color: var(--txt-h);
+            letter-spacing: 0.12em; line-height: 1.1; margin-bottom: 12px;
+            animation: fadeUp .6s .08s both;
+        }
+
+        .hero-name-ko {
+            font-size: clamp(2.0rem, 7vw, 3.2rem);
+            font-weight: 300; color: var(--txt-m);
+            margin-bottom: 32px; letter-spacing: 0.15em;
+            animation: fadeUp .6s .12s both;
+        }
+
+        .hero-title {
+            font-size: clamp(1.4rem, 2.8vw, 2.5rem);
+            font-weight: 900; line-height: 1.25; margin-bottom: 20px;
+            animation: fadeUp .6s .18s both;
+        }
+
+        .hero-title span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .hero-desc {
+            font-size: 1rem; line-height: 1.85; color: var(--txt-m);
+            max-width: 520px; margin-bottom: 36px;
+            animation: fadeUp .6s .24s both;
+        }
+
+        /* ───── PROFILE CARD ───── */
+        .profile-card {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .4);
+            animation: fadeUp .6s .2s both;
+        }
+
+        .profile-img-wrap {
+            position: relative !important;
+            width: 140px; height: 140px;
+            margin: 0 auto 24px;
+            z-index: 2;
+        }
+
+        .hero-main-img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.45);
+            background: linear-gradient(var(--bg2), var(--bg2)) padding-box, var(--grad) border-box;
+            position: relative;
+            z-index: 5;
+            transition: .6s;
+        }
+
+        html:not([data-theme='light']) .hero-main-img {
+            background: #ffffff !important;
+            border: 4px solid #ffffff !important;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                0 0 25px rgba(255, 255, 255, 0.45),
+                0 0 50px rgba(0, 242, 254, 0.3);
+            padding: 3px;
+            z-index: 5;
+        }
+
+        .profile-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 242, 254, 0.4);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            pointer-events: none;
+            animation: profile-ring-pulse 3s infinite;
+            z-index: 1;
+        }
+
+        @keyframes profile-ring-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        .profile-card:hover 
+
+        .status-badge {
+            position: absolute; bottom: 10px; right: 10px;
+            width: 20px; height: 20px; border-radius: 50%;
+            background: var(--clr-1); border: 4px solid var(--bg);
+            box-shadow: 0 0 15px var(--clr-1-glow);
+            animation: blinking 2s ease-in-out infinite;
+        }
+
+        .profile-name-en { font-family: var(--font-en); font-size: 1.2rem; font-weight: 800; color: var(--txt-h); margin-bottom: 4px; letter-spacing: -0.5px; }
+        .profile-role { font-size: .88rem; color: var(--clr-1); font-weight: 800; margin-bottom: 24px; letter-spacing: 1px; text-transform: uppercase; }
+
+        .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+        .stat-box { background: rgba(255, 255, 255, .04); border: 1px solid var(--border); border-radius: 16px; padding: 16px 8px; }
+        .stat-val { font-family: var(--font-en); font-size: 1.4rem; font-weight: 800; color: var(--txt-h); }
+        .stat-lbl { font-size: .65rem; color: var(--txt-s); margin-top: 6px; text-transform: uppercase; font-weight: 800; }
+
+        .profile-info {
+            display: flex; flex-direction: column; gap: 14px; text-align: left;
+            margin-top: 24px; border-top: 1px solid var(--border); padding-top: 24px;
+        }
+        .profile-info-item { display: flex; align-items: center; gap: 12px; font-size: .88rem; color: var(--txt-m); }
+        .profile-info-item i { color: var(--clr-1); font-size: 1.2rem; }
+
+        /* ───── SECTIONS ───── */
+        section {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 100px 40px; position: relative; z-index: 10;
+            scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden;
+        }
+
+        .inner { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+        .sec-label {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: .78rem; font-weight: 800; font-family: var(--font-en);
+            color: var(--clr-2); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px;
+        }
+        .sec-label::before { content: ''; width: 32px; height: 1px; background: var(--clr-2); }
+
+        .sec-title { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 900; color: var(--txt-h); margin-bottom: 48px; letter-spacing: -2px; line-height: 1.1; }
+
+        /* ───── BENTO GRID (IDENTITY) ───── */
+        .bento-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; margin-top: 20px; }
+        .bento-item {
+            background: var(--card); border: 1px solid var(--border); border-radius: 32px;
+            padding: 40px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative; overflow: hidden;
+        }
+        .bento-item:hover { border-color: var(--clr-1-glow); background: var(--card-hv); transform: translateY(-5px); }
+        .bento-item h3 { font-size: 1.4rem; color: var(--txt-h); font-weight: 800; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+        .bento-item h3 i { color: var(--clr-1); }
+        
+        .bento-vision {
+            display: flex; flex-direction: column; justify-content: center;
+            background: linear-gradient(135deg, rgba(167, 139, 250, .08) 0%, transparent 100%), var(--card);
+        }
+        .vision-quote { font-size: 1.95rem; font-weight: 900; line-height: 1.4; color: var(--txt-h); margin-bottom: 28px; letter-spacing: -1px; }
+        .vision-quote span { color: var(--clr-1); }
+        
+        .system-list { display: flex; flex-direction: column; gap: 20px; }
+        .mini-card { display: flex; gap: 18px; align-items: flex-start; }
+        .mini-icon {
+            width: 48px; height: 48px; border-radius: 14px; background: rgba(167, 139, 250, .1);
+            display: flex; align-items: center; justify-content: center; color: var(--clr-1); flex-shrink: 0;
+            border: 1px solid rgba(167, 139, 250, .1);
+        }
+        .mini-content p:first-child { font-weight: 800; color: var(--txt-h); font-size: 1.05rem; margin-bottom: 4px; }
+        .mini-content p:last-child { font-size: .88rem; color: var(--txt-m); line-height: 1.6; }
+
+        /* ───── MAIN REEL SECTION ───── */
+        .visual-box {
+            position: relative; border-radius: 32px; overflow: hidden; border: 1px solid var(--border);
+            aspect-ratio: 16/9; background: #000; box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+        }
+        .video-player { width: 100%; height: 100%; object-fit: cover; }
+        
+        .tech-panel {
+            background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+            padding: 28px 40px; margin-top: 32px; max-width: 900px; width: 100%;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+        }
+        .tech-spec { display: flex; flex-direction: column; gap: 8px; }
+        .spec-lbl { color: var(--clr-1); font-weight: 800; font-size: .7rem; text-transform: uppercase; letter-spacing: 1px; }
+        .spec-val { color: var(--txt-h); font-weight: 700; font-size: 1.1rem; }
+
+        /* ───── WORK SHOWCASE ───── */
+        .work-layout { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 48px; align-items: center; }
+        .work-info { display: flex; flex-direction: column; }
+        .work-title { font-size: 2.8rem; font-weight: 900; color: var(--txt-h); margin-bottom: 24px; letter-spacing: -1.5px; line-height: 1.2; }
+        
+        .work-desc-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+        .work-desc-list li { display: flex; gap: 12px; font-size: 1rem; color: var(--txt-b); line-height: 1.6; }
+        .work-desc-list li i { color: var(--clr-1); font-size: 1.2rem; margin-top: 2px; }
+
+        .channel-stats { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; padding: 16px 24px; background: rgba(255, 255, 255, .03); border-radius: 16px; border-left: 4px solid var(--clr-2); }
+        .subs-val { font-size: 2.22rem; font-weight: 900; color: var(--clr-2); }
+        .subs-lbl { font-size: .9rem; color: var(--txt-m); font-weight: 500; }
+
+        /* ───── DOT NAVIGATION ───── */
+        #nav-dots {
+            position: fixed; right: 32px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 12px; z-index: 9999;
+        }
+        .nav-dot {
+            width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, .15);
+            border: 1.5px solid var(--border); cursor: pointer; transition: all .4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .nav-dot.active {
+            background: var(--clr-1); height: 32px; border-radius: 10px; border-color: var(--clr-1);
+            box-shadow: 0 0 15px var(--clr-1-glow);
+        }
+
+        /* ───── ANIMATION STATE ───── */
+        .slide-content { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.23, 1, 0.32, 1); }
+        section.active .slide-content { opacity: 1; transform: translateY(0); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        
+        .nav-right-group { flex: 1; display: flex; align-items: center; gap: 12px; justify-content: flex-end; }
+        .nav-home-btn {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--txt-h);
+            font-size: 2rem;
+            text-decoration: none;
+            transition: all .3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .nav-home-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            border-color: var(--clr-1);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 30px var(--clr-1-glow);
+        }
+
+        /* ───── SCROLL TOP BUTTON ───── */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            color: var(--txt-h);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .scroll-top-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px var(--clr-1-glow);
+        }
+        .scroll-top-btn i { transition: transform 0.3s ease; }
+        .scroll-top-btn:hover i { transform: translateY(-3px); }
+        .nav-home-btn:hover {
+            background: var(--grad);
+            color: var(--bg);
+            border-color: var(--clr-1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--clr-1-glow);
+        }
+
+        /* ───── MOBILE ───── */
+        @media (max-width: 1024px) {
+            
+        .nav-right-group { flex: 1; display: flex; align-items: center; gap: 12px; justify-content: flex-end; }
+        .nav-home-btn { width: 52px; height: 52px; font-size: 1.4rem; }
+            .hero-inner, .bento-grid, .work-layout, .tech-panel { grid-template-columns: 1fr; gap: 40px; }
+            .hero-text { text-align: center; display: flex; flex-direction: column; align-items: center; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-card { max-width: 480px; margin: 0 auto; }
+            section { height: auto; min-height: 100vh; padding: 120px 24px; }
+            .tech-panel { grid-template-columns: repeat(2, 1fr); padding: 32px; }
+        }
+    
+                /* ????? HIGH-END LIGHT MODE ????? */
+        html[data-theme='light'] {
+            --bg: #f8fafc;
+            --bg2: #f1f5f9;
+            --card: rgba(255, 255, 255, 0.7);
+            --card-hv: rgba(255, 255, 255, 0.9);
+            --border: rgba(15, 23, 42, 0.08); /* 留ㅼ슦 ????寃쎄퀎??*/
+            --border-active: rgba(0, 122, 255, 0.4);
+            
+            --clr-1: #0066ff; /* ?꾨━誘몄뾼 釉붾（ */
+            --clr-1-glow: rgba(0, 102, 255, 0.2);
+            --clr-2: #00c6ff; /* ?꾨━誘몄뾼 ?쒖븞 */
+            --clr-2-glow: rgba(0, 198, 255, 0.2);
+            
+            --txt-h: #0f172a; /* ??李⑥퐳 */
+            --txt-b: #334155; 
+            --txt-m: #64748b;
+            --txt-s: #94a3b8;
+        }
+
+        /* ?쇱씠??紐⑤뱶 ?꾩슜 洹몃┝???ㅻ벉湲?(寃怨??곹븳 洹몃┝??以묓솕) */
+        html[data-theme='light'] .portfolio-card, 
+        html[data-theme='light'] .hero-logo-card {
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+            backdrop-filter: blur(24px);
+        }
+
+        html[data-theme='light'] .portfolio-card:hover, 
+        html[data-theme='light'] .hero-logo-card:hover {
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(0, 102, 255, 0.3) inset !important;
+            border-color: var(--clr-1);
+        }
+
+        html[data-theme='light'] .bg-grid {
+            opacity: 0.5;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+        }
+
+        html[data-theme='light'] nav {
+            background: rgba(248, 250, 252, 0.85); /* 留ㅼ슦 遺?쒕윭???ㅻ뜑 */
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(20px);
+        }
+
+        html[data-theme='light'] footer {
+            background: #f1f5f9;
+            border-top: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        html[data-theme='light'] .hero-badge {
+            background: rgba(0, 102, 255, 0.08);
+            border: 1px solid rgba(0, 102, 255, 0.15);
+            color: #0055ff;
+        }
+            /* ????? DYNAMIC CARD SELECTION ANIMATION ????? */
+        @keyframes pulseBorder {
+            0% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+            50% { box-shadow: 0 0 50px rgba(0, 122, 255, 0.6), 0 0 0 3px rgba(0, 198, 255, 0.8) inset; }
+            100% { box-shadow: 0 0 20px rgba(0, 198, 255, 0.2), 0 0 0 2px rgba(0, 198, 255, 0.2) inset; }
+        }
+
+        .portfolio-card, html[data-theme='light'] .portfolio-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+        }
+
+        .portfolio-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .portfolio-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        .card-arrow {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .portfolio-card:hover .card-arrow {
+            transform: translate(12px, -12px) scale(1.4) !important;
+            background: linear-gradient(135deg, #00c6ff, #0066ff) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px rgba(0, 198, 255, 0.5) !important;
+        }
+            /* ????? EXTRA DYNAMIC CARD SELECTION ANIMATION (INNER PROJECTS) ????? */
+        .proj-card, html[data-theme='light'] .proj-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .proj-card:hover {
+            transform: translateY(-16px) scale(1.03) !important;
+            border-color: #00c6ff !important;
+            animation: pulseBorder 1.5s infinite alternate !important;
+            z-index: 50;
+            position: relative;
+        }
+
+        .proj-card:active {
+            transform: translateY(-5px) scale(0.98) !important;
+            opacity: 0.9 !important;
+        }
+
+        html[data-theme='light'] .proj-card:hover {
+            border-color: #0066ff !important;
+            animation: none !important;
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.15), 0 0 0 3px rgba(0, 102, 255, 0.3) inset, 0 0 30px rgba(0, 102, 255, 0.1) !important;
+        }
+
+        /* Bento Grid items hover enhancement */
+        .bento-item, html[data-theme='light'] .bento-item {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-8px) scale(1.01) !important;
+            border-color: var(--clr-1) !important;
+            box-shadow: 0 20px 40px rgba(0, 198, 255, 0.3), 0 0 0 1px rgba(0, 198, 255, 0.2) inset !important;
+            z-index: 20;
+        }
+
+        html[data-theme='light'] .bento-item:hover {
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 0 0 2px rgba(0, 102, 255, 0.2) inset !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <button class="scroll-top-btn" onclick="scrollToSection('#hero')" title="최상단으로 이동">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+
+    <nav class="top-nav">
+        <a href="#hero" class="nav-logo">
+            <div class="nav-logo-dot"></div>
+            KIM WOO JOO
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about" onclick="scrollToSection('#about')">Identity</a></li>
+            <li><a href="#works" onclick="scrollToSection('#works')">Works</a></li>
+            <li><a href="#contact" onclick="scrollToSection('#contact')">Contact</a></li>
+        </ul>
+        <div class="nav-right-group"><a href="index.html#kimwooju" class="nav-home-btn" title="메인 페이지로 이동">
+            <i class="ri-home-4-line"></i>
+        </a>
+            <!-- THEME TOGGLE -->
+        <button id="theme-toggle-btn" style="background: transparent; border: none; color: var(--txt-h); font-size: 1.5rem; cursor: pointer; transition: color 0.3s; padding: 0;" aria-label="?뚮쭏 ?꾪솚">
+            <i class="ri-sun-line theme-icon" id="theme-icon"></i>
+        </button></div>
+    </nav>
+
+    <div id="progress-bar"></div>
+    <div id="nav-dots"></div>
+
+    <div id="reel">
+        <!-- Hero Section -->
+        <section class="hero active" id="hero">
+            <div class="hero-glow"></div>
+            <div class="hero-inner slide-content">
+                <div class="hero-text">
+                    <div class="hero-tag">Visual Storytelling Director</div>
+                    <h1 class="hero-name">KIM WOO JOO</h1>
+                    <p class="hero-name-ko">김 우 주 | DIRECTOR'S CUT</p>
+                    <h2 class="hero-title">찰나의 순간을 <span>영원</span>으로,<br>감각적인 우주를 그립니다.</h2>
+                    <p class="hero-desc">보이지 않는 감정을 시각적 언어로 포착합니다. 스크린 너머의 울림을 위해 프레임 하나하나에 영혼을 담는 비디오 디렉터입니다.</p>
+                    <div style="display: flex; gap: 16px; margin-top: 32px;">
+                        <a href="#main-reel" onclick="scrollToSection('#main-reel')" class="btn-primary" style="padding: 16px 36px; border-radius: 12px; background: var(--grad); color: #03050a; font-weight: 800; text-decoration: none; font-size: 1rem; display: inline-flex; align-items: center; gap: 10px;">
+                            <i class="ri-play-circle-fill" style="font-size: 1.4rem;"></i> WATCH SHOWREEL
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-card">
+                    <div class="profile-card">
+                        <div class="profile-img-wrap">
+                            
+                            <img src="promising_choihyunsoo/image162.png" alt="Profile Image" class="hero-main-img">
+                            <div class="status-badge"></div>
+                        </div>
+                        <p class="profile-name-en">WOOJOO KIM</p>
+                        <p class="profile-role">Video Director</p>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-box">
+                                <p class="stat-val">12+</p>
+                                <p class="stat-lbl">Films</p>
+                            </div>
+                            <div class="stat-box">
+                                <p class="stat-val">6.8k</p>
+                                <p class="stat-lbl">Subs</p>
+                            </div>
+                            <div class="stat-box">
+                                <p class="stat-val">2026</p>
+                                <p class="stat-lbl">Grad</p>
+                            </div>
+                        </div>
+
+                        <div class="profile-info">
+                            <div class="profile-info-item"><i class="ri-mail-line"></i> example@example.com</div>
+                            <div class="profile-info-item"><i class="ri-youtube-line"></i> "Milk Tuna" Editor</div>
+                            <div class="profile-info-item"><i class="ri-map-pin-line"></i> Seoul, Republic of Korea</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Showreel Section -->
+        <section id="main-reel" style="background: #000;">
+            <div class="inner slide-content" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <div class="sec-label">2026 Showreel</div>
+                <h2 class="sec-title" style="margin-bottom: 32px;">Directing Portfolio</h2>
+                <div class="visual-box">
+                    <video id="main-video" class="video-player" controls preload="auto" poster="영상 첫 프레임.png">
+                        <source src="promising_kimwooju/kimwooju_portfolio_main.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="tech-panel">
+                    <div class="tech-spec"><span class="spec-lbl">Directing</span><span class="spec-val">Narrative / MV</span></div>
+                    <div class="tech-spec"><span class="spec-lbl">Editing</span><span class="spec-val">Premiere / AE</span></div>
+                    <div class="tech-spec"><span class="spec-lbl">Resolution</span><span class="spec-val">4K Cinematic</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Identity Section -->
+        <section id="about" class="inner">
+            <div class="slide-content" style="width: 100%;">
+                <div class="sec-label">Creative Logic</div>
+                <h2 class="sec-title">Woo Joo's Perspective</h2>
+                
+                <div class="bento-grid">
+                    <div class="bento-item bento-vision">
+                        <i class="ri-double-quotes-l" style="font-size: 2.5rem; color: var(--clr-1); margin-bottom: 24px; opacity: .5;"></i>
+                        <p class="vision-quote">"화면 너머에 <span>감정을 포개는 일</span>, 그것이 저의 업입니다."</p>
+                        <p style="font-size: 1rem; color: var(--txt-m); line-height: 1.85;">
+                            단순한 컷 편집을 넘어 관객과 호흡하는 타이밍을 연구합니다. 각 프로젝트의 핵심 메시지에 가장 적합한 톤앤매너를 구축하여 브랜드의 가치를 시각적으로 극대화합니다.
+                        </p>
+                    </div>
+
+                    <div class="bento-item">
+                        <h3><i class="ri-terminal-window-line"></i> Professional Exp</h3>
+                        <div class="system-list">
+                            <div class="mini-card">
+                                <div class="mini-icon"><i class="ri-play-list-add-line"></i></div>
+                                <div class="mini-content">
+                                    <p>우유참치 채널 전속 편집자</p>
+                                    <p>구독자 6.81만명 실전 필드 경험</p>
+                                </div>
+                            </div>
+                            <div class="mini-card">
+                                <div class="mini-icon"><i class="ri-focus-2-line"></i></div>
+                                <div class="mini-content">
+                                    <p>서강대 영상 크리에이터 과정</p>
+                                    <p>심화 연출 및 포스트 프로덕션 수료</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Showcase 1: YouTube Editing -->
+        <section id="works" class="inner">
+            <div class="slide-content" style="width: 100%;">
+                <div class="work-layout">
+                    <div class="visual-box">
+                        <video class="video-player" controls preload="metadata">
+                            <source src="promising_kimwooju/kimwooju_video_01.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="work-info">
+                        <div class="sec-label">Field Experience</div>
+                        <h2 class="work-title">우유참치 채널<br>Main Editing</h2>
+                        <div class="channel-stats">
+                            <span class="subs-val">68,100+</span>
+                            <span class="subs-lbl">Subscribers</span>
+                        </div>
+                        <ul class="work-desc-list">
+                            <li><i class="ri-check-line"></i> 채널 정체성을 고려한 독자적 자막 디자인 구축</li>
+                            <li><i class="ri-check-line"></i> 데이터 기반 시청 지속 시간 극대화 컷 편집</li>
+                            <li><i class="ri-check-line"></i> 실시간 트렌드 반영 썸네일 및 레이아웃 제안</li>
+                        </ul>
+                        <div class="tech-panel" style="margin-top: 0; padding: 20px; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                            <div class="tech-spec"><span class="spec-lbl">Category</span><span class="spec-val">Social Video</span></div>
+                            <div class="tech-spec"><span class="spec-lbl">Duration</span><span class="spec-val">10m+ Series</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Showcase 2: Lyrics Animation -->
+        <section id="work2" class="inner">
+            <div class="slide-content" style="width: 100%;">
+                <div class="work-layout" style="grid-template-columns: 0.75fr 1.25fr;">
+                    <div class="work-info">
+                        <div class="sec-label">Motion Design</div>
+                        <h2 class="work-title">가사 해석 및<br>타이포그래픽 애니메이션</h2>
+                        <ul class="work-desc-list">
+                            <li><i class="ri-check-line"></i> The Weeknd - Blinding Light 가사 시각화</li>
+                            <li>• 곡의 질감을 살린 노이즈 및 네온 이펙트 활용</li>
+                            <li>• 비트와 싱크를 맞춘 리드미컬한 타이포그래피</li>
+                            <li>• 한로로 / 즛토마요 등 다양한 아티스트 협업</li>
+                        </ul>
+                    </div>
+                    <div class="visual-box">
+                        <video class="video-player" controls preload="metadata">
+                            <source src="promising_kimwooju/kimwooju_video_02.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Showcase 3: Motion Projects -->
+        <section id="work3" class="inner">
+            <div class="slide-content" style="width: 100%;">
+                <div class="work-layout">
+                    <div class="visual-box" style="aspect-ratio: 21/9; grid-column: span 1;">
+                        <video class="video-player" controls preload="metadata">
+                            <source src="promising_kimwooju/kimwooju_video_03.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="work-info">
+                        <div class="sec-label">Experimental Art</div>
+                        <h2 class="work-title">Typography<br>Experimental Work</h2>
+                        <p style="color: var(--txt-m); margin-bottom: 24px;">하라구치 사스케, 히이라기 마그네타이트 등 모던 프로듀서들의 사운드를 모션으로 재해석한 실험적 프로젝트군입니다.</p>
+                        <div class="tech-panel" style="margin-top: 0; padding: 20px; grid-template-columns: repeat(1, 1fr);">
+                            <div class="tech-spec"><span class="spec-lbl">Tools</span><span class="spec-val">AE / Cinema 4D / PR</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="inner">
+            <div class="slide-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <div class="sec-label" style="justify-content: center;">Let's Create Together</div>
+                <h2 class="sec-title" style="font-size: clamp(3rem, 7vw, 6rem); margin-bottom: 24px;">DIRECTOR</h2>
+                <p style="color: var(--txt-m); font-size: 1.2rem; margin-bottom: 48px;">당신의 비즈니스에 감각적인 '우주'를 선사합니다.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 60px;">
+                    <div class="bento-item" style="padding: 24px;">
+                        <span style="color: var(--clr-1); font-weight: 800; font-size: 1.1rem;">example@example.com</span>
+                    </div>
+                    <div class="bento-item" style="padding: 24px;">
+                        <span style="color: var(--txt-h); font-weight: 800; font-size: 1.1rem;">010-XXXX-XXXX</span>
+                    </div>
+                </div>
+                <div style="margin-top: 40px; color: var(--txt-s); font-family: var(--font-en); letter-spacing: 2px; font-size: 0.8rem;">
+                    © 2026 KIM WOO JOO STUDIO. ALL RIGHTS RESERVED.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reel = document.getElementById('reel');
+            const sections = document.querySelectorAll('section');
+            const dotsContainer = document.getElementById('nav-dots');
+            const progressBar = document.getElementById('progress-bar');
+            let currentIdx = 0;
+
+            // Dot Nav Init
+            dotsContainer.innerHTML = '';
+            sections.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = `nav-dot ${i === 0 ? 'active' : ''}`;
+                dot.onclick = () => scrollToSection(`#${sections[i].id}`);
+                dotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('.nav-dot');
+
+            function scrollToSection(id) {
+                const el = document.querySelector(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idx = Array.from(sections).indexOf(entry.target);
+                        currentIdx = idx;
+                        sections.forEach(s => s.classList.remove('active'));
+                        entry.target.classList.add('active');
+                        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+                    }
+                });
+            }, { root: reel, threshold: 0.6 });
+
+            sections.forEach(s => observer.observe(s));
+
+            reel.addEventListener('scroll', () => {
+                const pct = (reel.scrollTop / (reel.scrollHeight - reel.clientHeight)) * 100;
+                progressBar.style.width = pct + '%';
+            });
+        });
+    </script>
+    <!-- THEME SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('theme-toggle-btn');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Check local storage or default to dark
+            const savedTheme = localStorage.getItem('theme');
+            const currentTheme = savedTheme ? savedTheme : 'dark';
+            
+            function applyTheme(theme) {
+                if (theme === 'light') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    if(themeIcon) {
+                        themeIcon.classList.remove('ri-sun-line');
+                        themeIcon.classList.add('ri-moon-clear-line');
+                    }
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    if(themeIcon) {
+                        themeIcon.classList.remove('ri-moon-clear-line');
+                        themeIcon.classList.add('ri-sun-line');
+                    }
+                }
+}
+            
+            applyTheme(currentTheme);
+            
+            if(toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                    localStorage.setItem('theme', newTheme);
+                    applyTheme(newTheme);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
